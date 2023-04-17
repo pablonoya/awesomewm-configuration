@@ -1,0 +1,24 @@
+#!/bin/sh
+
+start() {
+  if ! pgrep -f $1 ;
+  then
+    "$@"&
+  fi
+}
+
+# load X colors
+start xrdb $HOME/.Xresources
+
+# apps
+start /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+start nm-applet
+start blueman-applet
+start /usr/bin/diodon
+start ulauncher --hide-window
+
+# pause mpv if there are open windows
+start $HOME/.config/awesome/configuration/pause_videowallpaper
+
+# compositor
+start picom --config=$HOME/.config/awesome/theme/picom.conf

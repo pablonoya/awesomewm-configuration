@@ -1,0 +1,8 @@
+require("ui.bar")
+require("ui.control-center")
+require("ui.calendar-box")
+require("ui.exit-screen")
+require("ui.notifications")
+require("ui.notification-center")
+require("ui.popups")
+-- require("ui.decorations")

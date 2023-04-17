@@ -1,0 +1,9 @@
+[submodule "away"]
+	path = away
+	url = https://github.com/shmilee/awesome-away.git
+[submodule "module/bling"]
+	path = module/bling
+	url = https://github.com/BlingCorp/bling.git
+[submodule "module/rubato"]
+	path = module/rubato
+	url = https://github.com/andOrlando/rubato.git
