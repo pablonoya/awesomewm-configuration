@@ -16,6 +16,7 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
   - Monospace: [JetBrains Mono Slashed](https://github.com/sharpjs/JetBrainsMonoSlashed#installation)
   - Icons: [Material Design Icons](https://github.com/google/material-design-icons) and [jetbrains-mono-nerd](https://archlinux.org/packages/community/any/ttf-jetbrains-mono-nerd/)
 - ▶ Wallpaper: "#8 Unicorn" by [Kanistra Studio](https://www.artstation.com/artwork/Bmd6zm)
+- 📄 Rest of .dotfiles [here](https://github.com/pablonoya/dotfiles)
 
 ### ⚙ Instalation
 ---
