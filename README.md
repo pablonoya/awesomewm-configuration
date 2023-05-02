@@ -47,7 +47,7 @@ mv awesomewm-configuration $HOME/.config/awesome
 
 ### ✨ Features
 ---
-🎨 Custom color scheme, available for vscode [here](https://github.com/pablonoya/seramuriana).  
+🎨 Custom color scheme taken from [Xresources](https://github.com/pablonoya/dotfiles/blob/main/Xresources), also available for vscode [here](https://github.com/pablonoya/seramuriana).  
 💻🖥 Multiple screen support (vertical screen in progress).  
 ⏯ Auto-pausing video wallpaper.  
 🎬 Simple animations with [Rubato](https://github.com/andOrlando/rubato) and this [picom fork](https://github.com/fdev31/picom).
@@ -83,6 +83,11 @@ With [Bling](https://github.com/BlingCorp/bling) previews!
 |:-:|:-:|
 |![tag_preview](https://user-images.githubusercontent.com/31524852/232521049-1462738a-d58b-473e-a0b8-1fbc72b345bc.png)|![task_preview](https://user-images.githubusercontent.com/31524852/232521057-253397c9-d0bc-499a-aa86-6de24ca126fe.png)  |
 
+#### Lockscreen with word clock colorized by time of day
+|Dawn|Midday|Night
+|---|---|---|
+|![image](https://user-images.githubusercontent.com/31524852/235561130-92c58246-4922-4343-bec6-2c00ef49fe3b.png)|![image](https://user-images.githubusercontent.com/31524852/235560816-588185cc-9696-43c5-b4a6-3bd30a609116.png)|![image](https://user-images.githubusercontent.com/31524852/235561459-06d1b240-0eb5-4724-9dc4-c14b965776cc.png)|
+
 #### Some popups
 |Volume|Layout|Mic on/off|
 |---|---|---|
@@ -90,6 +95,10 @@ With [Bling](https://github.com/BlingCorp/bling) previews!
 
 #### Keyboard shortcuts
 ![keyboard_shortcuts](https://user-images.githubusercontent.com/31524852/232522652-dad0f836-6ea0-4d73-aa56-5ea85f241925.png)
+
+#### Exit screen
+![image](https://user-images.githubusercontent.com/31524852/235562950-17883931-ef68-4591-a528-f3675e054d2b.png)
+
 
 ### 🤍 Acknowledgments
 ---
