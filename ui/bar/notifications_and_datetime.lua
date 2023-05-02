@@ -31,14 +31,13 @@ local datetime = wibox.widget {
     font = beautiful.font_name .. "13",
     format = "%a. %d <b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>",
     refresh = 2,
-    -- forced_width = dpi(60),
     ellipsize = "none",
     widget = wibox.widget.textclock
 }
 
 datetime:connect_signal(
     "widget::redraw_needed", function()
-        datetime.format = "%a. %d <b>%I" .. helpers.colorize_by_time_of_day(":") .. "%M</b>"
+        datetime.format = "%a. %d <b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
     end
 )
 
