@@ -5,6 +5,7 @@ local naughty = require("naughty")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
+local color_helpers = require("helpers.color-helpers")
 
 local lock_screen = require("ui.lockscreen")
 
@@ -101,7 +102,7 @@ local function create_text_widget(index, w)
     local text_widget = wibox.widget {
         id = "t" .. index,
         markup = w,
-        font = beautiful.font_name .. "bold 18",
+        font = beautiful.font_name .. " Bold 18",
         align = "center",
         valign = "center",
         forced_width = dpi(25),
@@ -115,8 +116,8 @@ local function create_text_widget(index, w)
 end
 
 local var_count = 0
-for i, m in pairs(time_char) do
-    local text = helpers.colorize_text(m, beautiful.xforeground .. "15")
+for i, char in pairs(time_char) do
+    local text = helpers.colorize_text(char, beautiful.light_black .. "16")
 
     var_count = var_count + 1
     local create_dummy_text = true
@@ -142,17 +143,14 @@ for i, m in pairs(time_char) do
 end
 
 local function activate_word(w)
-    for i, m in pairs(char_map[w]) do
-        local text = m.text
-        m.markup = helpers.colorize_text(text, beautiful.xforeground)
+    for i, char in pairs(char_map[w]) do
+        char.markup = color_helpers.colorize_by_time_of_day(char.text)
     end
 end
 
 local function deactivate_word(w)
-    for i, m in pairs(char_map[w]) do
-        local text = m.text
-
-        m.markup = helpers.colorize_text(text, beautiful.xforeground .. "15")
+    for i, char in pairs(char_map[w]) do
+        char.markup = helpers.colorize_text(char.text, beautiful.light_black .. "16")
     end
 end
 
@@ -218,13 +216,15 @@ gears.timer {
 }
 
 -- Lock animation
-local lock_screen_symbol = ""
-local lock_screen_fail_symbol = ""
+local lock_icon = "\u{e897}"
+local password_icon = "\u{f042}"
+local password_failed_icon = helpers.colorize_text(password_icon, beautiful.red)
+
 local lock_animation_icon = wibox.widget {
     -- Set forced size to prevent flickering when the icon rotates
     forced_height = dpi(80),
     forced_width = dpi(80),
-    markup = lock_screen_symbol,
+    markup = helpers.colorize_text(lock_icon, beautiful.light_black),
     font = beautiful.icon_font_name .. "Outlined 24",
     align = "center",
     valign = "center",
@@ -258,14 +258,14 @@ local lock_animation = {
 local characters_entered = 0
 local function reset()
     characters_entered = 0;
-    lock_animation_icon.markup = helpers.colorize_text(lock_screen_symbol, beautiful.white)
+    lock_animation_icon.markup = helpers.colorize_text(lock_icon, beautiful.light_black)
     lock_animation_widget_rotate.direction = "north"
     lock_animation_arc.bg = "#00000000"
 end
 
 local function fail()
     characters_entered = 0;
-    lock_animation_icon.markup = helpers.colorize_text(lock_screen_fail_symbol, beautiful.red)
+    lock_animation_icon.markup = password_failed_icon
     lock_animation_widget_rotate.direction = "north"
     lock_animation_arc.bg = "#00000000"
 end
@@ -283,7 +283,7 @@ local function key_animation(char_inserted)
     local direction = animation_directions[(characters_entered % 4) + 1]
     if char_inserted then
         color = animation_colors[(characters_entered % 6) + 1]
-        lock_animation_icon.text = lock_screen_symbol
+        lock_animation_icon.markup = helpers.colorize_text(password_icon, beautiful.white)
     else
         if characters_entered == 0 then
             reset()
@@ -300,6 +300,8 @@ local function set_visibility(visible)
     naughty.suspended = visible
     for s in screen do
         s.lockscreen.visible = visible
+        s.lockscreen:get_children_by_id("container")[1].border_color =
+            color_helpers.get_color_by_time_of_day()
     end
 end
 
@@ -375,8 +377,11 @@ awful.screen.connect_for_each_screen(
                     margins = dpi(64),
                     widget = wibox.container.margin
                 },
+                id = "container",
                 shape = helpers.rrect(beautiful.border_radius),
                 bg = beautiful.xbackground,
+                border_color = beautiful.focus,
+                border_width = dpi(2),
                 widget = wibox.container.background
             },
             widget = wibox.container.place
