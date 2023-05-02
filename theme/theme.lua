@@ -53,6 +53,14 @@ theme.neptune = theme.cyan
 theme.accent = theme.blue
 theme.focus = "#424f5b"
 
+-- Time of the day colors
+theme.late_night_color = theme.magenta
+theme.dawn_color = theme.pluto
+theme.morning_color = theme.yellow
+theme.midday_color = theme.moon
+theme.dusk_color = theme.chibimoon
+theme.night_color = theme.blue
+
 -- PFP
 theme.pfp = gsurface.load_uncached(local_dir .. "theme/assets/kirby_snowboard.jpg")
 
@@ -291,6 +299,6 @@ theme.window_switcher_icon_width = dpi(28)
 
 -- video wallpaper
 theme.video_wallpaper_path = HOME .. "/Vídeos/aniwalls/unicorn_loop.mp4"
-theme.video_wallpaper_vertical_path = HOME .. "/Vídeos/aniwalls/Rain_shelter-aleha_84.mp4"
+theme.video_wallpaper_vertical_path = HOME .. "/Vídeos/aniwalls/6am_shinjuku_guttykreum.mp4"
 
 return theme

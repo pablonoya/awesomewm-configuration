@@ -6,13 +6,11 @@ local naughty = require("naughty")
 local helpers = {}
 
 -- Create rounded rectangle shape (in one line)
-local function round_rect(radius)
+function helpers.rrect(radius)
     return function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, radius)
     end
 end
-
-helpers.rrect = round_rect
 
 -- Markup helper
 function helpers.colorize_text(txt, fg)
