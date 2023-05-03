@@ -5,9 +5,9 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
 
 ![full_screenshot](https://user-images.githubusercontent.com/31524852/232510330-a812c5d7-f5e5-4aa3-a7d5-deb58a684390.png)
 
+
 ### ℹ️ Details
 ---
-
 - 🐧 **OS:**  EndeavourOS
 - 🧑‍💻 **Terminal:** Kitty
 - 🌙 **Icons:** [Küyen](https://github.com/fabianalexisinostroza/Kuyen-icons)
@@ -18,33 +18,6 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
 - ▶ Wallpaper: "#8 Unicorn" by [Kanistra Studio](https://www.artstation.com/artwork/Bmd6zm)
 - 📄 Rest of .dotfiles [here](https://github.com/pablonoya/dotfiles)
 
-### ⚙ Instalation
----
-Tested on Asus G14 (2020) with EndeavourOS
-
-<details>
-<summary>Install dependencies</summary>
-
-```
-pikaur -S awesome-git picom-simpleanims-git \
-acpi acpid acpi_call upower \
-pipewire pipewire-alsa pipewire-pulse playerctl pamixer jq \
-brightnessctl redshift \
-bluez-utils networkmanager polkit-gnome xdotool \
-mpv xwinwrap-git lxappearance-gtk3 qt5ct-kde \
-blueman network-manager-applet flameshot diodon ulauncher \
-asusctl rog-control-center --needed
-```
-</details>
-
-Clone the proyect
-```
-git clone --recurse-submodules https://github.com/pablonoya/awesomewm-configuration
-```
-Optional: If you want to replace you current configuration completely
-```
-mv awesomewm-configuration $HOME/.config/awesome
-```
 
 ### ✨ Features
 ---
@@ -62,6 +35,44 @@ https://github.com/pablonoya/awesomewm-configuration/blob/ed0b10fff129717ab1ff3b
 and autostart this small script
 https://github.com/pablonoya/awesomewm-configuration/blob/ed0b10fff129717ab1ff3b48abc56d7197345cf8/configuration/pause_videowallpaper#L3-L12 
 </details>
+
+
+### ⚙ Installation
+---
+Tested on Asus G14 (2020) with EndeavourOS
+
+Install dependencies
+```sh
+pikaur -S awesome-git picom-simpleanims-git \
+acpi acpid acpi_call upower \
+pipewire pipewire-alsa pipewire-pulse playerctl pamixer jq \
+brightnessctl redshift-git \
+bluez-utils networkmanager polkit-gnome xdotool \
+mpv xwinwrap-git lxappearance-gtk3 qt5ct-kde \
+blueman network-manager-applet flameshot diodon ulauncher \
+asusctl rog-control-center --needed
+```
+</details>
+
+Clone the proyect
+```sh
+git clone --recurse-submodules https://github.com/pablonoya/awesomewm-configuration
+```
+
+To obtain the colors, copy or replace my [Xresources file](https://github.com/pablonoya/dotfiles/blob/main/Xresources) to
+```sh
+$HOME/.Xresources
+```
+
+<details>
+<summary>Optional: Replace the current configuration completely</summary>
+
+
+```sh
+mv awesomewm-configuration $HOME/.config/awesome
+```
+</details>
+
 
 ### 🖼 Gallery
 ---
