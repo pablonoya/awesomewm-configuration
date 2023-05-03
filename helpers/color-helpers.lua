@@ -6,7 +6,7 @@ local color_map = {
     {0, 5, color = beautiful.late_night_color},
     {5, 8, color = beautiful.dawn_color},
     {12, 14, color = beautiful.midday_color},
-    {8, 12, color = beautiful.morning_color},
+    {8, 17, color = beautiful.morning_color},
     {17, 18, color = beautiful.dusk_color},
     {18, 24, color = beautiful.night_color},
 }

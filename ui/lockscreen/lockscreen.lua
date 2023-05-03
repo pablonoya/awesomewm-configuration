@@ -142,9 +142,13 @@ for i, char in pairs(time_char) do
 
 end
 
+local last_hour
+local last_minute
+local time_of_day_color
+
 local function activate_word(w)
     for i, char in pairs(char_map[w]) do
-        char.markup = color_helpers.colorize_by_time_of_day(char.text)
+        char.markup = color_helpers.colorize_text(char.text, time_of_day_color)
     end
 end
 
@@ -164,14 +168,32 @@ local function reset_time()
 end
 
 gears.timer {
-    timeout = 1,
+    timeout = 2,
     call_now = true,
     autostart = true,
     callback = function()
-        local time = os.date('%I' .. ':%M')
+        local time = os.date('%I:%M')
         local h, m = time:match('(%d+):(%d+)')
-        local min = tonumber(m)
         local hour = tonumber(h)
+        local min = tonumber(m)
+
+        if last_hour ~= hour then
+            time_of_day_color = color_helpers.get_color_by_time_of_day()
+            last_hour = hour
+        end
+
+        if last_minute == min then
+            return
+        else
+            last_minute = min
+        end
+
+        -- update if minute has changed
+        for s in screen do
+            if s.lockscreen then
+                s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
+            end
+        end
 
         reset_time()
 
@@ -300,8 +322,7 @@ local function set_visibility(visible)
     naughty.suspended = visible
     for s in screen do
         s.lockscreen.visible = visible
-        s.lockscreen:get_children_by_id("container")[1].border_color =
-            color_helpers.get_color_by_time_of_day()
+        s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
     end
 end
 
