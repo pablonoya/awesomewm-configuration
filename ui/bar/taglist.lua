@@ -131,7 +131,7 @@ local function adjust_grid_layout(s)
 
     local num_tags = 0
     for _, t in ipairs(screen.tags) do
-        if #t:clients() > 0 then
+        if t.selected or #t:clients() > 0 then
             num_tags = num_tags + 1
         end
     end
@@ -187,8 +187,6 @@ local taglist = function(s)
                     {
                         id = "tasklist_placeholder",
                         layout = wibox.layout.fixed.horizontal,
-                        left = dpi(20),
-                        right = dpi(20),
                         widget = wibox.container.margin
                     },
                     spacing = dpi(4),

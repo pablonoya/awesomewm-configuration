@@ -40,7 +40,7 @@ local function icon_button(markup)
                 widget = wibox.widget.textbox
             },
             shape = gshape.circle,
-            widget = wibox.widget.background
+            widget = wibox.container.background
         }
     )
 

@@ -46,7 +46,7 @@ Install dependencies
 pikaur -S awesome-git picom-simpleanims-git \
 acpi acpid acpi_call upower \
 pipewire pipewire-alsa pipewire-pulse playerctl pamixer jq \
-brightnessctl redshift-git \
+brightnessctl redshift-minimal \
 bluez-utils networkmanager polkit-gnome xdotool \
 mpv xwinwrap-git lxappearance-gtk3 qt5ct-kde \
 blueman network-manager-applet flameshot diodon ulauncher \

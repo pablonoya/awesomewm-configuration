@@ -41,13 +41,15 @@ local timed_slide = rubato.timed {
 
 local notif_center_show = function()
     local screen = awful_screen.focused()
-    notification_center.height = screen.geometry.height - dpi(360)
+    local top_bar_height = screen.bar.height
 
-    awful_placement.right(
+    notification_center.height = screen.geometry.height - top_bar_height - dpi(304)
+
+    awful_placement.top_right(
         notification_center, {
             parent = screen,
             margins = {
-                top = screen.bar.height + dpi(280),
+                top = top_bar_height + dpi(300),
                 right = -notification_center.width + dpi(14)
             }
         }

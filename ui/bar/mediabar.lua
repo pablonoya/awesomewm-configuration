@@ -97,7 +97,7 @@ return function(screen_width, is_vertical)
         },
         spacing = dpi(8),
         layout = wibox_layout.fixed.horizontal,
-        widget = wibox_widget.background
+        widget = wibox_container.background
     }
 
     local progress_container = wibox_widget {

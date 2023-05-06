@@ -32,7 +32,7 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
         },
         bg = beautiful.control_center_button_bg,
         shape = helpers.rrect(beautiful.border_radius),
-        widget = wibox.widget.background
+        widget = wibox.container.background
     }
 
     filled_button:buttons(gtable.join(button({}, 1, nil, onclick)))

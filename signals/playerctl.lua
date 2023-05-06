@@ -1,20 +1,17 @@
-local naughty = require("naughty")
 local playerctl = require("module.bling.signal.playerctl")
 
 local instance = nil
 
-local function new()
+local function new_instance()
     return playerctl.lib(
         {
-            update_on_activity = true,
-            player = {"youtube-music", "spotify", "mpd", "%any"},
-            debounce_delay = 1
+            player = {"youtube-music", "spotify", "mpd", "%any"}
         }
     )
 end
 
 if not instance then
-    instance = new()
+    instance = new_instance()
 end
 
 return instance

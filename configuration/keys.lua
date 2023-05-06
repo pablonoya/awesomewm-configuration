@@ -81,6 +81,7 @@ awful_keyboard.append_global_keybindings {
         }
     ), awful_key(
         {modkey}, "s", function()
+            ytm_scratchpad:reapply_geometry()
             ytm_scratchpad:toggle()
         end, {
             description = "Toggle scratchpad",
