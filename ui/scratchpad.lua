@@ -33,9 +33,9 @@ function ytm_scratchpad:reapply_geometry()
     local is_vertical = width < height
 
     ytm_scratchpad.geometry = {
-        x = width / (is_vertical and 40 or 7),
-        y = height / 10,
-        width = width * (is_vertical and 0.95 or 0.7),
+        x = width / (is_vertical and 50 or 7),
+        y = height / 8 + screen_geometry.y,
+        width = width * (is_vertical and 0.96 or 0.7),
         height = height * 0.7
     }
 end
