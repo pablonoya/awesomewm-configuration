@@ -19,7 +19,7 @@ return function(s)
     local bar = awful_wibar {
         type = "dock",
         screen = s,
-        height = is_vertical and dpi(60) or dpi(40)
+        height = is_vertical and dpi(64) or dpi(40)
     }
 
     bar:setup{
@@ -46,7 +46,7 @@ return function(s)
                     systray,
                     mic_indicator,
                     battery(is_vertical),
-                    notifications_and_datetime,
+                    notifications_and_datetime(is_vertical),
                     control_center_button,
                     layoutbox(s),
 
