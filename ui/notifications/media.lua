@@ -1,15 +1,7 @@
-local playerctl = require("signals.playerctl")
+local gstring = require("gears.string")
 local notification = require("naughty.notification")
 
--- local play_pause = naughty.action {
---   name = "play"
--- }
-
--- play_pause:connect_signal(
---     "invoked", function(action)
---         instance:play_pause()
---     end
--- )
+local playerctl = require("signals.playerctl")
 
 playerctl:connect_signal(
     "metadata", function(_, title, artist, album_path, album, new, player_name)
@@ -18,16 +10,10 @@ playerctl:connect_signal(
                 urgency = "low",
                 app_name = player_name,
                 title = artist,
-                message = '🎵 ' .. title .. (album ~= "" and "\n💿 " .. album or ""),
+                text = gstring.xml_unescape(
+                    '🎵 ' .. title .. (album ~= "" and "\n💿 " .. album or "")
+                ),
                 image = album_path
-                -- actions = {
-                --     naughty.action {
-                --         name = "prev"
-                --     }, play_pause, naughty.action {
-                --         name = "next"
-                --     }
-
-                -- }
             }
         end
     end
