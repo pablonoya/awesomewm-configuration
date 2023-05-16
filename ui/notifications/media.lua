@@ -9,7 +9,7 @@ playerctl:connect_signal(
             notification {
                 urgency = "low",
                 app_name = player_name,
-                title = artist,
+                title = gstring.xml_unescape(artist),
                 text = gstring.xml_unescape(
                     '🎵 ' .. title .. (album ~= "" and "\n💿 " .. album or "")
                 ),
