@@ -28,7 +28,7 @@ spawn.easy_async_with_shell(
         end
         -- Periodically get battery info
         awful_widget.watch(
-            "cat " .. battery_file, 2, function(_, stdout)
+            "cat " .. battery_file, 4, function(_, stdout)
                 local status = (stdout == 'Charging\n' or stdout == 'Not charging\n')
                 if status then
                     update_interval = 60
