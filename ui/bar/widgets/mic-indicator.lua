@@ -13,15 +13,20 @@ local icon = text_icon {
 
 local mic_indicator = wibox.widget {
     {
-        icon,
-        margins = dpi(2),
-        widget = wibox.container.margin
+        {
+            icon,
+            margins = dpi(2),
+            widget = wibox.container.margin
+        },
+        fg = beautiful.black,
+        bg = beautiful.green,
+        shape = gears.shape.circle,
+        widget = wibox.container.background
     },
     visible = false,
-    fg = beautiful.black,
-    bg = beautiful.green,
-    shape = gears.shape.circle,
-    widget = wibox.container.background
+    left = dpi(4),
+    right = dpi(4),
+    widget = wibox.container.margin
 }
 
 mic_indicator:buttons(gears.table.join({awful.button({}, 1, nil, system_controls.mic_toggle)}))

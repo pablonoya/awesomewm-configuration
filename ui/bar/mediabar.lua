@@ -141,7 +141,7 @@ return function(screen_width, is_vertical)
     local mediabar = {
         progress_container,
         left = dpi(4),
-        right = dpi(6),
+        right = dpi(4),
         widget = wibox_container.margin
     }
 

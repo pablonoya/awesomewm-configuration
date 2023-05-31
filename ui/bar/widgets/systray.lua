@@ -52,7 +52,7 @@ client.connect_signal(
 
         if focused_screen.geometry.height > focused_screen.geometry.width then
             beautiful.systray_max_rows = 2
-            tray.base_size = 20
+            tray.base_size = 21
         else
             beautiful.systray_max_rows = 1
             tray.base_size = 24

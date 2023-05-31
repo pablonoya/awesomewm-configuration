@@ -25,7 +25,7 @@ local charge_icon = wibox.widget {
     markup = helpers.colorize_text("\u{ea0b}", beautiful.green),
     halign = "center",
     visible = false,
-    widget = wibox.widget.textbox()
+    widget = wibox.widget.textbox
 }
 
 local battery_bar = wibox.widget {
@@ -79,12 +79,7 @@ return function(is_vertical)
     end
 
     local battery_widget = wibox.widget {
-        {
-            battery_body,
-            left = dpi(4),
-            right = dpi(6),
-            widget = wibox.container.margin
-        },
+        battery_body,
         widget = wibox.container.place
     }
 
@@ -156,5 +151,10 @@ return function(is_vertical)
         end
     )
 
-    return battery_widget
+    return {
+        battery_widget,
+        left = dpi(4),
+        right = dpi(6),
+        widget = wibox.container.margin
+    }
 end
