@@ -2,38 +2,42 @@ local awful_button = require("awful.button")
 local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 local gtable = require("gears.table")
-local wibox_widget = require("wibox.widget")
-local wibox_layout = require("wibox.layout")
+local wibox = require("wibox")
 
 local clickable_container = require("ui.widgets.clickable-container")
 
 return function(args)
-    local name = wibox_widget {
+    local name = wibox.widget {
         id = "name",
         text = args.name or "Action",
         font = beautiful.font_name .. "Bold 10",
         align = "left",
-        widget = wibox_widget.textbox
+        widget = wibox.widget.textbox
     }
 
     local icon_button = clickable_container {
         widget = args.icon,
         margins = dpi(4),
-        shape = gshape.circle
+        shape = gshape.circle,
+        action = args.action_button
     }
 
-    icon_button:buttons(gtable.join(awful_button({}, 1, nil, args.action_button)))
-
     args.slider:buttons(
-        gtable.join(awful_button({}, 4, nil, args.action_up), awful_button({}, 5, nil, args.action_down))
+        gtable.join(
+            awful_button({}, 4, nil, args.action_up), awful_button({}, 5, nil, args.action_down)
+        )
     )
 
-    return wibox_widget {
+    return wibox.widget {
         {
             name,
             nil,
-            args.device_widget,
-            layout = wibox_layout.align.horizontal
+            {
+                args.device_widget,
+                width = dpi(180),
+                widget = wibox.container.constraint
+            },
+            layout = wibox.layout.align.horizontal
         },
         {
             icon_button,
@@ -42,9 +46,9 @@ return function(args)
 
             spacing = dpi(8),
             fill_space = true,
-            layout = wibox_layout.fixed.horizontal
+            layout = wibox.layout.fixed.horizontal
         },
         spacing = dpi(8),
-        layout = wibox_layout.fixed.vertical
+        layout = wibox.layout.fixed.vertical
     }
 end

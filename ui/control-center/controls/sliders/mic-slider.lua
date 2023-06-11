@@ -7,6 +7,7 @@ local helpers = require("helpers")
 local system_controls = require("helpers.system-controls")
 
 local slider = require("ui.widgets.slider")
+local clickable_container = require("ui.widgets.clickable-container")
 local text_icon = require("ui.widgets.text-icon")
 
 local value_text = require("ui.control-center.widgets.value-text")
@@ -21,25 +22,12 @@ local mic_value = value_text {
 }
 
 local mic_device_name = wibox.widget {
-    text = "",
+    text = "-",
     font = beautiful.font_name .. " Medium 10",
     valign = "center",
     align = "right",
     forced_height = dpi(12),
     widget = wibox.widget.textbox
-}
-
-local mic_device = wibox.widget {
-    {
-        mic_device_name,
-        margins = {
-            left = dpi(6),
-            right = dpi(6)
-        },
-        widget = wibox.container.margin
-    },
-    shape = helpers.rrect(beautiful.border_radius),
-    widget = wibox.container.background
 }
 
 local mic_slider = slider {
@@ -72,17 +60,42 @@ local function check_volume_and_mute()
         "pamixer --default-source --get-mute --get-volume", function(stdout)
             local muted, volume = table.unpack(gears_string.split(stdout, " "))
 
-            mic_slider:set_value(tonumber(volume))
-
             set_muted_style(muted == "true")
+            mic_slider:set_value(tonumber(volume))
         end
     )
 end
 
+local mic_device = clickable_container {
+    widget = mic_device_name,
+    bg = beautiful.xbackground,
+    bg_focused = "#668c75",
+    margins = {
+        left = dpi(6),
+        right = dpi(6)
+    },
+    action = function()
+        spawn("pavucontrol -t 4")
+    end
+}
+
+mic_device:connect_signal(
+    "mouse::enter", function()
+        mic_device.hover = true
+    end
+)
+mic_device:connect_signal(
+    "mouse::leave", function()
+        mic_device.hover = false
+    end
+)
+
 awesome.connect_signal(
     "microphone::state", function(state)
-        mic_device.bg = state and beautiful.green or beautiful.transparent
-        mic_device.fg = state and beautiful.xbackground or beautiful.xforeground
+        if not mic_device.hover then
+            mic_device.bg = state and beautiful.green or beautiful.xbackground
+            mic_device.fg = state and beautiful.xbackground or beautiful.xforeground
+        end
     end
 )
 

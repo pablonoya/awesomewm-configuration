@@ -1,5 +1,6 @@
 local awful_button = require("awful.button")
 local beautiful = require("beautiful")
+local gcolor = require("gears.color")
 local gshape = require("gears.shape")
 local gtable = require("gears.table")
 local wibox_container = require("wibox.container")
@@ -23,26 +24,24 @@ local function clickable_container(args)
 
     helpers.add_hover_cursor(container, "hand2")
 
-    -- Hover bg change
+    -- Hover bg and fg change
+    local last_bg
+    local last_fg
     container:connect_signal(
         "mouse::enter", function()
-            container.bg = args.bg_focused or beautiful.focus
-            container.fg = args.fg_focused or beautiful.xforeground
+            last_bg = container.bg
+            last_fg = container.fg
+            container.bg = args.bg_focused or gcolor.change_opacity("#d0f0ff", 0.13)
+            container.fg = args.fg_focused or container.fg
         end
     )
 
     container:connect_signal(
         "mouse::leave", function()
             if not container.focused then
-                container.bg = args.bg or beautiful.transparent
-                container.fg = args.fg or beautiful.xforeground
+                container.bg = last_bg or args.bg or beautiful.transparent
+                container.fg = last_fg or args.fg or beautiful.xforeground
             end
-        end
-    )
-
-    container:connect_signal(
-        "button::press", function()
-            container.bg = beautiful.focus .. 'B0'
         end
     )
 

@@ -1,11 +1,14 @@
 local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gears_string = require("gears.string")
-
 local wibox = require("wibox")
+
+local system_controls = require("helpers.system-controls")
 
 local slider = require("ui.widgets.slider")
 local text_icon = require("ui.widgets.text-icon")
+local clickable_container = require("ui.widgets.clickable-container")
+
 local value_text = require("ui.control-center.widgets.value-text")
 local setting_slider = require("ui.control-center.widgets.setting-slider")
 
@@ -25,14 +28,25 @@ local function get_volume_icon(value)
     end
     return "\u{e04e}"
 end
-
-local volume_device = wibox.widget {
+local volume_device_name = wibox.widget {
     text = "",
     font = beautiful.font_name .. " Medium 10",
     valign = "center",
     align = "right",
     forced_height = dpi(12),
     widget = wibox.widget.textbox
+}
+
+local volume_device = clickable_container {
+    widget = volume_device_name,
+    bg = beautiful.xbackground,
+    margins = {
+        left = dpi(6),
+        right = dpi(6)
+    },
+    action = function()
+        spawn("pavucontrol -t 3")
+    end
 }
 
 local volume_slider = slider {
@@ -64,9 +78,8 @@ local function check_volume_and_mute()
     )
 end
 
-local function volume_action()
-    spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
-    check_volume_and_mute()
+local function toggle_mute()
+    system_controls.volume_control("mute")
 end
 
 awesome.connect_signal(
@@ -86,7 +99,7 @@ volume_slider:connect_signal(
 
 awesome.connect_signal(
     "volume::device", function(name)
-        volume_device.text = name
+        volume_device_name.text = name
     end
 )
 
@@ -96,7 +109,7 @@ return setting_slider {
     name = "Volume",
     device_widget = volume_device,
     icon = volume_icon,
-    action_button = volume_action,
+    action_button = toggle_mute,
 
     slider = volume_slider,
     action_up = function()

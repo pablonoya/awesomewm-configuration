@@ -49,7 +49,7 @@ pipewire pipewire-alsa pipewire-pulse playerctl pamixer jq \
 brightnessctl redshift-minimal \
 bluez-utils networkmanager polkit-gnome xdotool \
 mpv xwinwrap-git lxappearance-gtk3 qt5ct-kde \
-blueman network-manager-applet flameshot diodon ulauncher \
+blueman network-manager-applet flameshot diodon ulauncher pavucontrol \
 asusctl rog-control-center --needed
 ```
 </details>
