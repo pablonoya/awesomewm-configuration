@@ -16,7 +16,7 @@ local function clickable_container(args)
             widget = wibox_container.margin
         },
         bg = args.bg or beautiful.transparent,
-        fg = args.fg or beautiful.xforeground,
+        fg = args.fg,
         shape = args.shape or gshape.rounded_rect,
         widget = wibox_container.background
     }
@@ -29,8 +29,10 @@ local function clickable_container(args)
     local last_fg
     container:connect_signal(
         "mouse::enter", function()
-            last_bg = container.bg
-            last_fg = container.fg
+            if not container.focused then
+                last_bg = container.bg
+                last_fg = container.fg
+            end
             container.bg = args.bg_focused or gcolor.change_opacity("#d0f0ff", 0.13)
             container.fg = args.fg_focused or container.fg
         end
@@ -40,7 +42,7 @@ local function clickable_container(args)
         "mouse::leave", function()
             if not container.focused then
                 container.bg = last_bg or args.bg or beautiful.transparent
-                container.fg = last_fg or args.fg or beautiful.xforeground
+                container.fg = last_fg or args.fg
             end
         end
     )

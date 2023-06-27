@@ -28,15 +28,17 @@ naughty.connect_signal(
 )
 
 return function(is_vertical)
-    local datetime_format = (
-        "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
-        .. (is_vertical and "\n" or " ")
-        .. "<b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
-    )
+    local get_datetime_format = function()
+        return (
+            "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
+            .. (is_vertical and "\n" or " ") 
+            .. "<b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
+        )
+    end
 
     local datetime = wibox.widget {
         font = beautiful.font_name .. (is_vertical and 12 or 13),
-        format = datetime_format,
+        format = get_datetime_format(),
         refresh = 2,
         ellipsize = "none",
         halign = "center",
@@ -46,7 +48,7 @@ return function(is_vertical)
 
     datetime:connect_signal(
         "widget::redraw_needed", function()
-            datetime.format = datetime_format
+            datetime.format = get_datetime_format()
         end
     )
 
