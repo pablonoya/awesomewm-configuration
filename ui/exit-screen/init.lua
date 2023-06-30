@@ -10,6 +10,10 @@ local create_button = require("ui.exit-screen.create-button")
 local dpi = beautiful.xresources.apply_dpi
 lock_screen.init()
 
+local function hide_exit_screen()
+    awesome.emit_signal("exit_screen::hide")
+end
+
 -- Commands
 local poweroff_command = function()
     awful.spawn.with_shell("systemctl poweroff")
@@ -50,6 +54,7 @@ local create_exit_screen = function(s)
         visible = false,
         ontop = true,
         bg = beautiful.black .. "D7",
+        y = s.geometry.y,
         height = s.geometry.height,
         width = s.geometry.width
     }
@@ -69,15 +74,8 @@ local create_exit_screen = function(s)
 
     s.exit_screen:buttons(
         gtable.join(
-            awful.button(
-                {}, 2, function()
-                    awesome.emit_signal("exit_screen::hide")
-                end
-            ), awful.button(
-                {}, 3, function()
-                    awesome.emit_signal("exit_screen::hide")
-                end
-            )
+            awful.button({}, 2, hide_exit_screen),
+            awful.button({}, 3, hide_exit_screen)
         )
     )
 end
