@@ -48,7 +48,7 @@ local function clickable_container(args)
     )
 
     if args.action then
-        container:buttons(gtable.join(awful_button({}, 1, nil, args.action)))
+        container:buttons(gtable.join(awful_button({}, 1, args.action)))
     end
 
     return container

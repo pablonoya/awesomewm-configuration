@@ -9,7 +9,7 @@ return function(args)
     return wibox_widget {
         {
             args.widget,
-            margins = dpi(4),
+            margins = args.margins or dpi(4),
             widget = wibox_container.margin
         },
         shape = args.shape or helpers.rrect(beautiful.border_radius),
