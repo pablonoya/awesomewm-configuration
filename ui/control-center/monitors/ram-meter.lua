@@ -21,7 +21,7 @@ local meter_icon = wibox_widget {
 local function format_info(stdout)
     local total, used, free, shared, buff_cache, available, total_swap, used_swap, free_swap =
         stdout:match(
-            "(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*Swap:%s*(%d+)%s*(%d+)%s*(%d+)"
+            "(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)"
         )
     local value = used / total * 100
     local info = string.format("%.2f / %.2f GB", used / 1048576, total / 1048576)
@@ -39,7 +39,7 @@ local ram_meter = progressbar {
         stops = {{0, beautiful.cyan}, {1, beautiful.blue}}
     },
     bg_color = beautiful.accent .. "60",
-    watch_command = 'bash -c "free --kilo | grep -z Mem.*Swap.*"',
+    watch_command = 'bash -c "free --kilo"',
     format_info = format_info,
     interval = 5
 }
