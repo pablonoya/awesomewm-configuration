@@ -18,21 +18,21 @@ local styles = {
         bg_color = beautiful.accent,
         fg_color = beautiful.xbackground,
         shape = gshape.circle,
-        markup = function(t)
+        style_markup = function(t)
             return '<b>' .. t .. '</b>'
         end
     },
 
     header = {
-        markup = function(t)
+        style_markup = function(t)
             return '<b>' .. capitalize(t) .. '</b>'
         end
     },
 
     weekday = {
         fg_color = beautiful.accent,
-        markup = function(s)
-            return '<b>' .. s:sub(1, 1):upper() .. "</b>"
+        style_markup = function(t)
+            return '<b>' .. t:sub(1, 2) .. "</b>"
         end
     }
 }
@@ -50,29 +50,27 @@ end
 local button_previous = icon_button("\u{e5cb}")
 local button_next = icon_button("\u{e5cc}")
 local button_today = border_container {
-    widget = clickable_container(
-        {
-            widget = wibox.widget {
-                markup = "today",
-                valign = "center",
-                font = beautiful.font_name .. 11,
-                widget = wibox.widget.textbox
-            },
-            margins = {
-                left = dpi(4),
-                right = dpi(4)
-            },
-            shape = helpers.rrect(beautiful.border_radius / 2)
-        }
-    ),
+    widget = clickable_container {
+        widget = wibox.widget {
+            markup = "today",
+            valign = "center",
+            font = beautiful.font_name .. 11,
+            widget = wibox.widget.textbox
+        },
+        margins = {
+            left = dpi(4),
+            right = dpi(4)
+        },
+        shape = helpers.rrect(beautiful.border_radius / 2)
+    },
     shape = helpers.rrect(beautiful.border_radius / 2)
 }
 
 local function decorate_cell(widget, flag, date)
     local props = styles[flag] or {}
 
-    if props.markup and widget.get_text and widget.set_markup then
-        widget:set_markup(props.markup(widget:get_text()))
+    if props.style_markup and widget.set_markup and widget.text then
+        widget:set_markup(props.style_markup(widget.text))
     end
 
     if flag == "header" then
@@ -86,10 +84,9 @@ local function decorate_cell(widget, flag, date)
             button_today,
             layout = wibox.layout.align.horizontal
         }
-    end
 
-    if flag == "weekday" then
-        return wibox.widget {
+    elseif flag == "weekday" then
+        return {
             {
                 widget,
                 halign = "center",
@@ -101,22 +98,24 @@ local function decorate_cell(widget, flag, date)
             widget = wibox.container.background
         }
 
+    elseif flag == "normal" or flag == "focus" then
+        return {
+            {
+                widget,
+                halign = "center",
+                valign = "center",
+                forced_width = dpi(40),
+                forced_height = dpi(32),
+                widget = wibox.container.place
+            },
+            shape = props.shape,
+            fg = props.fg_color or beautiful.xforeground,
+            bg = props.bg_color or beautiful.black,
+            widget = wibox.container.background
+        }
     end
 
-    return wibox.widget {
-        {
-            widget,
-            halign = "center",
-            valign = "center",
-            forced_width = (flag == "normal" or flag == "focus") and dpi(40) or nil,
-            forced_height = (flag == "normal" or flag == "focus") and dpi(32) or nil,
-            widget = wibox.container.place
-        },
-        shape = props.shape,
-        fg = props.fg_color or beautiful.xforeground,
-        bg = props.bg_color or beautiful.black,
-        widget = wibox.container.background
-    }
+    return widget
 end
 
 local calendar = wibox.widget {
@@ -148,13 +147,9 @@ local function next_month()
     change_date(date)
 end
 
-local function add_action(self, action)
-    self:buttons(gtable.join(awful_button({}, 1, action)))
-end
-
-add_action(button_previous, previous_month)
-add_action(button_next, next_month)
-add_action(
+helpers.add_action(button_previous, previous_month)
+helpers.add_action(button_next, next_month)
+helpers.add_action(
     button_today, function()
         change_date(os.date("*t"))
     end

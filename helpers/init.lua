@@ -98,4 +98,8 @@ function helpers.float_and_resize(c, width, height)
     c:raise()
 end
 
+function helpers.add_action(widget, action)
+    widget:buttons(gears.table.join(awful.button({}, 1, action)))
+end
+
 return helpers
