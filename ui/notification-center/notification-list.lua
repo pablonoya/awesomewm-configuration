@@ -95,6 +95,12 @@ clear_notification = function(notification_widget)
         clear_notifications()
     else
         layout:remove_widgets(notification_widget)
+        for i, notification in ipairs(all_notifications) do
+            if notification_widget == notification then
+                table.remove(all_notifications, i)
+                break
+            end
+        end
     end
 end
 
