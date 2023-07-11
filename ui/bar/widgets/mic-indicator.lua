@@ -5,6 +5,7 @@ local wibox = require("wibox")
 
 local system_controls = require("helpers.system-controls")
 local text_icon = require("ui.widgets.text-icon")
+local helpers = require("helpers")
 
 local icon = text_icon {
     text = "\u{e029}",
@@ -29,7 +30,7 @@ local mic_indicator = wibox.widget {
     widget = wibox.container.margin
 }
 
-mic_indicator:buttons(gears.table.join({awful.button({}, 1, nil, system_controls.mic_toggle)}))
+helpers.add_action(mic_indicator, system_controls.mic_toggle)
 
 local device_name = awful.tooltip {
     objects = {mic_indicator},

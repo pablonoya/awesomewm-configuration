@@ -4,6 +4,8 @@ local gtable = require("gears.table")
 local wibox_container = require("wibox.container")
 local wibox_widget = require("wibox.widget")
 
+local helpers = require("helpers")
+
 local text_icon = require("ui.widgets.text-icon")
 local clickable_container = require("ui.widgets.clickable-container")
 
@@ -20,14 +22,10 @@ local control_center_button = clickable_container {
     }
 }
 
-control_center_button:buttons(
-    gtable.join(
-        awful_button(
-            {}, 1, function(c)
-                awesome.emit_signal("control_center::toggle")
-            end
-        )
-    )
+helpers.add_action(
+    control_center_button, function(c)
+        awesome.emit_signal("control_center::toggle")
+    end
 )
 
 awesome.connect_signal(

@@ -46,8 +46,6 @@ return function(symbol, hover_color, text, command)
 
     }
 
-    button:buttons(gtable.join(awful_button({}, 1, command)))
-
     button:connect_signal(
         "mouse::enter", function()
             icon.markup = helpers.colorize_text(icon.text, beautiful.black)
@@ -71,6 +69,7 @@ return function(symbol, hover_color, text, command)
     )
 
     helpers.add_hover_cursor(button, "hand1")
+    helpers.add_action(button, command)
 
     return button
 end

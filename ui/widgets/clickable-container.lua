@@ -48,7 +48,7 @@ local function clickable_container(args)
     )
 
     if args.action then
-        container:buttons(gtable.join(awful_button({}, 1, args.action)))
+        helpers.add_action(container, args.action)
     end
 
     return container

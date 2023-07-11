@@ -121,15 +121,12 @@ return function(notification)
     )
 
     -- Delete notification
-    dismiss_btn:buttons(
-        gtable.join(
-            awful_button(
-                {}, 1, function()
-                    clear_notification(notifbox)
-                end
-            )
-        )
+    helpers.add_action(
+        dismiss_btn, function()
+            clear_notification(notifbox)
+        end
     )
+
     collectgarbage("collect")
 
     notifbox.creation_time = os.time()
