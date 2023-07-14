@@ -37,13 +37,12 @@ local system_popup = awful.popup {
             margins = dpi(16),
             widget = wibox.container.margin
         },
-        bg = beautiful.black,
+        bg = beautiful.popup_bg,
         border_width = dpi(2),
         border_color = beautiful.focus,
         shape = helpers.rrect(beautiful.popup_border_radius),
         widget = wibox.container.background
     },
-    -- minimum_height = beautiful.popup_size - dpi(12),
     minimum_width = beautiful.popup_size - dpi(32),
     maximum_height = beautiful.popup_size,
     maximum_width = beautiful.popup_size,

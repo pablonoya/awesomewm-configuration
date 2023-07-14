@@ -173,9 +173,10 @@ theme.wibar_shape = helpers.rrect(theme.client_border_radius)
 
 -- Pop up notifications
 theme.popup_size = dpi(188)
-theme.pop_bg = theme.xbackground
-theme.pop_volume_color = theme.accent
-theme.pop_brightness_color = theme.venus
+theme.popup_bg = theme.black
+theme.popup_volume_color = theme.accent
+theme.popup_brightness_color = theme.moon
+theme.popup_mic_color = theme.green
 theme.popup_border_radius = theme.border_radius
 
 -- Layout list popup

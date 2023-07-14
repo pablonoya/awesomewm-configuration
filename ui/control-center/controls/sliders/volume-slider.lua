@@ -4,6 +4,7 @@ local gears_string = require("gears.string")
 local wibox = require("wibox")
 
 local system_controls = require("helpers.system-controls")
+local ui_helpers = require("helpers.ui-helpers")
 
 local slider = require("ui.widgets.slider")
 local text_icon = require("ui.widgets.text-icon")
@@ -20,14 +21,6 @@ local vol_value = value_text {
     text = "0%"
 }
 
-local function get_volume_icon(value)
-    if value > 5 and value <= 50 then
-        return "\u{e04d}"
-    elseif value > 50 then
-        return "\u{e050}"
-    end
-    return "\u{e04e}"
-end
 local volume_device_name = wibox.widget {
     text = "",
     font = beautiful.font_name .. " Medium 10",
@@ -61,7 +54,7 @@ local function set_muted_style(muted)
         volume_slider.bar_active_color = beautiful.accent .. '60'
         volume_slider.handle_color = beautiful.focus
     else
-        volume_icon.text = get_volume_icon(volume_slider:get_value())
+        volume_icon.text = ui_helpers.get_volume_icon(volume_slider:get_value())
         volume_slider.bar_active_color = beautiful.accent
         volume_slider.handle_color = beautiful.accent
     end
@@ -91,7 +84,7 @@ awesome.connect_signal(
 
 volume_slider:connect_signal(
     "property::value", function(_, new_value)
-        volume_icon.text = get_volume_icon(new_value)
+        volume_icon.text = ui_helpers.get_volume_icon(new_value)
         vol_value.text = new_value .. "%"
         spawn("pamixer --set-volume " .. tostring(new_value))
     end

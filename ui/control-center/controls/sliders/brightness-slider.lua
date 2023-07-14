@@ -2,6 +2,8 @@ local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 
+local ui_helpers = require("helpers.ui-helpers")
+
 local slider = require("ui.widgets.slider")
 local text_icon = require("ui.widgets.text-icon")
 
@@ -22,24 +24,13 @@ local brightness_slider = slider {
     handle_color = beautiful.yellow
 }
 
-local function get_icon(value)
-    if value > 25 and value <= 50 then
-        return "\u{e1ae}"
-    elseif value > 50 and value <= 75 then
-        return "\u{e3a9}"
-    elseif value > 75 then
-        return "\u{e1ac}"
-    end
-    return "\u{e1ad}"
-end
-
 brightness_slider:connect_signal(
     "property::value", function()
         local value = brightness_slider:get_value()
 
         spawn("brightnessctl s -q " .. value .. "%", false)
         value_text.text = value .. '%'
-        icon.text = get_icon(value)
+        icon.text = ui_helpers.get_brightness_icon(value)
     end
 )
 
@@ -57,7 +48,7 @@ local function action_jump()
         new_value = 100
     end
 
-    icon.text = get_icon(new_value)
+    icon.text = ui_helpers.get_brightness_icon(new_value)
     brightness_slider:set_value(new_value)
 end
 
