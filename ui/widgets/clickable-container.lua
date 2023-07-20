@@ -18,6 +18,8 @@ local function clickable_container(args)
         bg = args.bg or beautiful.transparent,
         fg = args.fg,
         shape = args.shape or gshape.rounded_rect,
+        border_color = args.border_color,
+        border_width = args.border_width,
         widget = wibox_container.background
     }
     container.focused = false

@@ -1,22 +1,28 @@
 local button = require("awful.button")
 local beautiful = require("beautiful")
 local gtable = require("gears.table")
+local gcolor = require("gears.color")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
 
+local clickable_container = require("ui.widgets.clickable-container")
+local text_icon = require("ui.widgets.text-icon")
+
 local function toggle_button(icon, name, bg_color, onclick, signal, signal_label)
+    local hover_bg = gcolor.change_opacity(bg_color, 0.4)
+    local button_bg
+    local button_fg
+
     local action = wibox.widget {
         text = name,
         font = beautiful.font_name .. " Bold 10",
-        align = "left",
         widget = wibox.widget.textbox
     }
 
-    local icon = wibox.widget {
+    local icon = text_icon {
         markup = icon,
-        font = beautiful.icon_font,
-        widget = wibox.widget.textbox
+        size = 16
     }
 
     local filled_button = wibox.widget {
@@ -42,11 +48,16 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
         if state then
             filled_button.bg = bg_color
             filled_button.fg = beautiful.xbackground
+            hover_bg = gcolor.change_opacity(bg_color, 0.8)
         else
             filled_button.bg = beautiful.control_center_button_bg
             filled_button.fg = beautiful.xforeground
             action.text = name
+            hover_bg = gcolor.change_opacity(bg_color, 0.4)
         end
+
+        button_bg = filled_button.bg
+        button_fg = filled_button.fg
     end
 
     signal(toggle)
@@ -58,6 +69,19 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
             end
         )
     end
+
+    filled_button:connect_signal(
+        "mouse::enter", function()
+            filled_button.bg = hover_bg
+        end
+    )
+
+    filled_button:connect_signal(
+        "mouse::leave", function()
+            filled_button.bg = button_bg
+            filled_button.fg = button_fg
+        end
+    )
 
     return filled_button
 end
