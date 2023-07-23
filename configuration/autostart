@@ -17,6 +17,7 @@ start nm-applet
 start blueman-applet
 start /usr/bin/diodon
 start ulauncher --hide-window
+start fusuma -d
 
 # pause mpv if there are open windows
 start $HOME/.config/awesome/configuration/pause_videowallpaper
