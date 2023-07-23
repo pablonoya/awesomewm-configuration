@@ -10,66 +10,98 @@ local text_icon = require("ui.widgets.text-icon")
 local button_size = dpi(120)
 local button_bg = beautiful.xbackground
 
-return function(symbol, hover_color, text, command)
+local text_fg = beautiful.xforeground .. "C0"
+local key_icon_bg = button_bg .. "D0"
+local label_font = beautiful.font_name .. " 20"
+
+return function(symbol, hover_color, key, text, command)
     local icon = text_icon {
         markup = helpers.colorize_text(symbol, hover_color),
         size = 32,
         widget = wibox.widget.textbox
     }
 
-    local button = wibox.widget {
+    local key_icon = wibox.widget {
         {
-            {
-                icon,
-                layout = wibox.container.place
-            },
-            id = "container",
-            forced_height = button_size,
-            forced_width = button_size,
-            shape = gshape.circle,
-            bg = beautiful.xbackground,
-            border_width = beautiful.widget_border_width,
-            border_color = beautiful.focus,
-            widget = wibox.container.background
-        },
-        {
-            id = "label",
-            markup = helpers.colorize_text(text, beautiful.xforeground .. 75),
-            font = beautiful.font_name .. " 20",
-            forced_width = button_size,
+            markup = key,
+            font = label_font,
             align = "center",
             widget = wibox.widget.textbox
         },
-        spacing = dpi(8),
-        layout = wibox.layout.align.vertical,
+        border_color = beautiful.xforeground .. 70,
+        border_width = dpi(1),
+        forced_width = dpi(32),
+        fg = text_fg,
+        bg = key_icon_bg,
+        shape = helpers.rrect(beautiful.border_radius // 4),
         widget = wibox.container.background
-
     }
 
-    button:connect_signal(
+    local label = wibox.widget {
+        markup = helpers.colorize_text(text, text_fg),
+        font = label_font,
+        widget = wibox.widget.textbox
+    }
+
+    local button_label = wibox.widget {
+        {
+            key_icon,
+            label,
+            spacing = dpi(2),
+            layout = wibox.layout.fixed.horizontal,
+            widget = wibox.container.background
+        },
+        widget = wibox.container.place
+    }
+
+    local button = wibox.widget {
+        {
+            icon,
+            layout = wibox.container.place
+        },
+        forced_height = button_size,
+        forced_width = button_size,
+        shape = gshape.circle,
+        bg = button_bg,
+        border_width = beautiful.widget_border_width,
+        border_color = hover_color,
+        widget = wibox.container.background
+    }
+
+    local labeled_button = wibox.widget {
+        button,
+        button_label,
+        spacing = dpi(12),
+        layout = wibox.layout.fixed.vertical,
+        widget = wibox.container.background
+    }
+
+    labeled_button:connect_signal(
         "mouse::enter", function()
             icon.markup = helpers.colorize_text(icon.text, beautiful.black)
-            button.label.markup = helpers.colorize_text(text, hover_color)
-            button.container.bg = hover_color
+            button.bg = hover_color
+
+            key_icon.fg = hover_color
+            key_icon.border_color = hover_color
+
+            label.markup = helpers.colorize_text(label.text, hover_color)
         end
     )
 
-    button:connect_signal(
+    labeled_button:connect_signal(
         "mouse::leave", function()
             icon.markup = helpers.colorize_text(icon.text, hover_color)
-            button.label.markup = helpers.colorize_text(text, beautiful.xforeground .. 75)
-            button.container.bg = beautiful.xbackground
+            button.bg = button_bg
+
+            key_icon.fg = text_fg
+            key_icon.border_color = text_fg
+
+            label.markup = helpers.colorize_text(label.text, text_fg)
         end
     )
 
-    button:connect_signal(
-        "button::press", function()
-            button.container.bg = hover_color
-        end
-    )
+    helpers.add_hover_cursor(labeled_button, "hand1")
+    helpers.add_action(labeled_button, command)
 
-    helpers.add_hover_cursor(button, "hand1")
-    helpers.add_action(button, command)
-
-    return button
+    return labeled_button
 end

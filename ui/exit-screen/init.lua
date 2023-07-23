@@ -41,11 +41,11 @@ local lock_command = function()
 end
 
 -- Create the buttons
-local poweroff = create_button("", beautiful.red, "Poweroff", poweroff_command)
-local reboot = create_button("", beautiful.yellow, "Reboot", reboot_command)
-local suspend = create_button("\u{ef44}", beautiful.magenta, "Suspend", suspend_command)
-local exit = create_button("", beautiful.blue, "Logout", exit_command)
-local lock = create_button("", beautiful.green, "Lock", lock_command)
+local poweroff = create_button("\u{e8ac}", beautiful.red, "P", "oweroff", poweroff_command)
+local reboot = create_button("\u{f053}", beautiful.yellow, "R", "eboot", reboot_command)
+local suspend = create_button("\u{ef44}", beautiful.magenta, "S", "uspend", suspend_command)
+local lock = create_button("\u{e897}", beautiful.green, "L", "ock", lock_command)
+local exit = create_button("\u{e9ba}", beautiful.blue, "E", "xit", exit_commandd)
 
 local create_exit_screen = function(s)
     s.exit_screen = wibox {
@@ -61,21 +61,34 @@ local create_exit_screen = function(s)
 
     s.exit_screen:setup{
         {
-            poweroff,
-            reboot,
-            suspend,
-            exit,
-            lock,
-            spacing = dpi(44),
-            layout = wibox.layout.fixed.horizontal
+            {
+                poweroff,
+                reboot,
+                suspend,
+                lock,
+                exit,
+                spacing = dpi(44),
+                layout = wibox.layout.fixed.horizontal
+            },
+            {
+                {
+                    markup = "Press any of the listed keys to perform an action",
+                    font = beautiful.font_name .. " 13",
+                    halign = "center",
+                    widget = wibox.widget.textbox
+                },
+                fg = beautiful.xforeground .. "A0",
+                widget = wibox.container.background
+            },
+            spacing = dpi(16),
+            layout = wibox.layout.fixed.vertical
         },
         widget = wibox.container.place
     }
 
     s.exit_screen:buttons(
         gtable.join(
-            awful.button({}, 2, hide_exit_screen),
-            awful.button({}, 3, hide_exit_screen)
+            awful.button({}, 2, hide_exit_screen), awful.button({}, 3, hide_exit_screen)
         )
     )
 end
