@@ -77,7 +77,7 @@ mv awesomewm-configuration $HOME/.config/awesome
 ### 🖼 Gallery
 ---
 #### Notification Center + Calendar  
-![notif_center+calendar](https://user-images.githubusercontent.com/31524852/232395473-3699e4e0-58a9-41d6-a5a6-305284188977.png)
+![notif_center+calendar](https://github.com/pablonoya/awesomewm-configuration/assets/31524852/381a3fdd-7b64-4060-ac13-ac07e8f864e1)
 
 #### Control center
 |Controls|Monitors|
@@ -109,7 +109,7 @@ With [Bling](https://github.com/BlingCorp/bling) previews!
 ![keyboard_shortcuts](https://user-images.githubusercontent.com/31524852/232522652-dad0f836-6ea0-4d73-aa56-5ea85f241925.png)
 
 #### Exit screen
-![image](https://user-images.githubusercontent.com/31524852/235562950-17883931-ef68-4591-a528-f3675e054d2b.png)
+![exit_screen](https://github.com/pablonoya/awesomewm-configuration/assets/31524852/d6b8bfe4-8677-4487-9f8c-cfcea42b61b1)
 
 
 ### 🤍 Acknowledgments
