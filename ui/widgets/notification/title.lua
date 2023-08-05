@@ -1,4 +1,5 @@
 local beautiful = require("beautiful")
+local gstring = require("gears.string")
 local naughty_widget = require("naughty.widget")
 local wibox_container = require("wibox.container")
 local wibox_widget = require("wibox.widget")
@@ -8,7 +9,9 @@ local function notif_title(args)
 
     return wibox_widget {
         {
-            markup = "<b>" .. args.title .. "</b>" .. (has_app_name and " • " .. args.app_name or ""),
+            markup = "<b>" .. gstring.xml_escape(args.title) .. "</b>" .. (
+                has_app_name and " • " .. args.app_name or ""
+            ),
             font = beautiful.font_name .. (args.size or " 11"),
             align = "left",
             valign = "center",

@@ -27,9 +27,9 @@ end
 return function(notification)
     local time_of_pop = os.date("%H:%M:%S")
     local exact_time = os.date("%I:%M %p")
+    local exact_date = os.date("%d.%m.%y")
 
     local timepop = wibox_widget {
-        id = "timepop",
         markup = "now",
         font = beautiful.font_name .. "10",
         halign = "right",
@@ -41,8 +41,9 @@ return function(notification)
         call_now = true,
         autostart = true,
         callback = function()
-            local time_difference = time_in_seconds(os.date("%H:%M:%S")) - time_in_seconds(time_of_pop)
-
+            local time_difference = (
+                time_in_seconds(os.date("%H:%M:%S")) - time_in_seconds(time_of_pop)
+            )
             if time_difference >= 60 and time_difference < 3600 then
                 local time_in_minutes = math.floor(time_difference / 60)
                 timepop:set_markup(time_in_minutes .. "m ago")
@@ -51,7 +52,7 @@ return function(notification)
                 timepop:set_markup(exact_time)
 
             elseif time_difference >= 86400 then
-                timepop:set_markup(exact_date_time)
+                timepop:set_markup(exact_date)
                 return false
             end
         end
@@ -74,12 +75,12 @@ return function(notification)
                         title {
                             title = notification.title,
                             app_name = notification.app_name,
-                            forced_width = dpi(172)
+                            forced_width = dpi(170)
                         },
                         {
                             timepop,
                             dismiss_btn,
-                            forced_width = dpi(60),
+                            forced_width = dpi(64),
                             layout = wibox_layout.stack
                         },
                         spacing = dpi(8),
