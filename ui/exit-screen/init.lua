@@ -45,7 +45,7 @@ local poweroff = create_button("\u{e8ac}", beautiful.red, "P", "oweroff", powero
 local reboot = create_button("\u{f053}", beautiful.yellow, "R", "eboot", reboot_command)
 local suspend = create_button("\u{ef44}", beautiful.magenta, "S", "uspend", suspend_command)
 local lock = create_button("\u{e897}", beautiful.green, "L", "ock", lock_command)
-local exit = create_button("\u{e9ba}", beautiful.blue, "E", "xit", exit_commandd)
+local exit = create_button("\u{e9ba}", beautiful.blue, "E", "xit", exit_command)
 
 local create_exit_screen = function(s)
     s.exit_screen = wibox {
