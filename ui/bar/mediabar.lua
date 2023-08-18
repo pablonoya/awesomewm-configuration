@@ -15,10 +15,13 @@ local media_play = media_controls.play(19)
 local media_next = media_controls.next()
 
 local media_controls = wibox.widget {
-    media_prev,
-    media_play,
-    media_next,
-    layout = wibox.layout.fixed.horizontal
+    {
+        media_prev,
+        media_play,
+        media_next,
+        layout = wibox.layout.fixed.horizontal
+    },
+    widget = wibox.container.background
 }
 
 local cover = wibox.widget {
@@ -99,6 +102,17 @@ return function(screen_width, is_vertical)
     playerctl:connect_signal(
         "no_players", function(_)
             progress_container.visible = false
+        end
+    )
+
+    awesome.connect_signal(
+        "media::dominantcolors", function(stdout)
+            local colors = {}
+            for color in stdout:gmatch("[^\n]+") do
+                table.insert(colors, color)
+            end
+            progress_container.color = colors[3]
+            media_controls.fg = colors[3]
         end
     )
 

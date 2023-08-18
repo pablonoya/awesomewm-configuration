@@ -163,4 +163,24 @@ playerctl:connect_signal(
     end
 )
 
+awesome.connect_signal(
+    "media::dominantcolors", function(stdout)
+        local colors = {}
+
+        for color in stdout:gmatch("[^\n]+") do
+            table.insert(colors, color)
+        end
+
+        -- darkening the bg color to match the dark theming
+        media_controls_popup.widget.bg = colors[1] .. "D0"
+        media_controls_popup.border_color = colors[1]
+
+        media_controls_popup.fg = colors[2]
+
+        progress.bar_color = colors[2] .. "70"
+        progress.bar_active_color = colors[2]
+        progress.handle_color = colors[2]
+    end
+)
+
 return media_controls_popup
