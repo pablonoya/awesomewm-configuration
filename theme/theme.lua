@@ -292,4 +292,7 @@ theme.window_switcher_icon_width = dpi(28)
 theme.video_wallpaper_path = HOME .. "/Vídeos/aniwalls/violet-afternoon-w.mp4"
 theme.video_wallpaper_vertical_path = HOME .. "/Vídeos/aniwalls/violet-afternoon-v.mp4"
 
+-- Dominantcolors script path
+theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
+
 return theme

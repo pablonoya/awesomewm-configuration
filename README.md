@@ -4,7 +4,8 @@
 
 My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
 
-![full_screenshot](https://user-images.githubusercontent.com/31524852/232510330-a812c5d7-f5e5-4aa3-a7d5-deb58a684390.png)
+![full_screenshot](https://github.com/pablonoya/awesomewm-configuration/assets/31524852/d151f061-00c6-4304-9fe4-ae33a6eb2285)
+
 
 
 ### ℹ️ Details
@@ -51,7 +52,8 @@ brightnessctl redshift-minimal \
 bluez-utils networkmanager polkit-gnome xdotool \
 mpv xwinwrap-git lxappearance-gtk3 qt5ct-kde \
 blueman network-manager-applet flameshot diodon ulauncher pavucontrol \
-asusctl rog-control-center --needed
+asusctl rog-control-center
+python-pipx --needed
 ```
 </details>
 
@@ -63,6 +65,11 @@ git clone --recurse-submodules https://github.com/pablonoya/awesomewm-configurat
 To obtain the colors, copy or replace my [Xresources file](https://github.com/pablonoya/dotfiles/blob/main/Xresources) to
 ```sh
 $HOME/.Xresources
+```
+
+Install my [dominantcolors script](https://github.com/pablonoya/dominantcolors) with pipx
+```
+pipx install git+https://github.com/pablonoya/dominantcolors.git
 ```
 
 <details>
@@ -85,8 +92,13 @@ mv awesomewm-configuration $HOME/.config/awesome
 |:-:|:-:|
 |![control_center_controls](https://user-images.githubusercontent.com/31524852/232521407-83232103-e1d9-40d7-a2cd-07cf5ddcecd2.png)|![control_center_monitors](https://user-images.githubusercontent.com/31524852/232395856-87c766c4-1058-408c-84f6-e481d9f649cd.png)    |
 
-#### Media controls in top bar
-![media_in_bar](https://user-images.githubusercontent.com/31524852/232518944-3f5087f9-40a2-48a5-9b81-c66e2537b1b3.png)
+#### Media controls with dominant colors in top bar and control center
+(Requires my [dominantcolors script](https://github.com/pablonoya/dominantcolors))
+
+![media_in_bar](https://github.com/pablonoya/awesomewm-configuration/assets/31524852/e623bbc5-a7fd-4431-a758-08b10e3b8bad)
+
+![media_in_control_center](https://github.com/pablonoya/awesomewm-configuration/assets/31524852/4fde20fb-ee94-4bfd-b163-ca6590204d74)
+
 
 #### Combined taglist + tasklist
 ![taglist](https://user-images.githubusercontent.com/31524852/232517286-68d3a288-2f5d-4302-bfdb-663334f63f8a.png)

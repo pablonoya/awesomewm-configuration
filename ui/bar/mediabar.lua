@@ -1,118 +1,85 @@
 local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 local gsurface = require("gears.surface")
-local wibox_container = require("wibox.container")
-local wibox_layout = require("wibox.layout")
-local wibox_widget = require("wibox.widget")
+local wibox = require("wibox")
 
 local helpers = require("helpers")
 local playerctl = require("signals.playerctl")
-local clickable_container = require("ui.widgets.clickable-container")
+
+local media_controls = require("ui.widgets.media.media-controls")
+local scrolling_text = require("ui.widgets.scrolling-text")
 local text_icon = require("ui.widgets.text-icon")
 
-local create_media_button = function(symbol, command, size)
-    local button = clickable_container {
-        widget = {
-            id = "icon",
-            text = symbol,
-            font = beautiful.icon_font_name .. " " .. (size or 14),
-            ellipsize = "none",
-            widget = wibox_widget.textbox
+local media_prev = media_controls.prev()
+local media_play = media_controls.play(19)
+local media_next = media_controls.next()
 
-        },
-        shape = gshape.circle,
-        margins = dpi(1),
-        action = command
-    }
+local media_controls = wibox.widget {
+    {
+        media_prev,
+        media_play,
+        media_next,
+        layout = wibox.layout.fixed.horizontal
+    },
+    widget = wibox.container.background
+}
 
-    return button
-end
-
-local media_play_command = function()
-    playerctl:play_pause()
-end
-local media_prev_command = function()
-    playerctl:previous()
-end
-local media_next_command = function()
-    playerctl:next()
-end
-
-local media_play = create_media_button("", media_play_command, 19)
-local media_prev = create_media_button("", media_prev_command)
-local media_next = create_media_button("", media_next_command)
-
-playerctl:connect_signal(
-    "playback_status", function(_, playing, player)
-        if playing then
-            media_play.widget.icon:set_markup_silently("")
-        else
-            media_play.widget.icon:set_markup_silently("")
-        end
-    end
-)
-
-local cover = wibox_widget {
+local cover = wibox.widget {
     {
         id = "img",
         resize = true,
-        widget = wibox_widget.imagebox
+        widget = wibox.widget.imagebox
     },
     shape = helpers.rrect(4),
-    widget = wibox_container.background
+    widget = wibox.container.background
 }
 
 return function(screen_width, is_vertical)
-    local music_text = wibox_widget {
-        {
-            id = "text",
-            font = "Roboto 11",
-            valign = "center",
-            widget = wibox_widget.textbox
-        },
+    local media_info = scrolling_text {
+        font = "Roboto 11",
         fps = 4,
-        speed = 16,
         extra_space = 16,
-        expand = true,
-        max_size = screen_width / (is_vertical and 24 or 10),
-        widget = wibox_container.scroll.horizontal
+        max_size = screen_width / (is_vertical and 24 or 10)
     }
 
-    local media = wibox_widget {
+    local player_interface
+    if is_vertical then
+        player_interface = wibox.widget {
+            media_info,
+            media_controls,
+            spacing = dpi(2),
+            layout = wibox.layout.fixed.vertical
+        }
+    else
+        player_interface = wibox.widget {
+            media_controls,
+            media_info,
+            spacing = dpi(4),
+            layout = wibox.layout.fixed.horizontal
+        }
+    end
+
+    local media = wibox.widget {
+        player_interface,
         cover,
-        {
-            music_text,
-            {
-                media_prev,
-                media_play,
-                media_next,
-                {
-                    forced_width = dpi(0.5),
-                    widget = wibox_container.margin
-                },
-                layout = wibox_layout.fixed.horizontal
-            },
-            spacing = is_vertical and dpi(2) or dpi(8),
-            layout = is_vertical and wibox_layout.fixed.vertical or wibox_layout.fixed.horizontal
-        },
         spacing = dpi(8),
-        layout = wibox_layout.fixed.horizontal,
-        widget = wibox_container.background
+        layout = wibox.layout.fixed.horizontal,
+        widget = wibox.container.background
     }
 
-    local progress_container = wibox_widget {
+    local progress_container = wibox.widget {
         {
             media,
-            left = dpi(12),
-            right = dpi(4),
-            widget = wibox_container.margin
+            left = dpi(4),
+            right = dpi(12),
+            widget = wibox.container.margin
         },
         visible = false,
         value = 0.1,
         border_width = dpi(1.6),
         color = beautiful.accent,
         border_color = beautiful.focus,
-        widget = wibox_container.radialprogressbar
+        widget = wibox.container.radialprogressbar
     }
 
     playerctl:connect_signal(
@@ -126,7 +93,7 @@ return function(screen_width, is_vertical)
             progress_container.visible = (title ~= "")
 
             cover.img:set_image(gsurface.load_uncached(album_path))
-            music_text.text:set_markup_silently(
+            media_info.text:set_markup_silently(
                 title .. helpers.colorize_text(" • ", beautiful.xforeground .. 'B0') .. artist
             )
         end
@@ -138,11 +105,22 @@ return function(screen_width, is_vertical)
         end
     )
 
+    awesome.connect_signal(
+        "media::dominantcolors", function(stdout)
+            local colors = {}
+            for color in stdout:gmatch("[^\n]+") do
+                table.insert(colors, color)
+            end
+            progress_container.color = colors[3]
+            media_controls.fg = colors[3]
+        end
+    )
+
     local mediabar = {
         progress_container,
         left = dpi(4),
         right = dpi(4),
-        widget = wibox_container.margin
+        widget = wibox.container.margin
     }
 
     return mediabar
