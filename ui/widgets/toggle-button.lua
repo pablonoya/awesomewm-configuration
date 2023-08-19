@@ -10,9 +10,9 @@ local clickable_container = require("ui.widgets.clickable-container")
 local text_icon = require("ui.widgets.text-icon")
 
 local function toggle_button(icon, name, bg_color, onclick, signal, signal_label)
+    local button_fg = beautiful.xforeground
+    local button_bg = beautiful.control_center_button_bg
     local hover_bg = gcolor.change_opacity(bg_color, 0.4)
-    local button_bg
-    local button_fg
 
     local action = wibox.widget {
         text = name,
