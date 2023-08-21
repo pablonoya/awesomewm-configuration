@@ -99,6 +99,7 @@ function helpers.float_and_resize(c, width, height)
 end
 
 function helpers.add_action(widget, action)
+    helpers.add_hover_cursor(widget)
     widget:buttons(gears.table.join(awful.button({}, 1, action)))
 end
 

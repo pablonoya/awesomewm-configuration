@@ -100,7 +100,6 @@ return function(symbol, hover_color, key, text, command)
         end
     )
 
-    helpers.add_hover_cursor(labeled_button, "hand1")
     helpers.add_action(labeled_button, command)
 
     return labeled_button

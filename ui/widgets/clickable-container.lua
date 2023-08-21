@@ -24,8 +24,6 @@ local function clickable_container(args)
     }
     container.focused = false
 
-    helpers.add_hover_cursor(container, "hand2")
-
     -- Hover bg and fg change
     local last_bg
     local last_fg

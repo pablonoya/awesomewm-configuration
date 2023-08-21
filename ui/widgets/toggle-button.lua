@@ -41,7 +41,6 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
         widget = wibox.container.background
     }
 
-    helpers.add_hover_cursor(filled_button)
     helpers.add_action(filled_button, onclick)
 
     local toggle = function(state)
