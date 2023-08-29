@@ -13,6 +13,7 @@ local is_charging = false
 local last_value = 50
 local low_value = 20
 local critical_value = 15
+
 local percentage = wibox.widget {
     font = beautiful.font_name .. "Bold 12",
     halign = "center",
@@ -32,7 +33,7 @@ local battery_bar = wibox.widget {
     max_value = 100,
     value = last_value,
     paddings = 2.6,
-    forced_width = dpi(28),
+    forced_width = dpi(32),
     forced_height = dpi(23),
     color = beautiful.green,
     background_color = beautiful.green .. '10',
