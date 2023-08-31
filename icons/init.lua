@@ -5,5 +5,6 @@ return {
     notification = dir .. "notification.svg",
     notification_bell = dir .. "notification_bell.svg",
     ram = dir .. "ram.svg",
-    cpu = dir .. "cpu.svg"
+    cpu = dir .. "cpu.svg",
+    window = dir .. "window.svg",
 }

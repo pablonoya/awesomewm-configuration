@@ -1,12 +1,20 @@
 local awful_placement = require("awful.placement")
 local beautiful = require("beautiful")
 local gsurface = require("gears.surface")
+local gcolor = require("gears.color")
 local menubar_utils = require("menubar.utils")
+local icons = require("icons")
 
 local function get_icon(client)
     local class, _ = client.instance:gsub(" ", "-")
     local icon_path = menubar_utils.lookup_icon(class)
-    return icon_path
+
+    -- try using the client class
+    if not icon_path then
+        icon_path = menubar_utils.lookup_icon(client.class:gsub(" ", "-"))
+    end
+
+    return icon_path or gcolor.recolor_image(icons.window, beautiful.xforeground)
 end
 
 client.connect_signal(
