@@ -37,29 +37,15 @@ ruled.client.connect_signal(
             callback = awful.client.setslave
         }
 
-        -- Titlebar rules
-        ruled.client.append_rule {
-            id = "titlebars",
-            rule_any = {
-                class = {"discord", "Spotify", "Org.gnome.Nautilus"},
-                type = {"splash"},
-                name = {
-                    "^discord.com is sharing your screen.$" -- Discord (running in browser) screen sharing popup
-                }
-            },
-            properties = {
-                titlebars_enabled = false
-            }
-        }
-
         -- Float
         ruled.client.append_rule {
             id = "floating",
             rule_any = {
                 class = {
-                    "Lxappearance", "Nm-connection-editor", "slack", "Slack", "discord", "ulauncher", "Ulauncher",
-                    "telegram-desktop", "TelegramDesktop", "blueman-manager", "Blueman-manager", "pavucontrol",
-                    "Pavucontrol"
+                    "Lxappearance", "Nm-connection-editor", "slack", "Slack", "discord",
+                    "ulauncher", "Ulauncher", "telegram-desktop", "TelegramDesktop",
+                    "blueman-manager", "Blueman-manager", "pavucontrol", "Pavucontrol",
+                    "youtube music", "YouTube Music"
                 },
                 name = {
                     -- xev
