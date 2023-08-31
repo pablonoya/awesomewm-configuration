@@ -1,12 +1,17 @@
 local awful_popup = require("awful.popup")
 local beautiful = require("beautiful")
+local gcolor = require("gears.color")
 local gsurface = require("gears.surface")
 local gstring = require("gears.string")
+local gshape = require("gears.shape")
+local menubar_utils = require("menubar.utils")
+local notification = require("naughty.notification")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
 local playerctl = require("signals.playerctl")
 
+local media_icons = require("icons.media")
 local media_controls = require("ui.widgets.media.media-controls")
 local scrolling_text = require("ui.widgets.scrolling-text")
 local slider = require("ui.widgets.slider")
@@ -48,7 +53,7 @@ local media_info = wibox.widget {
 
 local progress = slider {
     max = 1,
-    bar_bg_color = beautiful.accent .. '70',
+    bar_bg_color = beautiful.accent .. "70",
     bar_color = beautiful.accent,
     handle_width = dpi(12),
     handle_color = beautiful.accent,
@@ -96,14 +101,40 @@ playerctl:connect_signal(
     end
 )
 
-local cover = wibox.widget {
+local media_image = wibox.widget {
     {
         id = "img",
-        resize = true,
         widget = wibox.widget.imagebox
     },
     shape = helpers.rrect(8),
     widget = wibox.container.background
+}
+
+local player_icon = wibox.widget {
+    {
+        id = "img",
+        widget = wibox.widget.imagebox
+    },
+    forced_width = dpi(24),
+    forced_height = dpi(24),
+    shape = gshape.circle,
+    bg = beautiful.xbackground,
+    widget = wibox.container.background
+}
+
+local cover = wibox.widget {
+    {
+        media_image,
+        widget = wibox.container.place
+    },
+    {
+        player_icon,
+        valign = "bottom",
+        halign = "right",
+        widget = wibox.container.place
+    },
+    horizontal_offset = dpi(8),
+    layout = wibox.layout.stack
 }
 
 local body_container = {
@@ -119,12 +150,11 @@ local body_container = {
                     layout = wibox.layout.flex.horizontal
                 },
                 spacing = dpi(8),
-                forced_width = dpi(204),
+                forced_width = dpi(200),
                 layout = wibox.layout.fixed.vertical
             },
             {
                 cover,
-                forced_width = dpi(120),
                 widget = wibox.container.place
             },
             spacing = dpi(16),
@@ -151,9 +181,10 @@ local media_controls_popup = awful_popup {
 
 playerctl:connect_signal(
     "metadata", function(_, title, artist, album_path)
-        cover.img:set_image(gsurface.load_uncached(album_path))
         media_title.text.text = gstring.xml_unescape(title)
         artist_name.text.text = gstring.xml_unescape(artist)
+
+        media_image.img:set_image(gsurface.load(album_path))
     end
 )
 
@@ -171,15 +202,22 @@ awesome.connect_signal(
             table.insert(colors, color)
         end
 
+        local bg_color, fg_color = table.unpack(colors)
+
         -- darkening the bg color to match the dark theming
-        media_controls_popup.widget.bg = colors[1] .. "D0"
-        media_controls_popup.border_color = colors[1]
+        media_controls_popup.widget.bg = bg_color .. "D0"
+        media_controls_popup.border_color = bg_color
+        media_controls_popup.fg = fg_color
 
-        media_controls_popup.fg = colors[2]
+        progress.bar_color = fg_color .. "70"
+        progress.bar_active_color = fg_color
+        progress.handle_color = fg_color
 
-        progress.bar_color = colors[2] .. "70"
-        progress.bar_active_color = colors[2]
-        progress.handle_color = colors[2]
+        player_icon.bg = bg_color
+        player_icon.img.image = gcolor.recolor_image(
+            media_icons[playerctl:get_active_player().player_name] or media_icons.music_note,
+            fg_color
+        )
     end
 )
 

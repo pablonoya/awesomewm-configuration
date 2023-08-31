@@ -1,4 +1,5 @@
 local beautiful = require("beautiful")
+local gcolor = require("gears.color")
 local gshape = require("gears.shape")
 local gsurface = require("gears.surface")
 local wibox = require("wibox")
@@ -10,10 +11,13 @@ local media_controls = require("ui.widgets.media.media-controls")
 local scrolling_text = require("ui.widgets.scrolling-text")
 local text_icon = require("ui.widgets.text-icon")
 
+local media_icons = require("icons.media")
+
 local media_prev = media_controls.prev()
 local media_play = media_controls.play(19)
 local media_next = media_controls.next()
 
+local text_separator = helpers.colorize_text(" • ", beautiful.xforeground .. "B0")
 local media_controls = wibox.widget {
     {
         media_prev,
@@ -31,6 +35,19 @@ local cover = wibox.widget {
         widget = wibox.widget.imagebox
     },
     shape = helpers.rrect(4),
+    widget = wibox.container.background
+}
+
+local player_icon = wibox.widget {
+    {
+        id = "img",
+        valign = "center",
+        widget = wibox.widget.imagebox
+    },
+    forced_width = dpi(20),
+    forced_height = dpi(20),
+    shape = gshape.circle,
+    bg = beautiful.xbackground,
     widget = wibox.container.background
 }
 
@@ -61,7 +78,12 @@ return function(screen_width, is_vertical)
 
     local media = wibox.widget {
         player_interface,
-        cover,
+        {
+            cover,
+            player_icon,
+            spacing = dpi(-2),
+            layout = wibox.layout.fixed.horizontal
+        },
         spacing = dpi(8),
         layout = wibox.layout.fixed.horizontal,
         widget = wibox.container.background
@@ -71,7 +93,7 @@ return function(screen_width, is_vertical)
         {
             media,
             left = dpi(4),
-            right = dpi(12),
+            right = dpi(4),
             widget = wibox.container.margin
         },
         visible = false,
@@ -91,10 +113,10 @@ return function(screen_width, is_vertical)
     playerctl:connect_signal(
         "metadata", function(_, title, artist, album_path)
             progress_container.visible = (title ~= "")
-
             cover.img:set_image(gsurface.load_uncached(album_path))
+
             media_info.text:set_markup_silently(
-                title .. helpers.colorize_text(" • ", beautiful.xforeground .. 'B0') .. artist
+                title .. (artist ~= "" and text_separator .. artist or "")
             )
         end
     )
@@ -111,8 +133,15 @@ return function(screen_width, is_vertical)
             for color in stdout:gmatch("[^\n]+") do
                 table.insert(colors, color)
             end
-            progress_container.color = colors[3]
-            media_controls.fg = colors[3]
+            local fg_bar_color = colors[3]
+
+            progress_container.color = fg_bar_color
+            media_controls.fg = fg_bar_color
+
+            player_icon.img.image = gcolor.recolor_image(
+                media_icons[playerctl:get_active_player().player_name] or media_icons.music_note,
+                fg_bar_color
+            )
         end
     )
 
