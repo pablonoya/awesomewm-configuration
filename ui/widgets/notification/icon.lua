@@ -11,7 +11,7 @@ local function notif_icon(args)
             forced_height = args.size or dpi(28),
             widget = wibox_widget.imagebox
         },
-        top = dpi(18),
+        top = dpi(16),
         right = dpi(8),
         left = dpi(8),
         widget = wibox_container.margin
