@@ -1,30 +1,22 @@
 local awful_popup = require("awful.popup")
 local beautiful = require("beautiful")
-local gcolor = require("gears.color")
-local gsurface = require("gears.surface")
 local gstring = require("gears.string")
-local gshape = require("gears.shape")
-local menubar_utils = require("menubar.utils")
-local notification = require("naughty.notification")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
 local playerctl = require("signals.playerctl")
 
-local media_icons = require("icons.media")
+local media_image = require("ui.widgets.media.media-image")
 local media_controls = require("ui.widgets.media.media-controls")
+local player_icon = require("ui.widgets.media.player-icon")
+
 local scrolling_text = require("ui.widgets.scrolling-text")
 local slider = require("ui.widgets.slider")
-local text_icon = require("ui.widgets.text-icon")
-
-local media_prev = media_controls.prev(16)
-local media_play = media_controls.play(20)
-local media_next = media_controls.next(16)
 
 local media_buttons = wibox.widget {
-    media_prev,
-    media_play,
-    media_next,
+    media_controls.prev(16),
+    media_controls.play(21),
+    media_controls.next(16),
     spacing = dpi(2),
     layout = wibox.layout.fixed.horizontal,
     widget = wibox.container.background
@@ -42,7 +34,6 @@ local artist_name = scrolling_text {
     font = "Roboto 11",
     speed = 32,
     step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
-
 }
 
 local media_info = wibox.widget {
@@ -101,34 +92,13 @@ playerctl:connect_signal(
     end
 )
 
-local media_image = wibox.widget {
-    {
-        id = "img",
-        widget = wibox.widget.imagebox
-    },
-    shape = helpers.rrect(8),
-    widget = wibox.container.background
-}
-
-local player_icon = wibox.widget {
-    {
-        id = "img",
-        widget = wibox.widget.imagebox
-    },
-    forced_width = dpi(24),
-    forced_height = dpi(24),
-    shape = gshape.circle,
-    bg = beautiful.xbackground,
-    widget = wibox.container.background
-}
-
 local cover = wibox.widget {
     {
-        media_image,
+        media_image(8),
         widget = wibox.container.place
     },
     {
-        player_icon,
+        player_icon(24, "popup"),
         valign = "bottom",
         halign = "right",
         widget = wibox.container.place
@@ -183,8 +153,6 @@ playerctl:connect_signal(
     "metadata", function(_, title, artist, album_path)
         media_title.text.text = gstring.xml_unescape(title)
         artist_name.text.text = gstring.xml_unescape(artist)
-
-        media_image.img:set_image(gsurface.load(album_path))
     end
 )
 
@@ -195,14 +163,8 @@ playerctl:connect_signal(
 )
 
 awesome.connect_signal(
-    "media::dominantcolors", function(stdout)
-        local colors = {}
-
-        for color in stdout:gmatch("[^\n]+") do
-            table.insert(colors, color)
-        end
-
-        local bg_color, fg_color = table.unpack(colors)
+    "media::dominantcolors", function(colors)
+        local bg_color, fg_color, _ = table.unpack(colors)
 
         -- darkening the bg color to match the dark theming
         media_controls_popup.widget.bg = bg_color .. "D0"
@@ -212,12 +174,6 @@ awesome.connect_signal(
         progress.bar_color = fg_color .. "70"
         progress.bar_active_color = fg_color
         progress.handle_color = fg_color
-
-        player_icon.bg = bg_color
-        player_icon.img.image = gcolor.recolor_image(
-            media_icons[playerctl:get_active_player().player_name] or media_icons.music_note,
-            fg_color
-        )
     end
 )
 

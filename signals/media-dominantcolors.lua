@@ -21,16 +21,17 @@ playerctl:connect_signal(
                         }
                     end
 
-                    if stdout == "" or not string.match(stdout, "^#") then
+                    if stdout == "" or not string.match(stdout, "^#") or actual_colors == stdout then
                         return
                     end
 
-                    if actual_colors == stdout then
-                        return
+                    local colors = {}
+                    for color in stdout:gmatch("[^\n]+") do
+                        table.insert(colors, color)
                     end
 
+                    awesome.emit_signal("media::dominantcolors", colors)
                     actual_colors = stdout
-                    awesome.emit_signal("media::dominantcolors", actual_colors)
                 end
             )
         end
