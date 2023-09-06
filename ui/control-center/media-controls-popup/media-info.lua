@@ -1,0 +1,35 @@
+local gstring = require("gears.string")
+local wibox = require("wibox")
+
+local playerctl = require("signals.playerctl")
+
+local scrolling_text = require("ui.widgets.scrolling-text")
+
+local media_title = scrolling_text {
+    title = "Title",
+    font = "Roboto 12",
+    speed = 32,
+    step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
+}
+
+local artist_and_album = scrolling_text {
+    text = "Artist",
+    font = "Roboto 11",
+    speed = 32,
+    step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
+}
+
+playerctl:connect_signal(
+    "metadata", function(_, title, artist, _, album_name)
+        media_title.text.text = gstring.xml_unescape(title)
+        artist_and_album.text.text = gstring.xml_unescape(
+            artist .. (album_name ~= "" and " • " .. album_name or "")
+        )
+    end
+)
+
+return wibox.widget {
+    media_title,
+    artist_and_album,
+    layout = wibox.layout.fixed.vertical
+}
