@@ -8,7 +8,7 @@ return function(notification)
     local actions = wibox.widget {
         notification = notification,
         base_layout = wibox.widget {
-            spacing = dpi(4),
+            spacing = dpi(5),
             layout = wibox.layout.flex.horizontal
         },
         widget_template = {
@@ -25,7 +25,7 @@ return function(notification)
         style = {
             underline_normal = false,
             underline_selected = true,
-            bg_normal = beautiful.focus .. "E0",
+            bg_normal = beautiful.focus .. "E7",
             bg_selected = beautiful.focus,
             shape_normal = helpers.rrect(beautiful.border_radius / 4)
         },

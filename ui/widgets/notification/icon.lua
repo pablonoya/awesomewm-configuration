@@ -1,5 +1,4 @@
 local wibox_container = require("wibox.container")
--- local wibox_layout = require("wibox.layout")
 local wibox_widget = require("wibox.widget")
 
 local function notif_icon(args)

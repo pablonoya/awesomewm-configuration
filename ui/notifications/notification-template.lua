@@ -1,12 +1,12 @@
 local beautiful = require("beautiful")
-local naughty = require("naughty")
+local naughty_layout = require("naughty.layout")
 local wibox = require("wibox")
 
-local icon = require("ui.widgets.notification.icon")
-local title = require("ui.widgets.notification.title")
-local dismiss = require("ui.widgets.notification.dismiss")
-local message = require("ui.widgets.notification.message")
 local actions = require("ui.widgets.notification.actions")
+local dismiss = require("ui.widgets.notification.dismiss")
+local icon = require("ui.widgets.notification.icon")
+local message = require("ui.widgets.notification.message")
+local title = require("ui.widgets.notification.title")
 
 local helpers = require("helpers")
 
@@ -59,7 +59,7 @@ return function(notification)
         widget = wibox.container.background
     }
 
-    naughty.layout.box {
+    naughty_layout.box {
         notification = notification,
         type = "notification",
         border_color = urgency_color[notification.urgency],

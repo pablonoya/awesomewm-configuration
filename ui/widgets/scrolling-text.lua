@@ -6,7 +6,7 @@ return function(args)
     return wibox_widget {
         {
             id = "text",
-            text = args.text or "Text",
+            markup = args.markup or args.text or "Text",
             font = args.font or beautiful.font,
             valign = "center",
             widget = wibox_widget.textbox
@@ -17,6 +17,7 @@ return function(args)
         expand = true,
         max_size = args.max_size,
         step_function = args.step_function,
+        forced_width = args.forced_width,
         widget = wibox_container.scroll.horizontal
     }
 end
