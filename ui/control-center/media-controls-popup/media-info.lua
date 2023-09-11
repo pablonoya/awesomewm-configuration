@@ -20,11 +20,15 @@ local artist_and_album = scrolling_text {
 }
 
 playerctl:connect_signal(
-    "metadata", function(_, title, artist, _, album_name)
+    "metadata", function(_, title, artist, _, album_name, new)
         media_title.text.text = gstring.xml_unescape(title)
         artist_and_album.text.text = gstring.xml_unescape(
             artist .. (album_name ~= "" and " • " .. album_name or "")
         )
+        if new then
+            media_title:reset_scrolling()
+            artist_and_album:reset_scrolling()
+        end
     end
 )
 

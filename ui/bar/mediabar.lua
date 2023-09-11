@@ -82,12 +82,15 @@ return function(screen_width, is_vertical)
     )
 
     playerctl:connect_signal(
-        "metadata", function(_, title, artist, album_path)
+        "metadata", function(_, title, artist, album_path, _, new)
             progress_container.visible = (title ~= "")
 
             media_info.text:set_markup_silently(
                 title .. (artist ~= "" and text_separator .. artist or "")
             )
+            if new then
+                media_info:reset_scrolling()
+            end
         end
     )
 
