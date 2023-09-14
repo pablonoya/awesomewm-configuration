@@ -85,8 +85,6 @@ return function(notification)
         end
     )
 
-    collectgarbage("collect")
-
     notifbox.creation_time = os.time()
     return notifbox
 end

@@ -53,6 +53,7 @@ local user_profile = wibox_widget {
         {
             profile_info,
             uptime,
+            forced_width = dpi(200),
             layout = wibox_layout.fixed.vertical
         },
         layout = wibox_layout.fixed.horizontal,
