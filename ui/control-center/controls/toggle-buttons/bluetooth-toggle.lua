@@ -21,4 +21,6 @@ local signal = function(callback)
     awesome.connect_signal("bluetooth::state", callback)
 end
 
-return toggle_button("\u{e1a7}", "Bluetooth", beautiful.accent, onclick, signal)
+return toggle_button(
+    "\u{e1a7}", "Bluetooth", beautiful.accent, onclick, signal, "bluetooth::devices"
+)

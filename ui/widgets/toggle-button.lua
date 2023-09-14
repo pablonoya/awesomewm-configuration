@@ -7,6 +7,7 @@ local wibox = require("wibox")
 local helpers = require("helpers")
 
 local clickable_container = require("ui.widgets.clickable-container")
+local scrolling_text = require("ui.widgets.scrolling-text")
 local text_icon = require("ui.widgets.text-icon")
 
 local function toggle_button(icon, name, bg_color, onclick, signal, signal_label)
@@ -14,10 +15,11 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
     local button_bg = beautiful.control_center_button_bg
     local hover_bg = gcolor.change_opacity(bg_color, 0.4)
 
-    local action = wibox.widget {
+    local action = scrolling_text {
         text = name,
         font = beautiful.font_name .. " Bold 10",
-        widget = wibox.widget.textbox
+        forced_width = dpi(100),
+        step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
     }
 
     local icon = text_icon {
@@ -51,7 +53,7 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
         else
             filled_button.bg = beautiful.control_center_button_bg
             filled_button.fg = beautiful.xforeground
-            action.text = name
+            action.text:set_markup(name)
             hover_bg = gcolor.change_opacity(bg_color, 0.4)
         end
 
@@ -64,7 +66,7 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
     if signal_label then
         awesome.connect_signal(
             signal_label, function(label)
-                action.text = label
+                action.text:set_markup(label)
             end
         )
     end
