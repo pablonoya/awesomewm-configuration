@@ -1,6 +1,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local gtable = require("gears.table")
+local gtimer = require("gears.timer")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
@@ -28,7 +29,14 @@ end
 local suspend_command = function()
     awesome.emit_signal("exit_screen::hide")
     lock_screen_show()
-    awful.spawn.with_shell("systemctl suspend")
+    gtimer {
+        timeout = 1,
+        autostart = true,
+        single_shot = true,
+        callback = function()
+            awful.spawn.with_shell("systemctl suspend")
+        end
+    }
 end
 
 local exit_command = function()
