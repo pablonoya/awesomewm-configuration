@@ -29,9 +29,9 @@ return function(s)
                 expand = "none",
                 -- start
                 {
+                    layoutbox(s),
                     client_info,
-                    margins = dpi(4),
-                    widget = wibox_container.margin
+                    layout = wibox_layout.fixed.horizontal
                 },
                 -- middle
                 {
@@ -48,7 +48,6 @@ return function(s)
                     battery(is_vertical),
                     notifications_and_datetime(is_vertical),
                     control_center_button,
-                    layoutbox(s),
 
                     layout = wibox_layout.fixed.horizontal
                 }

@@ -39,4 +39,8 @@ client.connect_signal(
     end
 )
 
-return client_info
+return {
+    client_info,
+    margins = dpi(4),
+    widget = wibox.container.margin
+}
