@@ -4,6 +4,8 @@ local gfs = require("gears.filesystem")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 
+local revelation = require("away.third_party.revelation")
+
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 naughty.connect_signal(
@@ -23,6 +25,9 @@ spawn.with_shell(gfs.get_configuration_dir() .. "configuration/autostart")
 
 -- Theme, modules and config
 beautiful.init(gfs.get_configuration_dir() .. "theme/theme.lua")
+revelation.init {
+    charorder = "wasdhjkluiopynmftgvceqzx1234567890"
+}
 require("module")
 require("configuration")
 

@@ -12,6 +12,8 @@ local playerctl = require("signals.playerctl")
 local ytm_scratchpad = require("ui.scratchpad")
 local hotkeys_popup = require("ui.hotkeys_popup")
 
+local revelation = require("away.third_party.revelation")
+
 -- Default modkey.
 local modkey = "Mod4"
 local alt = "Mod1"
@@ -108,6 +110,24 @@ awful_keyboard.append_global_keybindings {
             end
         end, {
             description = "close window",
+            group = "launcher"
+        }
+    ), awful_key(
+        {modkey}, "p", function()
+            spawn.easy_async_with_shell(
+                "autorandr --cycle", function(stdout)
+                    naughty.notification {
+                        text = stdout
+                    }
+                end
+            )
+        end, {
+            description = "cycle autorandr",
+            group = "launcher"
+        }
+    ), awful_key(
+        {modkey}, "Tab", revelation, {
+            description = "Use revelation",
             group = "launcher"
         }
     ), awful_key(
