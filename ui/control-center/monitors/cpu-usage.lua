@@ -2,7 +2,7 @@ local beautiful = require("beautiful")
 local wibox_container = require("wibox.container")
 local wibox_widget = require("wibox.widget")
 
-local progressbar = require("ui.widgets.progressbar")
+local monitor_progressbar = require("ui.widgets.monitor-progressbar")
 
 local meter_icon = wibox_widget {
     {
@@ -32,20 +32,20 @@ local function format_info(stdout)
     return diff_usage, string.format("%.2f %%", diff_usage)
 end
 
-local cpu_meter = progressbar {
+local cpu_usage = monitor_progressbar {
     name = "CPU",
     icon_widget = meter_icon,
     info = "0.00 %",
     slider_color = {
         type = "linear",
-        from = {0, 0},
-        to = {100, 0},
-        stops = {{0, beautiful.green}, {0.7, beautiful.cyan}}
+        from = {0},
+        to = {100},
+        stops = {{0, beautiful.cyan}, {0.7, beautiful.blue}}
     },
-    bg_color = beautiful.cyan .. "60",
+    bg_color = beautiful.blue .. "60",
     watch_command = [[ bash -c "cat /proc/stat | grep '^cpu '"]],
     format_info = format_info,
     interval = 1
 }
 
-return cpu_meter
+return cpu_usage

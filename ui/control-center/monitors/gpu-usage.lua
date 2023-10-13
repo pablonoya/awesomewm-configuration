@@ -9,7 +9,7 @@ local monitor_progressbar = require("ui.widgets.monitor-progressbar")
 
 local meter_icon = wibox_widget {
     {
-        image = gcolor.recolor_image(icons.ram, beautiful.xforeground),
+        image = gcolor.recolor_image(icons.gpu, beautiful.xforeground),
         forced_width = dpi(16),
         forced_height = dpi(18),
         widget = wibox_widget.imagebox
@@ -19,29 +19,24 @@ local meter_icon = wibox_widget {
 }
 
 local function format_info(stdout)
-    local total, used, free, shared, buff_cache, available, total_swap, used_swap, free_swap =
-        stdout:match(
-            "(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)"
-        )
-    local value = used / total * 100
-    local info = string.format("%.2f / %.2f GB", used / 1048576, total / 1048576)
-    return value, info
+    stdout = tonumber(stdout) or 0
+    return stdout, string.format("%.1f %%", stdout)
 end
 
-local ram_meter = monitor_progressbar {
-    name = "RAM",
+local gpu_usage = monitor_progressbar {
+    name = "dGPU",
     icon_widget = meter_icon,
-    info = "- / -",
+    info = "0.0 %",
     slider_color = {
         type = "linear",
         from = {0},
         to = {240},
-        stops = {{0, beautiful.moon}, {1, beautiful.yellow}}
+        stops = {{0, beautiful.cyan}, {0.3, beautiful.green}}
     },
-    bg_color = beautiful.yellow .. "60",
-    watch_command = 'bash -c "free --kilo"',
+    bg_color = beautiful.green .. "60",
+    watch_command = [[ bash -c "nvidia-smi -q -d UTILIZATION | grep Gpu | awk '{print $3}'"]],
     format_info = format_info,
-    interval = 5
+    interval = 2
 }
 
-return ram_meter
+return gpu_usage

@@ -9,7 +9,7 @@ local monitor_progressbar = require("ui.widgets.monitor-progressbar")
 
 local meter_icon = wibox_widget {
     {
-        image = gcolor.recolor_image(icons.ram, beautiful.xforeground),
+        image = gcolor.recolor_image(icons.gpu, beautiful.xforeground),
         forced_width = dpi(16),
         forced_height = dpi(18),
         widget = wibox_widget.imagebox
@@ -17,31 +17,29 @@ local meter_icon = wibox_widget {
     margins = dpi(2),
     widget = wibox_container.margin
 }
-
 local function format_info(stdout)
-    local total, used, free, shared, buff_cache, available, total_swap, used_swap, free_swap =
-        stdout:match(
-            "(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)%s*(%d+)"
-        )
-    local value = used / total * 100
-    local info = string.format("%.2f / %.2f GB", used / 1048576, total / 1048576)
-    return value, info
+    stdout = tonumber(stdout) or 0
+    return stdout, string.format("%.1f °", stdout)
 end
 
-local ram_meter = monitor_progressbar {
-    name = "RAM",
+local gpu_temperature = monitor_progressbar {
+    name = "dGPU",
     icon_widget = meter_icon,
-    info = "- / -",
+    info = "0 °",
+    min_value = 20,
+    max_value = 100,
     slider_color = {
         type = "linear",
         from = {0},
-        to = {240},
-        stops = {{0, beautiful.moon}, {1, beautiful.yellow}}
+        to = {255},
+        stops = {{0.4, beautiful.green}, {0.75, beautiful.yellow}, {0.9, beautiful.red}}
     },
     bg_color = beautiful.yellow .. "60",
-    watch_command = 'bash -c "free --kilo"',
+    watch_command = [[
+        bash -c "nvidia-smi -q -d TEMPERATURE | grep 'GPU Current Temp' | awk '{print $5}'"
+    ]],
     format_info = format_info,
-    interval = 5
+    interval = 2
 }
 
-return ram_meter
+return gpu_temperature

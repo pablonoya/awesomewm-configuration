@@ -7,7 +7,7 @@ local helpers = require("helpers")
 
 local info_and_buttons = require("ui.control-center.top-controls.container")
 local controls = require("ui.control-center.controls.container")
-local monitors = require("ui.control-center.monitors.container")
+local monitors = require("ui.control-center.monitors.monitors-container")
 local media_controls_popup = require("ui.control-center.media-controls-popup")
 
 local body_container = {
