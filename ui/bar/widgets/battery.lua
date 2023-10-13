@@ -126,7 +126,7 @@ return function(is_vertical)
                 color = beautiful.red
                 if not charge_icon.visible then
                     notification {
-                        text = "VERY low battery!",
+                        text = "VERY low battery (" .. value .. "%)",
                         urgency = "critical"
                     }
                 end
