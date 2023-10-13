@@ -1,10 +1,11 @@
-local watch = require("awful.widget.watch")
+local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gshape = require("gears.shape")
+local gtimer = require("gears.timer")
 local wibox_layout = require("wibox.layout")
 local wibox_widget = require("wibox.widget")
 
-local function progressbar(args)
+local function monitor_progressbar(args)
     local label = wibox_widget {
         text = args.name,
         font = beautiful.font_name .. "Bold 10",
@@ -19,10 +20,9 @@ local function progressbar(args)
         widget = wibox_widget.textbox
     }
 
-    local slider = wibox_widget {
+    local progressbar = wibox_widget {
         min_value = args.min_value or 0,
         max_value = args.max_value or 100,
-        value = args.min_value or 50,
         forced_height = dpi(20),
         color = args.slider_color,
         background_color = args.bg_color,
@@ -31,11 +31,27 @@ local function progressbar(args)
         widget = wibox_widget.progressbar
     }
 
-    watch(
-        args.watch_command, args.interval or 1, function(_, stdout)
-            local value, text = args.format_info(stdout)
-            slider:set_value(value)
-            information.markup = text
+    local timer = gtimer {
+        timeout = args.interval or 1,
+        call_now = true,
+        callback = function()
+            spawn.easy_async_with_shell(
+                args.watch_command, function(stdout)
+                    local value, text = args.format_info(stdout)
+                    progressbar:set_value(value)
+                    information.markup = text
+                end
+            )
+        end
+    }
+
+    awesome.connect_signal(
+        "control_center::monitor_mode", function(monitor_mode)
+            if monitor_mode then
+                timer:start()
+            else
+                timer:stop()
+            end
         end
     )
 
@@ -47,14 +63,14 @@ local function progressbar(args)
         },
         {
             args.icon_widget or {},
-            slider,
+            progressbar,
             layout = wibox_layout.fixed.horizontal,
             spacing = dpi(8)
         },
         layout = wibox_layout.fixed.vertical,
-        spacing = dpi(8)
+        spacing = dpi(6)
     }
 
 end
 
-return progressbar
+return monitor_progressbar
