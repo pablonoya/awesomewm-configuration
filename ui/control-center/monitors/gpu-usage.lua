@@ -34,7 +34,7 @@ local gpu_usage = monitor_progressbar {
         stops = {{0, beautiful.cyan}, {0.3, beautiful.green}}
     },
     bg_color = beautiful.green .. "60",
-    watch_command = [[ bash -c "nvidia-smi -q -d UTILIZATION | grep Gpu | awk '{print $3}'"]],
+    watch_command = [[ bash -c "nvidia-smi -q -d UTILIZATION | grep Gpu | awk '{print \$3}'"]],
     format_info = format_info,
     interval = 2
 }

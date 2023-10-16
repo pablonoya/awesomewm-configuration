@@ -36,7 +36,7 @@ local gpu_temperature = monitor_progressbar {
     },
     bg_color = beautiful.yellow .. "60",
     watch_command = [[
-        bash -c "nvidia-smi -q -d TEMPERATURE | grep 'GPU Current Temp' | awk '{print $5}'"
+        bash -c "nvidia-smi -q -d TEMPERATURE | grep 'GPU Current Temp' | awk '{print \$5}'"
     ]],
     format_info = format_info,
     interval = 2
