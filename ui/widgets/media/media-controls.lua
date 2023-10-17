@@ -10,7 +10,7 @@ local create_media_button = function(symbol, command, size, args)
         widget = {
             id = "icon",
             text = symbol,
-            font = beautiful.icon_font_name .. (size or 14),
+            font = beautiful.icon_font_name .. (size or 14) .. " @FILL=1",
             ellipsize = "none",
             widget = wibox.widget.textbox
         },

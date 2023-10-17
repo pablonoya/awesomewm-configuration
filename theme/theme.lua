@@ -77,8 +77,8 @@ theme.useless_gap = dpi(4)
 -- Fonts
 theme.font_name = "Manrope "
 theme.font = theme.font_name .. "10"
-theme.icon_font_name = "Material Icons "
-theme.icon_font = theme.icon_font_name .. "16"
+theme.icon_font_name = "Material Symbols Rounded "
+theme.icon_font = theme.icon_font_name .. "16 @FILL=1"
 theme.mono_font = "JetBrains Mono Slashed 10"
 
 -- Borders
@@ -172,7 +172,7 @@ theme.wibar_margins = {
 theme.wibar_shape = helpers.rrect(theme.client_border_radius)
 
 -- Pop up notifications
-theme.popup_size = dpi(188)
+theme.popup_size = dpi(220)
 theme.popup_bg = theme.black
 theme.popup_volume_color = theme.accent
 theme.popup_brightness_color = theme.moon

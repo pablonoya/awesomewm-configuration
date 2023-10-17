@@ -21,7 +21,8 @@ local progressbar = wibox.widget {
     bar_shape = helpers.rrect(beautiful.popup_border_radius),
     border_width = dpi(2),
     border_color = beautiful.focus,
-    paddings = dpi(5),
+    paddings = dpi(6),
+    forced_height = dpi(44),
     widget = wibox.widget.progressbar
 }
 
@@ -31,7 +32,7 @@ local system_popup = awful.popup {
             {
                 popup_icon,
                 progressbar,
-                spacing = dpi(8),
+                spacing = dpi(4),
                 layout = wibox.layout.fixed.vertical
             },
             margins = dpi(16),
@@ -43,7 +44,7 @@ local system_popup = awful.popup {
         shape = helpers.rrect(beautiful.popup_border_radius),
         widget = wibox.container.background
     },
-    minimum_width = beautiful.popup_size - dpi(32),
+    minimum_width = beautiful.popup_size - dpi(28),
     maximum_height = beautiful.popup_size,
     maximum_width = beautiful.popup_size,
     placement = awful.placement.centered,
@@ -58,8 +59,9 @@ local timeout = gears.timer {
     end
 }
 
-system_popup.show = function(icon, value, color)
-    popup_icon.markup = icon
+system_popup.show = function(icon_markup, value, color)
+    popup_icon.markup = icon_markup
+
     if value >= 0 then
         progressbar.value = value
         progressbar.color = color

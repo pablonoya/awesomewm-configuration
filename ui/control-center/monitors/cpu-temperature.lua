@@ -4,6 +4,7 @@ local wibox_container = require("wibox.container")
 local wibox_widget = require("wibox.widget")
 
 local monitor_progressbar = require("ui.widgets.monitor-progressbar")
+local text_icon = require("ui.widgets.text-icon")
 
 local function change_asus_fan_profile(temp)
     if temp < 85 then
@@ -18,13 +19,8 @@ local function change_asus_fan_profile(temp)
     )
 end
 
-local meter_icon = wibox_widget {
-    {
-        text = "\u{e1ff}",
-        font = beautiful.icon_font,
-        widget = wibox_widget.textbox
-    },
-    widget = wibox_container.background
+local meter_icon = text_icon {
+    text = "\u{e1ff}"
 }
 
 local function format_info(stdout)

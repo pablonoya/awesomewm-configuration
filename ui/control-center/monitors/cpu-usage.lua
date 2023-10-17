@@ -3,14 +3,10 @@ local wibox_container = require("wibox.container")
 local wibox_widget = require("wibox.widget")
 
 local monitor_progressbar = require("ui.widgets.monitor-progressbar")
+local text_icon = require("ui.widgets.text-icon")
 
-local meter_icon = wibox_widget {
-    {
-        text = "\u{e322}",
-        font = beautiful.icon_font,
-        widget = wibox_widget.textbox
-    },
-    widget = wibox_container.background
+local meter_icon = text_icon {
+    text = "\u{e322}"
 }
 
 local total_prev = 0

@@ -1,5 +1,4 @@
 local awful_button = require("awful.button")
-local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 local gtable = require("gears.table")
@@ -8,6 +7,8 @@ local wibox = require("wibox")
 
 local helpers = require("helpers")
 local system_controls = require("helpers.system-controls")
+
+local text_icon = require("ui.widgets.text-icon")
 
 local is_charging = false
 local last_value = 50
@@ -21,12 +22,10 @@ local percentage = wibox.widget {
     widget = wibox.widget.textbox
 }
 
-local charge_icon = wibox.widget {
-    font = beautiful.icon_font_name .. 17,
-    markup = helpers.colorize_text("\u{ea0b}", beautiful.green),
-    halign = "center",
-    visible = false,
-    widget = wibox.widget.textbox
+local charge_icon = text_icon {
+    markup = helpers.colorize_text("\u{ea0b}", beautiful.yellow),
+    size = 15,
+    visible = false
 }
 
 local battery_bar = wibox.widget {

@@ -247,7 +247,7 @@ local lock_animation_icon = wibox.widget {
     forced_height = dpi(80),
     forced_width = dpi(80),
     markup = helpers.colorize_text(lock_icon, beautiful.light_black),
-    font = beautiful.icon_font_name .. "Outlined 24",
+    font = beautiful.icon_font_name .. 24,
     align = "center",
     valign = "center",
     widget = wibox.widget.textbox
@@ -320,6 +320,7 @@ end
 
 local function set_visibility(visible)
     naughty.suspended = visible
+
     for s in screen do
         s.lockscreen.visible = visible
         s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
