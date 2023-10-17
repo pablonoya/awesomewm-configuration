@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local client_title = wibox.widget {
-    font = beautiful.font_name .. "Medium 10",
+    font = beautiful.font_name .. "SemiBold 10",
     widget = wibox.widget.textbox
 }
 local client_icon = wibox.widget {
