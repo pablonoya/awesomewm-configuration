@@ -278,6 +278,16 @@ awful_keyboard.append_global_keybindings {
             group = "hotkeys"
         }
     ), awful_key(
+        {}, "XF86KbdBrightnessUp", system_controls.keyboard_brightness, {
+            description = "increase keyboard brightness",
+            group = "hotkeys"
+        }
+    ), awful_key(
+        {}, "XF86KbdBrightnessDown", system_controls.keyboard_brightness, {
+            description = "decrease keyboard brightness",
+            group = "hotkeys"
+        }
+    ), awful_key(
         {}, "Insert", function()
             playerctl:play_pause()
         end, {
