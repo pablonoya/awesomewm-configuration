@@ -8,12 +8,9 @@ local clickable_container = require("ui.widgets.clickable-container")
 return function()
     return wibox_widget {
         clickable_container {
-            widget = {
-                text_icon {
-                    text = "\u{e5cd}"
-                },
-                margins = dpi(1),
-                widget = wibox_container.margin
+            widget = text_icon {
+                text = "\u{e5cd}",
+                size = 12
             },
             shape = gshape.circle
         },

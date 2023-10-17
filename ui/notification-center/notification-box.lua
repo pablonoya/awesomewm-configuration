@@ -10,10 +10,11 @@ local message = require("ui.widgets.notification.message")
 local time_elapsed = require("ui.widgets.notification.time-elapsed")
 local title = require("ui.widgets.notification.title")
 
-return function(notification)
+local function notification_box(notification)
     local time_of_notification = os.date("%H:%M:%S")
     local exact_time = os.date("%I:%M %p")
     local exact_date = os.date("%d.%m.%y")
+
     local dismiss_btn = dismiss()
     local time_elapsed_text = time_elapsed(time_of_notification, exact_time, exact_date)
 
@@ -88,3 +89,5 @@ return function(notification)
     notifbox.creation_time = os.time()
     return notifbox
 end
+
+return notification_box
