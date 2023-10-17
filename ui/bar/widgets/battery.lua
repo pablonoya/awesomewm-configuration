@@ -23,7 +23,7 @@ local percentage = wibox.widget {
 }
 
 local charge_icon = text_icon {
-    markup = helpers.colorize_text("\u{ea0b}", beautiful.yellow),
+    markup = helpers.colorize_text("\u{ea0b}", beautiful.green),
     size = 15,
     visible = false
 }
@@ -34,8 +34,8 @@ local battery_bar = wibox.widget {
     paddings = 2.6,
     forced_width = dpi(32),
     forced_height = dpi(23),
-    color = beautiful.green,
-    background_color = beautiful.green .. '10',
+    color = beautiful.green .. "70",
+    background_color = beautiful.green .. "10",
     shape = helpers.rrect(4),
     bar_shape = helpers.rrect(2),
     border_width = dpi(1),
@@ -54,7 +54,43 @@ local positive_connection = wibox.widget {
     widget = wibox.container.background
 }
 
-return function(is_vertical)
+awesome.connect_signal(
+    "signal::charger", function(state)
+        is_charging = state
+        charge_icon.visible = not percentage.visible and is_charging
+    end
+)
+
+awesome.connect_signal(
+    "signal::battery", function(value)
+        battery_bar.value = value
+        last_value = value
+
+        local color = beautiful.green
+        if value <= critical_value then
+            color = beautiful.red
+            if not charge_icon.visible then
+                notification {
+                    text = "VERY low battery (" .. value .. "%)",
+                    urgency = "critical"
+                }
+            end
+
+        elseif value <= low_value then
+            color = beautiful.yellow
+        end
+
+        if color ~= nil then
+            percentage:set_markup_silently(helpers.colorize_text(value, color))
+            positive_connection.bg = color
+            battery_bar.color = color .. "70"
+            battery_bar.background_color = color .. "10"
+            battery_bar.border_color = color
+        end
+    end
+)
+
+local function battery(is_vertical_screen)
     local battery_body = {
         {
             battery_bar,
@@ -70,7 +106,7 @@ return function(is_vertical)
         layout = wibox.layout.fixed.horizontal
     }
 
-    if is_vertical then
+    if is_vertical_screen then
         battery_body = {
             battery_body,
             direction = "east",
@@ -112,45 +148,6 @@ return function(is_vertical)
         end
     )
 
-    awesome.connect_signal(
-        "signal::battery", function(value)
-            battery_bar.value = value
-            last_value = value
-
-            local color = beautiful.green
-            if charge_icon.visible then
-                color = beautiful.cyan
-
-            elseif value <= critical_value then
-                color = beautiful.red
-                if not charge_icon.visible then
-                    notification {
-                        text = "VERY low battery (" .. value .. "%)",
-                        urgency = "critical"
-                    }
-                end
-
-            elseif value <= low_value then
-                color = beautiful.yellow
-            end
-
-            if color ~= nil then
-                percentage:set_markup_silently(helpers.colorize_text(value, color))
-                positive_connection.bg = color
-                battery_bar.color = color .. '70'
-                battery_bar.background_color = color .. '10'
-                battery_bar.border_color = color
-            end
-        end
-    )
-
-    awesome.connect_signal(
-        "signal::charger", function(state)
-            is_charging = state
-            charge_icon.visible = not percentage.visible and is_charging
-        end
-    )
-
     return {
         battery_widget,
         left = dpi(4),
@@ -158,3 +155,5 @@ return function(is_vertical)
         widget = wibox.container.margin
     }
 end
+
+return battery
