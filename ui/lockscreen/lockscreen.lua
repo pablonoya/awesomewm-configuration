@@ -182,13 +182,12 @@ gears.timer {
             last_hour = hour
         end
 
+        -- update if minute has changed
         if last_minute == min then
             return
-        else
-            last_minute = min
         end
+        last_minute = min
 
-        -- update if minute has changed
         for s in screen do
             if s.lockscreen then
                 s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
@@ -328,23 +327,21 @@ local function set_visibility(visible)
 end
 
 -- Get input from user
-local some_textbox = wibox.widget.textbox()
 local function grab_password()
+    local function reset_input()
+        reset()
+        grab_password()
+    end
+
     awful.prompt.run {
-        hooks = { -- Custom escape behaviour: Do not cancel input with Escape
-            -- Instead, this will just clear any input received so far.
-            {
-                {}, 'Escape', function(_)
-                    reset()
-                    grab_password()
-                end
-            }, -- Fix for Control+Delete crashing the keygrabber
-            {
-                {'Control'}, 'Delete', function()
-                    reset()
-                    grab_password()
-                end
-            }
+        hooks = {
+            -- Do not cancel input with Escape or Ctrl+Del
+            -- This will just clear any input received so far.
+            {{}, 'Escape', reset_input},
+            {{'Control'}, 'Delete', reset_input},
+
+            -- Prevent Awesomewm restarting
+            {{'Control', 'Mod4'}, 'r', reset_input}
         },
         keypressed_callback = function(mod, key, cmd)
             -- Only count single character keys (thus preventing
@@ -358,23 +355,18 @@ local function grab_password()
                 end
                 key_animation(false)
             end
-
-            -- Debug
-            -- naughty.notify { title = 'You pressed:', text = key }
         end,
         exe_callback = function(input)
             -- Check input
             if lock_screen.authenticate(input) then
-                -- YAY
                 reset()
                 set_visibility(false)
             else
-                -- NAY
                 fail()
                 grab_password()
             end
         end,
-        textbox = some_textbox
+        textbox = wibox.widget.textbox()
     }
 end
 
