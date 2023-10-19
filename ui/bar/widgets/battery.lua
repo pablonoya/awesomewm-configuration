@@ -24,7 +24,7 @@ local percentage = wibox.widget {
 
 local charge_icon = text_icon {
     markup = helpers.colorize_text("\u{ea0b}", beautiful.green),
-    size = 15,
+    size = 14,
     visible = false
 }
 

@@ -1,6 +1,6 @@
 local awful_wibar = require("awful.wibar")
-local wibox_container = require("wibox.container")
-local wibox_layout = require("wibox.layout")
+local beautiful = require("beautiful")
+local wibox = require("wibox")
 
 local taglist = require("ui.bar.taglist")
 local notifications_and_datetime = require("ui.bar.notifications_and_datetime")
@@ -25,20 +25,28 @@ return function(s)
     bar:setup{
         {
             {
-                layout = wibox_layout.align.horizontal,
+                layout = wibox.layout.align.horizontal,
                 expand = "none",
                 -- start
                 {
                     layoutbox(s),
+                    wibox.widget.separator {
+                        orientation = "vertical",
+                        color = beautiful.xforeground .. "70",
+                        thickness = dpi(2),
+                        span_ratio = 0.6,
+                        forced_width = dpi(2)
+                    },
                     client_info,
-                    layout = wibox_layout.fixed.horizontal
+                    spacing = dpi(4),
+                    layout = wibox.layout.fixed.horizontal
                 },
                 -- middle
                 {
                     taglist(s),
                     left = dpi(8),
                     right = dpi(8),
-                    widget = wibox_container.margin
+                    widget = wibox.container.margin
                 },
                 -- end
                 {
@@ -49,13 +57,13 @@ return function(s)
                     notifications_and_datetime(is_vertical),
                     control_center_button,
 
-                    layout = wibox_layout.fixed.horizontal
+                    layout = wibox.layout.fixed.horizontal
                 }
             },
             margins = dpi(4),
-            widget = wibox_container.margin
+            widget = wibox.container.margin
         },
-        widget = wibox_container.background
+        widget = wibox.container.background
     }
 
     return bar
