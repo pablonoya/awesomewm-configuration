@@ -1,7 +1,7 @@
--- Standard awesome library
 local autofocus = require("awful.autofocus")
 local awful_placement = require("awful.placement")
 local awful_screen = require("awful.screen")
+local beautiful = require("beautiful")
 
 local task_preview = require("module.bling.widget.task_preview")
 local tag_preview = require("module.bling.widget.tag_preview")
@@ -44,3 +44,8 @@ task_preview.enable {
         )
     end
 }
+
+if beautiful.video_wallpaper_path then
+    local video_wallpaper = require("configuration.video_wallpaper")
+    video_wallpaper(beautiful.video_wallpaper_path)
+end
