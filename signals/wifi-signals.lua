@@ -23,7 +23,7 @@ end
 
 local timer = gtimer {
     timeout = 2,
-    autostart = true,
+    call_now = true,
     callback = emit_ssid_signal
 }
 
