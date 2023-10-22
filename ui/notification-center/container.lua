@@ -6,10 +6,10 @@ local clear_all = require("ui.notification-center.clear-all")
 
 local header = wibox.widget {
     {
-        text = 'Notification center',
-        font = beautiful.font_name .. 'Bold 14',
-        align = 'left',
-        valign = 'center',
+        text = "Notification center",
+        font = beautiful.font_name .. "Bold 14",
+        align = "left",
+        valign = "center",
         widget = wibox.widget.textbox
     },
     nil,
@@ -24,6 +24,8 @@ return wibox.widget {
         layout = wibox.layout.fixed.vertical,
         spacing = dpi(8)
     },
-    margins = dpi(12),
+    top = dpi(8),
+    left = dpi(12),
+    right = dpi(12),
     widget = wibox.container.margin
 }

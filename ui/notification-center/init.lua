@@ -7,10 +7,7 @@ local rubato = require("module.rubato")
 
 local helpers = require("helpers")
 local container = require('ui.notification-center.container')
-local cal_height = require('ui.calendar-box.calendar-container').height
-
-local screen_height = awful_screen.focused().geometry.height
-local reserved_height = screen_height + dpi(280)
+local calendar_height = require('ui.calendar-box.calendar-container').height
 
 local notification_center = wibox {
     type = "dock",
@@ -41,15 +38,16 @@ local timed_slide = rubato.timed {
 
 local notif_center_show = function()
     local screen = awful_screen.focused()
-    local top_bar_height = screen.bar.height
+    local screen_height = screen.geometry.height
+    local bar_and_calendar_height = screen.bar.height + calendar_height
 
-    notification_center.height = screen.geometry.height - top_bar_height - dpi(304)
+    notification_center.height = screen_height - bar_and_calendar_height - dpi(24)
 
-    awful_placement.top_right(
+    awful_placement.right(
         notification_center, {
             parent = screen,
             margins = {
-                top = top_bar_height + dpi(300),
+                top = bar_and_calendar_height + dpi(16),
                 right = -notification_center.width + dpi(14)
             }
         }
