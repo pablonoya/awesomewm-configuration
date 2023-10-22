@@ -44,7 +44,5 @@ awesome.connect_signal(
         else
             show()
         end
-
-        awesome.emit_signal("notification_center::visible", calendar_container.visible)
     end
 )

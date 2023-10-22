@@ -1,9 +1,9 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local header = require("ui.calendar-box.header")
-local weekday = require("ui.calendar-box.weekday")
-local day = require("ui.calendar-box.day")
+local header = require("ui.calendar-box.widgets.calendar-header")
+local weekday = require("ui.calendar-box.widgets.calendar-weekday")
+local day = require("ui.calendar-box.widgets.calendar-day")
 
 local function decorate_cell(widget, flag, date)
     if flag == "header" then
