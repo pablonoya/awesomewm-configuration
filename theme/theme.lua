@@ -295,4 +295,7 @@ theme.video_wallpaper_vertical_path = HOME .. "/Vídeos/aniwalls/violet-afternoo
 -- Dominantcolors script path
 theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
 
+-- gcalendar command
+theme.gcalendar_command = "gcalendar --no-of-days 1 --output json"
+
 return theme
