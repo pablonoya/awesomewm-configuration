@@ -4,6 +4,8 @@ local wibox_layout = require("wibox.layout")
 local wibox_widget = require("wibox.widget")
 local naughty = require("naughty")
 
+local helpers = require("helpers")
+
 local notification_box = require("ui.notification-center.notification-box")
 local empty_notifbox = require("ui.notification-center.no-notifications")
 
@@ -16,28 +18,8 @@ local layout = wibox_widget {
 }
 local all_notifications = {}
 
--- scrolling notifications
-layout:buttons(
-    gtable.join(
-        awful_button(
-            {}, 4, nil, function()
-                if #layout.children == 1 then
-                    return
-                end
-                layout:insert(1, layout.children[#layout.children])
-                layout:remove(#layout.children)
-            end
-        ), awful_button(
-            {}, 5, nil, function()
-                if #layout.children == 1 then
-                    return
-                end
-                layout:insert(#layout.children + 1, layout.children[1])
-                layout:remove(1)
-            end
-        )
-    )
-)
+-- scrolling notifications list
+helpers.add_list_scrolling(layout)
 
 local notifbox_add = function(notification)
     if #layout.children == 1 and is_empty then
