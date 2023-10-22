@@ -15,8 +15,9 @@ local timed_slide = rubato.timed {
 
 -- Make toogle button
 local show = function()
-    local screen = awful_screen.focused()
+    awesome.emit_signal("calendar::date", "today")
 
+    local screen = awful_screen.focused()
     awful_placement.top_right(
         calendar_container, {
             parent = screen,

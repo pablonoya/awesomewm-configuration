@@ -45,7 +45,7 @@ awesome.connect_signal(
         elseif action == "previous_month" then
             date.month = date.month - 1
         else -- reset date
-            date = os.date("*t")
+            date = current_date
         end
 
         date.day = (current_date.month == date.month) and current_date.day
