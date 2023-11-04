@@ -15,7 +15,7 @@ function helpers.get_brightness_icon(value)
     elseif value >= 50 and value < 75 then
         return "\u{e1ae}"
     elseif value >= 75 then
-        return "\u{e1ac}"
+        return "\u{f7e8}"
     end
     return "\u{e1ad}"
 end

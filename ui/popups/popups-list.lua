@@ -54,10 +54,16 @@ awesome.connect_signal(
 
 awesome.connect_signal(
     "brightness::keyboard", function(value)
-        icon_markup = color_helpers.colorize_text(
-            value < 50 and "\u{f7ec}" or "\u{f7ed}", beautiful.white
-        )
-        progressbar_color = beautiful.white
+        if value == 0 then
+            icon_markup = color_helpers.colorize_text("\u{f7ec}", beautiful.focus)
+            progressbar_color = beautiful.focus
+        else
+            icon_markup = color_helpers.colorize_text(
+                value < 50 and "\u{f7ec}" or "\u{f7ed}", beautiful.white
+            )
+            progressbar_color = beautiful.white
+        end
+
         system_popup.show(icon_markup, value, progressbar_color)
     end
 )
