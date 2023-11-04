@@ -210,14 +210,14 @@ theme.pfp = gsurface.load_uncached(local_dir .. "theme/assets/kirby_snowboard.jp
 
 -- Notifications
 naughty.config.defaults.ontop = true
-naughty.config.defaults.title = "System Notification title"
+naughty.config.defaults.title = "Generic Notification"
 
 naughty.config.icon_dirs = {
     HOME .. "/.local/share/icons/Kuyen-icons/apps/48/", HOME .. "/.local/share/icons/Kuyen-icons/",
     "/usr/share/icons/Papirus-Dark/", "/usr/share/icons/Suru++-Asprómauros/",
     "/usr/share/icons/breeze-dark/", "/usr/share/pixmaps/"
 }
-naughty.config.icon_formats = {"png", "svg", "jpg", "gif"}
+naughty.config.icon_formats = {"png", "svg", "jpg", "jpeg", "gif", "webp", ""}
 
 theme.notification_spacing = 12
 theme.notification_border_radius = theme.border_radius / 2
@@ -289,13 +289,13 @@ theme.window_switcher_name_focus_color = theme.cyan
 theme.window_switcher_icon_width = dpi(28)
 
 -- Video wallpaper
-theme.video_wallpaper_path = HOME .. "/Vídeos/aniwalls/violet-afternoon-w.mp4"
-theme.video_wallpaper_vertical_path = HOME .. "/Vídeos/aniwalls/violet-afternoon-v.mp4"
+-- theme.video_wallpaper_path =  -- HOME .. "/videos/unicorn-kanistra.mp4"
+-- theme.video_wallpaper_vertical_path = HOME .. "/videos/unicorn-kanistra-vertical.mp4"
 
 -- Dominantcolors script path
-theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
+-- theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
 
 -- gcalendar command
-theme.gcalendar_command = "gcalendar --no-of-days 1 --output json"
+-- theme.gcalendar_command = "gcalendar --output json"
 
 return theme
