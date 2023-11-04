@@ -279,13 +279,14 @@ theme.task_preview_widget_border_width = theme.border_width
 theme.task_preview_widget_margin = dpi(8)
 
 -- Window switcher
-theme.window_switcher_widget_bg = theme.black .. "99"
+theme.window_switcher_widget_bg = theme.black .. "E9"
 theme.window_switcher_widget_border_width = theme.border_width
 theme.window_switcher_widget_border_radius = theme.border_radius
 theme.window_switcher_widget_border_color = theme.focus
 theme.window_switcher_client_width = dpi(256)
-theme.window_switcher_name_font = theme.font_name .. "11"
-theme.window_switcher_name_focus_color = theme.cyan
+theme.window_switcher_name_font = theme.font_name .. "Medium 11"
+theme.window_switcher_name_normal_color = theme.xforeground .. "97"
+theme.window_switcher_name_focus_color = theme.accent
 theme.window_switcher_icon_width = dpi(28)
 
 -- Video wallpaper
