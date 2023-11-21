@@ -98,7 +98,7 @@ awful_keyboard.append_global_keybindings {
         }
     ), awful_key(
         {modkey}, "e", function()
-            spawn("dolphin")
+            spawn("thunar")
         end, {
             description = "open file manager",
             group = "launcher"
