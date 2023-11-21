@@ -1,5 +1,5 @@
 local gfs = require("gears.filesystem")
-local dir = gfs.get_configuration_dir() .. "icons/media/"
+local dir = gfs.get_configuration_dir() .. "ui/icons/media/"
 
 local mapping = {
     firefox = dir .. "firefox.svg",

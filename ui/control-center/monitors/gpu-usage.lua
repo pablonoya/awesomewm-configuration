@@ -3,7 +3,7 @@ local gcolor = require("gears.color")
 local wibox_container = require("wibox.container")
 local wibox_widget = require("wibox.widget")
 
-local icons = require("icons")
+local icons = require("ui.icons")
 
 local monitor_progressbar = require("ui.widgets.monitor-progressbar")
 

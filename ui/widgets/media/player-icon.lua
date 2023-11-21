@@ -3,7 +3,7 @@ local gcolor = require("gears.color")
 local gshape = require("gears.shape")
 local wibox = require("wibox")
 
-local media_icons = require("icons.media")
+local media_icons = require("ui.icons.media")
 local playerctl = require("signals.playerctl")
 
 return function(size, widget_type)

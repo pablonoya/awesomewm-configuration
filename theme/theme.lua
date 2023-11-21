@@ -5,8 +5,10 @@ local xrdb = require("beautiful.xresources").get_current_theme()
 
 local helpers = require("helpers")
 
-local local_dir = gfs.get_configuration_dir()
 local HOME = os.getenv("HOME")
+local local_dir = gfs.get_configuration_dir()
+local icons_dir = local_dir .. "ui/icons/"
+
 local theme = {}
 
 -- Load ~/.Xresources colors
@@ -188,15 +190,15 @@ theme.layoutlist_shape_border_color_selected = theme.focus
 theme.layoutlist_shape_selected = helpers.rrect(theme.border_radius / 2)
 
 -- Layout icons
-theme.layout_tile = local_dir .. "icons/layouts/tile.svg"
-theme.layout_tilebottom = local_dir .. "icons/layouts/tilebottom.svg"
-theme.layout_magnifier = local_dir .. "icons/layouts/magnifier.svg"
-theme.layout_max = local_dir .. "icons/layouts/max.svg"
-theme.layout_horizontal = local_dir .. "icons/layouts/horizontal.svg"
-theme.layout_spiral = local_dir .. "icons/layouts/spiral.svg"
-theme.layout_mstab = local_dir .. "icons/layouts/mstab.svg"
-theme.layout_deck = local_dir .. "icons/layouts/deck.svg"
-theme.layout_floating = local_dir .. "icons/layouts/floating.svg"
+theme.layout_tile = icons_dir .. "layouts/tile.svg"
+theme.layout_tilebottom = icons_dir .. "layouts/tilebottom.svg"
+theme.layout_magnifier = icons_dir .. "layouts/magnifier.svg"
+theme.layout_max = icons_dir .. "layouts/max.svg"
+theme.layout_horizontal = icons_dir .. "layouts/horizontal.svg"
+theme.layout_spiral = icons_dir .. "layouts/spiral.svg"
+theme.layout_mstab = icons_dir .. "layouts/mstab.svg"
+theme.layout_deck = icons_dir .. "layouts/deck.svg"
+theme.layout_floating = icons_dir .. "layouts/floating.svg"
 
 -- Edge snap
 theme.snap_bg = theme.cyan
@@ -228,8 +230,8 @@ theme.notification_position = "top_right"
 theme.notif_center_radius = theme.border_radius
 
 -- Notification icons
-theme.notification_icon = gsurface.load_uncached(local_dir .. "icons/notification.svg")
-theme.notification_bell_icon = gsurface.load_uncached(local_dir .. "icons/notification_bell.svg")
+theme.notification_icon = gsurface.load_uncached(icons_dir .. "notification.svg")
+theme.notification_bell_icon = gsurface.load_uncached(icons_dir .. "notification_bell.svg")
 
 -- Systray
 theme.systray_icon_spacing = dpi(4)

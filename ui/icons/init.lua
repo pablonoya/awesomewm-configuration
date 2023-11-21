@@ -1,5 +1,5 @@
 local gfs = require("gears.filesystem")
-local dir = gfs.get_configuration_dir() .. "icons/"
+local dir = gfs.get_configuration_dir() .. "ui/icons/"
 
 return {
     notification = dir .. "notification.svg",

@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local gsurface = require("gears.surface")
 local gcolor = require("gears.color")
 local menubar_utils = require("menubar.utils")
-local icons = require("icons")
+local icons = require("ui.icons")
 
 local function get_icon(client)
     local class, _ = client.instance:gsub(" ", "-")
