@@ -85,12 +85,14 @@ return wibox.widget {
                 spacing = dpi(4),
                 layout = wibox.layout.fixed.vertical
             },
-            margins = dpi(8),
+            top = dpi(2),
+            left = dpi(8),
+            right = dpi(8),
             widget = wibox.container.margin
         },
         border_width = dpi(1),
         border_color = beautiful.focus,
-        shape = helpers.rrect(beautiful.border_radius - dpi(4)),
+        shape = helpers.rrect(beautiful.border_radius - dpi(8)),
         widget = wibox.container.background
     },
     left = dpi(8),
