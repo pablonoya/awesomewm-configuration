@@ -7,7 +7,6 @@ start() {
   fi
 }
 
-# compositor
 start /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 start nm-applet
 start blueman-applet
