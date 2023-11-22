@@ -25,15 +25,15 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
 
 ---
 
-🎨 Custom color scheme taken from [Xresources](https://github.com/pablonoya/dotfiles/blob/main/Xresources), available as vscode theme [here](https://github.com/pablonoya/seramuriana).
-💻🖥 Multiple screen support (vertical screen in progress).
-🎬 Simple animations with [Rubato](https://github.com/andOrlando/rubato) and this [picom fork](https://github.com/fdev31/picom).
+- 🎨 Custom color scheme taken from [Xresources](https://github.com/pablonoya/dotfiles/blob/main/Xresources), available as vscode theme [here](https://github.com/pablonoya/seramuriana).
+- 💻🖥 Multiple screen support (vertical screen in progress).
+- 🎬 Simple animations with [Rubato](https://github.com/andOrlando/rubato) and this [picom fork](https://github.com/fdev31/picom).
 
 #### Optional features
 
-⏯ Auto-pausing video wallpaper.
-🎶 Media controls with dominant colors.
-📅 Google Calendar events.
+- ⏯ Auto-pausing video wallpaper.
+- 🎶 Media controls with dominant colors.
+- 📅 Google Calendar events.
 
 ### ⚙ Installation
 
@@ -137,8 +137,6 @@ theme.gcalendar_command = "gcalendar --account personal --output json"
 | ![control_center_controls](./screenshots/control_center_controls.png) | ![control_center_monitors](./screenshots/control_center_monitors.png) |
 
 #### Media controls with dominant colors in top bar and control center
-
-(Requires my [dominantcolors script](https://github.com/pablonoya/dominantcolors))
 
 ![media_in_bar](./screenshots/media_in_bar.png)
 
