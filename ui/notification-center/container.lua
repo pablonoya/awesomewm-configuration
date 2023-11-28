@@ -22,9 +22,9 @@ return wibox.widget {
         header,
         notification_list,
         layout = wibox.layout.fixed.vertical,
-        spacing = dpi(8)
+        spacing = dpi(4)
     },
-    top = dpi(8),
+    top = dpi(4),
     left = dpi(12),
     right = dpi(12),
     widget = wibox.container.margin
