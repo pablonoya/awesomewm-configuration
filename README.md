@@ -51,11 +51,11 @@ brightnessctl networkmanager  \
 
 # autostarted
 polkit-gnome blueman network-manager-applet redshift-minimal \
-picom-simpleanims-git diodon fusuma ulauncher
+picom-simpleanims-git diodon fusuma ulauncher \
 
 # extra packages
 lxappearance-gtk3 qt5ct-kde \
-flameshot pavucontrol asusctl rog-control-center
+flameshot pavucontrol asusctl rog-control-center \
 
 # for optional features
 mpv xwinwrap-git \
@@ -159,7 +159,7 @@ With [Bling](https://github.com/BlingCorp/bling) previews!
 
 #### Some popups
 
-| Layout                                                                                                                 | Volume                                                                                                                 |
+| Volume                                                                                                                 | Layout                                                                                                                 |
 | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | ![popup_layout](https://user-images.githubusercontent.com/31524852/232397568-cfee5823-bb7a-4713-a85e-3ccff91fcad3.png) | ![popup_volume](https://user-images.githubusercontent.com/31524852/232397220-13c26fdc-1ff2-44de-ab4b-68bcbbd047e9.png) |
 
