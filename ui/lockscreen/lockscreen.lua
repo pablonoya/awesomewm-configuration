@@ -117,7 +117,7 @@ end
 
 local var_count = 0
 for i, char in pairs(time_char) do
-    local text = helpers.colorize_text(char, beautiful.light_black .. "16")
+    local text = color_helpers.colorize_text(char, beautiful.light_black .. "16")
 
     var_count = var_count + 1
     local create_dummy_text = true
@@ -154,7 +154,7 @@ end
 
 local function deactivate_word(w)
     for i, char in pairs(char_map[w]) do
-        char.markup = helpers.colorize_text(char.text, beautiful.light_black .. "16")
+        char.markup = color_helpers.colorize_text(char.text, beautiful.light_black .. "16")
     end
 end
 
@@ -239,13 +239,13 @@ gears.timer {
 -- Lock animation
 local lock_icon = "\u{e897}"
 local password_icon = "\u{f042}"
-local password_failed_icon = helpers.colorize_text(password_icon, beautiful.red)
+local password_failed_icon = color_helpers.colorize_text(password_icon, beautiful.red)
 
 local lock_animation_icon = wibox.widget {
     -- Set forced size to prevent flickering when the icon rotates
     forced_height = dpi(80),
     forced_width = dpi(80),
-    markup = helpers.colorize_text(lock_icon, beautiful.light_black),
+    markup = color_helpers.colorize_text(lock_icon, beautiful.light_black),
     font = beautiful.icon_font_name .. 24,
     align = "center",
     valign = "center",
@@ -279,7 +279,7 @@ local lock_animation = {
 local characters_entered = 0
 local function reset()
     characters_entered = 0;
-    lock_animation_icon.markup = helpers.colorize_text(lock_icon, beautiful.light_black)
+    lock_animation_icon.markup = color_helpers.colorize_text(lock_icon, beautiful.light_black)
     lock_animation_widget_rotate.direction = "north"
     lock_animation_arc.bg = "#00000000"
 end
@@ -304,7 +304,7 @@ local function key_animation(char_inserted)
     local direction = animation_directions[(characters_entered % 4) + 1]
     if char_inserted then
         color = animation_colors[(characters_entered % 6) + 1]
-        lock_animation_icon.markup = helpers.colorize_text(password_icon, beautiful.white)
+        lock_animation_icon.markup = color_helpers.colorize_text(password_icon, beautiful.white)
     else
         if characters_entered == 0 then
             reset()

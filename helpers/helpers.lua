@@ -12,14 +12,6 @@ function helpers.rrect(radius)
     end
 end
 
--- Markup helper
-function helpers.colorize_text(txt, fg)
-    if fg == nil then
-        fg = beautiful.xforeground
-    end
-    return "<span foreground='" .. fg .. "'>" .. txt .. "</span>"
-end
-
 function helpers.vertical_pad(height)
     return wibox.widget {
         forced_height = height,

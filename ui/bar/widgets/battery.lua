@@ -6,6 +6,7 @@ local notification = require("naughty.notification")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
+local color_helpers = require("helpers.color-helpers")
 local system_controls = require("helpers.system-controls")
 
 local text_icon = require("ui.widgets.text-icon")
@@ -23,7 +24,7 @@ local percentage = wibox.widget {
 }
 
 local charge_icon = text_icon {
-    markup = helpers.colorize_text("\u{ea0b}", beautiful.green),
+    markup = color_helpers.colorize_text("\u{ea0b}", beautiful.green),
     size = 14,
     visible = false
 }
@@ -81,7 +82,7 @@ awesome.connect_signal(
         end
 
         if color ~= nil then
-            percentage:set_markup_silently(helpers.colorize_text(value, color))
+            percentage:set_markup_silently(color_helpers.colorize_text(value, color))
             positive_connection.bg = color
             battery_bar.color = color .. "70"
             battery_bar.background_color = color .. "10"

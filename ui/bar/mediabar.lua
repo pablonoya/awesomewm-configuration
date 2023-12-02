@@ -2,6 +2,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
+local color_helpers = require("helpers.color-helpers")
 local playerctl = require("signals.playerctl")
 
 local media_controls = require("ui.widgets.media.media-controls")
@@ -10,7 +11,7 @@ local player_icon = require("ui.widgets.media.player-icon")
 
 local scrolling_text = require("ui.widgets.scrolling-text")
 
-local text_separator = helpers.colorize_text(" • ", beautiful.xforeground .. "B0")
+local text_separator = color_helpers.colorize_text(" • ", beautiful.xforeground .. "B0")
 
 local media_controls = wibox.widget {
     {

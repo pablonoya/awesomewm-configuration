@@ -12,7 +12,7 @@ local clickable_container = require("ui.widgets.clickable-container")
 local text_icon = require("ui.widgets.text-icon")
 
 local bell = text_icon {
-    markup = helpers.colorize_text("\u{e7f4}", beautiful.moon),
+    markup = color_helpers.colorize_text("\u{e7f4}", beautiful.moon),
     size = 14,
     widget = wibox.widget.textbox
 }
@@ -20,20 +20,19 @@ local bell = text_icon {
 naughty.connect_signal(
     "property::suspended", function(_, suspended)
         if suspended then
-            bell.markup = helpers.colorize_text("\u{e7f6}", beautiful.accent)
+            bell.markup = color_helpers.colorize_text("\u{e7f6}", beautiful.accent)
         else
-            bell.markup = helpers.colorize_text("\u{e7f4}", beautiful.moon)
+            bell.markup = color_helpers.colorize_text("\u{e7f4}", beautiful.moon)
         end
     end
 )
 
 return function(is_vertical)
     local get_datetime_format = function()
-        return (
-            "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
-            .. (is_vertical and "\n" or " ") 
-            .. "<b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
-        )
+        local date = "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
+        local time = "<b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
+
+        return (date .. (is_vertical and "\n" or " ") .. time)
     end
 
     local datetime = wibox.widget {

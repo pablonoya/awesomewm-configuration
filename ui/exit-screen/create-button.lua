@@ -5,6 +5,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
+local color_helpers = require("helpers.color-helpers")
 local text_icon = require("ui.widgets.text-icon")
 
 local button_size = dpi(120)
@@ -16,7 +17,7 @@ local label_font = beautiful.font_name .. " 20"
 
 return function(symbol, hover_color, key, text, command)
     local icon = text_icon {
-        markup = helpers.colorize_text(symbol, hover_color),
+        markup = color_helpers.colorize_text(symbol, hover_color),
         size = 32,
         widget = wibox.widget.textbox
     }
@@ -38,7 +39,7 @@ return function(symbol, hover_color, key, text, command)
     }
 
     local label = wibox.widget {
-        markup = helpers.colorize_text(text, text_fg),
+        markup = color_helpers.colorize_text(text, text_fg),
         font = label_font,
         widget = wibox.widget.textbox
     }
@@ -78,25 +79,25 @@ return function(symbol, hover_color, key, text, command)
 
     labeled_button:connect_signal(
         "mouse::enter", function()
-            icon.markup = helpers.colorize_text(icon.text, beautiful.black)
+            icon.markup = color_helpers.colorize_text(icon.text, beautiful.black)
             button.bg = hover_color
 
             key_icon.fg = hover_color
             key_icon.border_color = hover_color
 
-            label.markup = helpers.colorize_text(label.text, hover_color)
+            label.markup = color_helpers.colorize_text(label.text, hover_color)
         end
     )
 
     labeled_button:connect_signal(
         "mouse::leave", function()
-            icon.markup = helpers.colorize_text(icon.text, hover_color)
+            icon.markup = color_helpers.colorize_text(icon.text, hover_color)
             button.bg = button_bg
 
             key_icon.fg = text_fg
             key_icon.border_color = text_fg
 
-            label.markup = helpers.colorize_text(label.text, text_fg)
+            label.markup = color_helpers.colorize_text(label.text, text_fg)
         end
     )
 
