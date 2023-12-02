@@ -45,8 +45,11 @@ awesome.connect_signal(
 
 local interval = 4
 awful.widget.watch(
-    [[ bash -c "pamixer --list-sources | grep -o '\"Running\" \"[^\"]*\"'" | cut -d '"' -f4]],
-    interval, function(widget, stdout)
+    [[ bash -c "pamixer --list-sources |
+        grep -v '\"Monitor of' |
+        grep -o '\"Running\" \"[^\"]*\"'" |
+        cut -d '"' -f4
+    ]], interval, function(widget, stdout)
         mic_indicator.visible = stdout ~= ""
         awesome.emit_signal("microphone::state", mic_indicator.visible)
     end
