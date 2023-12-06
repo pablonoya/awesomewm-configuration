@@ -6,7 +6,7 @@ local mic_slider = require("ui.control-center.controls.sliders.mic-slider")
 local volume_slider = require("ui.control-center.controls.sliders.volume-slider")
 
 local controls_container = require("ui.control-center.widgets.controls-container")
-local grouped_buttons = require("ui.control-center.controls.grouped-buttons")
+local grouped_toggle_buttons = require("ui.control-center.controls.grouped-toggle-buttons")
 
 local control_sliders = wibox_widget {
     controls_container {
@@ -26,9 +26,9 @@ local control_sliders = wibox_widget {
 }
 
 return wibox_widget {
-    grouped_buttons,
+    grouped_toggle_buttons,
     control_sliders,
     visible = true,
     layout = wibox_layout.fixed.vertical,
-    spacing = dpi(8)
+    spacing = dpi(12)
 }
