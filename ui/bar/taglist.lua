@@ -42,7 +42,7 @@ local tasklist = function(t)
         },
         layout = {
             spacing_widget = nil,
-            spacing = 4,
+            spacing = 8,
             layout = wibox.layout.fixed.horizontal
         },
         widget_template = {
