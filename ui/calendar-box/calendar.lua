@@ -18,8 +18,8 @@ local function decorate_cell(widget, flag, date)
     elseif flag == "month" then
         return {
             widget,
-            top = dpi(8),
-            bottom = dpi(4),
+            top = dpi(6),
+            bottom = dpi(2),
             widget = wibox.container.margin
         }
     end

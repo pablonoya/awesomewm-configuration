@@ -24,21 +24,7 @@ end
 
 local previous = icon_button("\u{e5cb}")
 local next = icon_button("\u{e5cc}")
-local today = border_container {
-    widget = clickable_container {
-        widget = wibox.widget {
-            markup = "today",
-            font = beautiful.font_name .. 11,
-            widget = wibox.widget.textbox
-        },
-        margins = {
-            left = dpi(4),
-            right = dpi(4)
-        },
-        shape = helpers.rrect(beautiful.border_radius / 2)
-    },
-    shape = helpers.rrect(beautiful.border_radius / 2)
-}
+local cal = icon_button("\u{e8df}")
 
 helpers.add_action(
     previous, function()
@@ -51,7 +37,7 @@ helpers.add_action(
     end
 )
 helpers.add_action(
-    today, function()
+    cal, function()
         awesome.emit_signal("calendar::date", "today")
     end
 )
@@ -60,13 +46,14 @@ return function(widget)
     widget.markup = "<b>" .. capitalize(widget.text) .. "</b>"
 
     return {
+        widget,
+        nil,
         {
             previous,
+            cal,
             next,
             layout = wibox.layout.fixed.horizontal
         },
-        widget,
-        today,
         layout = wibox.layout.align.horizontal
     }
 end
