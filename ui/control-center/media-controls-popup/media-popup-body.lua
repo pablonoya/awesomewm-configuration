@@ -23,7 +23,7 @@ local cover = wibox.widget {
         widget = wibox.container.place
     },
     {
-        player_icon(24, "popup"),
+        player_icon(25, "popup"),
         valign = "bottom",
         halign = "right",
         widget = wibox.container.place
@@ -36,26 +36,30 @@ return wibox.widget {
     {
         {
             {
-                media_info,
-                progressbar,
                 {
-                    media_buttons,
-                    nil,
-                    interval,
-                    layout = wibox.layout.flex.horizontal
+                    media_info,
+                    progressbar,
+                    {
+                        media_buttons,
+                        nil,
+                        interval,
+                        layout = wibox.layout.flex.horizontal
+                    },
+                    spacing = dpi(8),
+                    forced_width = dpi(200),
+                    layout = wibox.layout.fixed.vertical
                 },
-                spacing = dpi(8),
-                forced_width = dpi(200),
-                layout = wibox.layout.fixed.vertical
+                margins = dpi(8),
+                widget = wibox.container.margin
             },
             {
                 cover,
                 widget = wibox.container.place
             },
-            spacing = dpi(16),
+            spacing = dpi(8),
             layout = wibox.layout.fixed.horizontal
         },
-        margins = dpi(12),
+        margins = dpi(4),
         widget = wibox.container.margin
     },
     bg = beautiful.black,
