@@ -69,7 +69,7 @@ return function(screen_width, is_vertical)
             widget = wibox.container.margin
         },
         visible = false,
-        value = 0.1,
+        value = 0.01,
         border_width = dpi(1.6),
         color = beautiful.accent,
         border_color = beautiful.focus,
@@ -78,7 +78,9 @@ return function(screen_width, is_vertical)
 
     playerctl:connect_signal(
         "position", function(_, interval_sec, length_sec)
-            progress_container.value = interval_sec / length_sec
+            if length_sec > 0 then
+                progress_container.value = interval_sec / length_sec
+            end
         end
     )
 
