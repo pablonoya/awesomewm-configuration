@@ -1,8 +1,5 @@
-local awful_button = require("awful.button")
 local beautiful = require("beautiful")
-local gtable = require("gears.table")
 local wibox_container = require("wibox.container")
-local wibox_widget = require("wibox.widget")
 
 local helpers = require("helpers")
 
@@ -11,19 +8,14 @@ local clickable_container = require("ui.widgets.clickable-container")
 
 local control_center_button = clickable_container {
     widget = text_icon {
-        text = "\u{e429}",
+        text = "\u{f614}",
         size = 20
     },
-    margins = {
-        top = dpi(2),
-        bottom = dpi(2),
-        left = dpi(4),
-        right = dpi(4)
-    }
+    margins = dpi(4)
 }
 
 helpers.add_action(
-    control_center_button, function(c)
+    control_center_button, function()
         awesome.emit_signal("control_center::toggle")
     end
 )
@@ -38,6 +30,5 @@ awesome.connect_signal(
 return {
     control_center_button,
     left = dpi(4),
-    right = dpi(4),
     widget = wibox_container.margin
 }
