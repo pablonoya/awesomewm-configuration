@@ -1,6 +1,8 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local border_popup = require('ui.widgets.border-popup')
+
 local notification_list = require("ui.notification-center.notification-list")
 local clear_all = require("ui.notification-center.clear-all")
 
@@ -17,15 +19,18 @@ local header = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 
-return wibox.widget {
-    {
-        header,
-        notification_list,
-        layout = wibox.layout.fixed.vertical,
-        spacing = dpi(4)
-    },
-    top = dpi(4),
-    left = dpi(12),
-    right = dpi(12),
-    widget = wibox.container.margin
+return border_popup {
+    widget = wibox.widget {
+        {
+            header,
+            notification_list,
+            layout = wibox.layout.fixed.vertical,
+            spacing = dpi(4)
+        },
+        top = dpi(4),
+        left = dpi(12),
+        right = dpi(12),
+        forced_width = dpi(320),
+        widget = wibox.container.margin
+    }
 }

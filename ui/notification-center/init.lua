@@ -1,33 +1,12 @@
-local awful_screen = require("awful.screen")
-local awful_placement = require("awful.placement")
-local beautiful = require("beautiful")
-local wibox = require("wibox")
+local awful = require("awful")
 
 local rubato = require("module.rubato")
 
-local helpers = require("helpers")
-local container = require('ui.notification-center.container')
-local calendar_height = require('ui.calendar-box.calendar-container').height
-
-local notification_center = wibox {
-    type = "dock",
-    screen = awful_screen.focused(),
-    width = dpi(320),
-    ontop = true,
-    visible = false,
-    shape = helpers.rrect(beautiful.border_radius)
-}
-
-notification_center:setup{
-    container,
-    bg = beautiful.black,
-    border_width = dpi(2),
-    border_color = beautiful.focus,
-    shape = helpers.rrect(beautiful.notif_center_radius),
-    widget = wibox.container.background
-}
+local notification_center = require('ui.notification-center.notification-center')
+local calendar_popup = require('ui.calendar-box.calendar-popup')
 
 local timed_slide = rubato.timed {
+    rate = 60,
     duration = 0.3,
     intro = 0.01,
     easing = rubato.easing.quadratic,
@@ -36,19 +15,18 @@ local timed_slide = rubato.timed {
     end
 }
 
-local notif_center_show = function()
-    local screen = awful_screen.focused()
-    local screen_height = screen.geometry.height
-    local bar_and_calendar_height = screen.bar.height + calendar_height
+local show = function()
+    local screen = awful.screen.focused()
+    local reserved_height = screen.bar.height + calendar_popup.height
 
-    notification_center.height = screen_height - bar_and_calendar_height - dpi(24)
+    notification_center.maximum_height = screen.geometry.height - reserved_height - dpi(24)
 
-    awful_placement.right(
+    awful.placement.top_right(
         notification_center, {
-            parent = screen,
+            parent = screen.bar,
             margins = {
-                top = bar_and_calendar_height + dpi(16),
-                right = -notification_center.width + dpi(14)
+                top = reserved_height + dpi(16),
+                right = -notification_center.width
             }
         }
     )
@@ -58,20 +36,24 @@ local notif_center_show = function()
     timed_slide.target = notification_center.x - notification_center.width
 end
 
-local notif_center_hide = function()
+local hide = function()
     timed_slide.target = notification_center.x + notification_center.width
     notification_center.visible = false
 end
 
+notification_center:connect_signal(
+    "property::visible", function(self)
+        awesome.emit_signal("notification_center::visible", self.visible)
+    end
+)
+
 awesome.connect_signal(
     "notification_center::toggle", function()
         if notification_center.visible then
-            notif_center_hide()
+            hide()
         else
-            notif_center_show()
+            show()
         end
-
-        awesome.emit_signal("notification_center::visible", notification_center.visible)
     end
 )
 

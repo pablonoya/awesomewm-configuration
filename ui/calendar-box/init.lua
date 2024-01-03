@@ -2,45 +2,46 @@ local awful_screen = require("awful.screen")
 local awful_placement = require("awful.placement")
 
 local rubato = require("module.rubato")
-local calendar_container = require("ui.calendar-box.calendar-container")
+local calendar_popup = require("ui.calendar-box.calendar-popup")
 
 local timed_slide = rubato.timed {
+    rate = 60,
     duration = 0.2,
     intro = 0.01,
     easing = rubato.easing.quadratic,
     subscribed = function(pos)
-        calendar_container.x = pos
+        calendar_popup.x = pos
     end
 }
 
--- Make toogle button
 local show = function()
-    awesome.emit_signal("calendar::date", "today")
-
     local screen = awful_screen.focused()
+
     awful_placement.top_right(
-        calendar_container, {
-            parent = screen,
+        calendar_popup, {
+            parent = screen.bar,
             margins = {
-                top = screen.bar.height + dpi(12),
-                right = -calendar_container.width + dpi(14)
+                top = screen.bar.height + dpi(8),
+                right = -calendar_popup.width
             }
         }
     )
 
-    timed_slide.pos = calendar_container.x
-    calendar_container.visible = true
-    timed_slide.target = calendar_container.x - calendar_container.width
+    timed_slide.pos = calendar_popup.x
+    calendar_popup.visible = true
+    timed_slide.target = calendar_popup.x - calendar_popup.width
+
+    awesome.emit_signal("calendar::date", "today")
 end
 
 local hide = function()
-    timed_slide.target = calendar_container.x + calendar_container.width
-    calendar_container.visible = false
+    timed_slide.target = calendar_popup.x + calendar_popup.width
+    calendar_popup.visible = false
 end
 
 awesome.connect_signal(
     "notification_center::toggle", function()
-        if calendar_container.visible then
+        if calendar_popup.visible then
             hide()
         else
             show()

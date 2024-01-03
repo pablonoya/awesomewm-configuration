@@ -7,29 +7,68 @@ local naughty = require("naughty")
 local helpers = require("helpers")
 
 local notification_box = require("ui.notification-center.notification-box")
-local empty_notifbox = require("ui.notification-center.no-notifications")
+local no_notifications = require("ui.notification-center.no-notifications")
 
+local all_notifications = {}
 local is_empty = true
 
-local layout = wibox_widget {
-    empty_notifbox,
+local list = wibox_widget {
+    no_notifications,
     spacing = dpi(8),
     layout = wibox_layout.fixed.vertical
 }
-local all_notifications = {}
 
 -- scrolling notifications list
-helpers.add_list_scrolling(layout)
+helpers.add_list_scrolling(list)
 
-local notifbox_add = function(notification)
-    if #layout.children == 1 and is_empty then
-        layout:reset()
+local add_notifbox = function(notification)
+    if #list.children == 1 and is_empty then
+        list:reset()
         is_empty = false
     end
 
     local new_notification = notification_box(notification)
     table.insert(all_notifications, new_notification)
-    layout:insert(1, new_notification)
+    list:insert(1, new_notification)
+end
+
+naughty.connect_signal(
+    "request::display", function(notification)
+        if notification.urgency == "low" then
+            return
+        end
+
+        notification:connect_signal(
+            "destroyed", function(self, reason, keep_visble)
+                if reason == 1 then
+                    add_notifbox(notification)
+                end
+            end
+        )
+    end
+)
+
+clear_all_notifications = function()
+    list:reset()
+    list:insert(1, no_notifications)
+
+    all_notifications = {}
+    is_empty = true
+end
+
+clear_notification = function(notification_widget)
+    if #list.children == 1 then
+        clear_all_notifications()
+    else
+        list:remove_widgets(notification_widget)
+
+        for i, notification in ipairs(all_notifications) do
+            if notification_widget == notification then
+                table.remove(all_notifications, i)
+                break
+            end
+        end
+    end
 end
 
 awesome.connect_signal(
@@ -41,49 +80,12 @@ awesome.connect_signal(
                 end
             )
 
-            layout:reset()
+            list:reset()
             for _, notification in ipairs(all_notifications) do
-                layout:insert(1, notification)
+                list:insert(1, notification)
             end
         end
     end
 )
 
-naughty.connect_signal(
-    "request::display", function(notification)
-        if notification.urgency == "low" then
-            return
-        end
-
-        notification:connect_signal(
-            "destroyed", function(self, reason, keep_visble)
-                if reason == 1 then
-                    notifbox_add(notification)
-                end
-            end
-        )
-    end
-)
-
-clear_notifications = function()
-    layout:reset()
-    all_notifications = {}
-    layout:insert(1, empty_notifbox)
-    is_empty = true
-end
-
-clear_notification = function(notification_widget)
-    if #layout.children == 1 then
-        clear_notifications()
-    else
-        layout:remove_widgets(notification_widget)
-        for i, notification in ipairs(all_notifications) do
-            if notification_widget == notification then
-                table.remove(all_notifications, i)
-                break
-            end
-        end
-    end
-end
-
-return layout
+return list

@@ -15,7 +15,7 @@ local clear_all_button = clickable_container {
         widget = wibox.container.margin
     },
     shape = gshape.circle,
-    action = clear_notifications
+    action = clear_all_notifications
 }
 
 return clear_all_button
