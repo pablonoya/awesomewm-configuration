@@ -21,7 +21,7 @@ local monitor_control_row_progressbars = wibox_widget {
             wibox_widget {
                 text = "Usage %",
                 font = beautiful.font_name .. "Bold 11",
-                align = "center",
+                halign = "center",
                 widget = wibox_widget.textbox
             },
             cpu_usage,
@@ -35,7 +35,7 @@ local monitor_control_row_progressbars = wibox_widget {
             wibox_widget {
                 text = "Temperature °C",
                 font = beautiful.font_name .. "Bold 11",
-                align = "center",
+                halign = "center",
                 widget = wibox_widget.textbox
             },
             cpu_temperature,
@@ -48,8 +48,16 @@ local monitor_control_row_progressbars = wibox_widget {
     spacing = dpi(12)
 }
 
-return wibox_widget {
+local monitors = wibox_widget {
     monitor_control_row_progressbars,
     visible = false,
     layout = wibox_layout.fixed.vertical
 }
+
+awesome.connect_signal(
+    "control_center::monitor_mode", function(monitor_mode)
+        monitors.visible = monitor_mode
+    end
+)
+
+return monitors

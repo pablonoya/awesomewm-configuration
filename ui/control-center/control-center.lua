@@ -1,65 +1,53 @@
-local awful_popup = require("awful.popup")
 local beautiful = require("beautiful")
-local wibox_container = require("wibox.container")
-local wibox_layout = require("wibox.layout")
+local wibox = require("wibox")
 
 local helpers = require("helpers")
 
+local border_popup = require('ui.widgets.border-popup')
+
 local info_and_buttons = require("ui.control-center.top-controls.container")
-local controls = require("ui.control-center.controls.container")
-local monitors = require("ui.control-center.monitors.monitors-container")
+local controls = require("ui.control-center.controls.controls")
+local monitors = require("ui.control-center.monitors.monitors")
 local media_controls_popup = require("ui.control-center.media-controls-popup")
 
-local body_container = {
+local body_container = wibox.widget {
     {
         {
             info_and_buttons,
             {
                 controls,
                 monitors,
-                layout = wibox_layout.stack
+                layout = wibox.layout.stack
             },
-            layout = wibox_layout.fixed.vertical,
+            layout = wibox.layout.fixed.vertical,
             spacing = dpi(12)
         },
         margins = dpi(16),
-        widget = wibox_container.margin
+        widget = wibox.container.margin
     },
     bg = beautiful.wibar_bg,
+    forced_width = dpi(beautiful.control_center_width),
     shape = helpers.rrect(beautiful.border_radius),
-    widget = wibox_container.background
+    widget = wibox.container.background
 }
 
-local control_center = awful_popup {
-    type = "dock",
-    maximum_width = dpi(beautiful.control_center_width),
-    border_width = dpi(2),
-    border_color = beautiful.focus,
-    ontop = true,
-    visible = false,
-    shape = helpers.rrect(beautiful.border_radius),
+local control_center = border_popup {
     widget = body_container
 }
 
 local last_height = control_center.height
-awesome.connect_signal(
-    "control_center::monitor_mode", function(monitor_mode)
-        if monitor_mode then
-            controls.visible = false
-            monitors.visible = true
-        else
-            controls.visible = true
-            monitors.visible = false
-        end
-    end
-)
-
 control_center:connect_signal(
     "property::height", function(self)
         if last_height ~= self.height then
             media_controls_popup.y = media_controls_popup.y + (self.height - last_height)
             last_height = self.height
         end
+    end
+)
+
+control_center:connect_signal(
+    "property::visible", function(self)
+        awesome.emit_signal("control_center::visible", self.visible)
     end
 )
 

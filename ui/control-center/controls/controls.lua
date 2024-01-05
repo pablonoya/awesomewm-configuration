@@ -25,10 +25,18 @@ local control_sliders = wibox_widget {
     spacing = dpi(12)
 }
 
-return wibox_widget {
+local controls = wibox_widget {
     grouped_toggle_buttons,
     control_sliders,
     visible = true,
     layout = wibox_layout.fixed.vertical,
     spacing = dpi(12)
 }
+
+awesome.connect_signal(
+    "control_center::monitor_mode", function(monitor_mode)
+        controls.visible = not monitor_mode
+    end
+)
+
+return controls

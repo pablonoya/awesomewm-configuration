@@ -1,6 +1,8 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
+local border_popup = require('ui.widgets.border-popup')
+
 local media_controls = require("ui.widgets.media.media-controls")
 local media_image = require("ui.widgets.media.media-image")
 local player_icon = require("ui.widgets.media.player-icon")
@@ -32,7 +34,7 @@ local cover = wibox.widget {
     layout = wibox.layout.stack
 }
 
-return wibox.widget {
+local body = wibox.widget {
     {
         {
             {
@@ -64,4 +66,9 @@ return wibox.widget {
     },
     bg = beautiful.black,
     widget = wibox.container.background
+}
+
+return border_popup {
+    widget = body,
+    maximum_width = dpi(beautiful.control_center_width)
 }
