@@ -15,11 +15,13 @@ local placeholder = wibox.widget {
     {
         id = "message",
         text = "Loading events...",
-        haligh = "center",
         font = beautiful.font_name .. "12",
         widget = wibox.widget.textbox
     },
-    margins = dpi(4),
+    top = dpi(4),
+    left = dpi(8),
+    right = dpi(8),
+    bottom = dpi(8),
     widget = wibox.container.margin
 }
 
