@@ -25,7 +25,7 @@ return function(filepath)
                     xargs = {"-b -ov -ni -nf -un -s -st -sp"},
                     pargs = {
                         "-wid WID", "--fullscreen", "--no-stop-screensaver", "--loop", "--no-audio",
-                        "--no-border", "--no-osc", "--no-osd-bar", "-name 'video-wallpaper'"
+                        "--no-border", "--no-osc", "--no-osd-bar"
                     }
                 }
             )
