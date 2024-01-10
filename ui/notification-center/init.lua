@@ -1,9 +1,15 @@
 local awful = require("awful")
+local beautiful = require("beautiful")
 
 local rubato = require("module.rubato")
 
 local notification_center = require('ui.notification-center.notification-center')
 local calendar_popup = require('ui.calendar-box.calendar-popup')
+
+local weather_popup
+if beautiful.weather_api_key then
+    weather_popup = require("ui.weather-popup")
+end
 
 local timed_slide = rubato.timed {
     rate = 60,
@@ -17,15 +23,17 @@ local timed_slide = rubato.timed {
 
 local show = function()
     local screen = awful.screen.focused()
-    local reserved_height = screen.bar.height + calendar_popup.height
+    local weather_popup_height = weather_popup and weather_popup.height or 0
 
-    notification_center.maximum_height = screen.geometry.height - reserved_height - dpi(24)
+    local reserved_height = screen.bar.height + calendar_popup.height + weather_popup_height
+
+    notification_center.maximum_height = screen.geometry.height - reserved_height - 24
 
     awful.placement.top_right(
         notification_center, {
             parent = screen.bar,
             margins = {
-                top = reserved_height + dpi(16),
+                top = reserved_height + (weather_popup and 36 or 24),
                 right = -notification_center.width
             }
         }

@@ -9,3 +9,7 @@ require("signals.volume-signals")
 if beautiful.dominantcolors_path then
     require("signals.media-dominantcolors")
 end
+
+if beautiful.weather_api_key then
+    require("signals.weather-signals")
+end

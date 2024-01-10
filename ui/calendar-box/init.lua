@@ -21,7 +21,7 @@ local show = function()
         calendar_popup, {
             parent = screen.bar,
             margins = {
-                top = screen.bar.height + dpi(8),
+                top = screen.bar.height + 12,
                 right = -calendar_popup.width
             }
         }

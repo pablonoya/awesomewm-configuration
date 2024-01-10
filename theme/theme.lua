@@ -299,6 +299,11 @@ theme.window_switcher_icon_width = dpi(28)
 -- theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
 
 -- gcalendar command
--- theme.gcalendar_command = "gcalendar --output json"
+theme.gcalendar_command = "gcalendar --output json --no-of-days 3"
+
+-- openweathermap settings
+-- theme.weather_api_key = ""
+theme.weather_latitude = 12.345
+theme.weather_longitude = -67.890
 
 return theme
