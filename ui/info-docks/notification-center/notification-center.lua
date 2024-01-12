@@ -3,8 +3,8 @@ local wibox = require("wibox")
 
 local border_popup = require('ui.widgets.border-popup')
 
-local notification_list = require("ui.notification-center.notification-list")
-local clear_all = require("ui.notification-center.clear-all")
+local notification_list = require("ui.info-docks.notification-center.notification-list")
+local clear_all = require("ui.info-docks.notification-center.clear-all")
 
 local header = wibox.widget {
     {
@@ -19,7 +19,7 @@ local header = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 
-return border_popup {
+local notification_center = border_popup {
     widget = wibox.widget {
         {
             header,
@@ -34,3 +34,10 @@ return border_popup {
         widget = wibox.container.margin
     }
 }
+
+notification_center:connect_signal(
+    "property::visible", function(self)
+    end
+)
+
+return notification_center

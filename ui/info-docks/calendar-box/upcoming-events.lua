@@ -9,7 +9,7 @@ local helpers = require("helpers")
 local text_icon = require("ui.widgets.text-icon")
 local clickable_container = require("ui.widgets.clickable-container")
 
-local calendar_event = require("ui.calendar-box.calendar-event")
+local calendar_event = require("ui.info-docks.calendar-box.calendar-event")
 
 local placeholder = wibox.widget {
     {

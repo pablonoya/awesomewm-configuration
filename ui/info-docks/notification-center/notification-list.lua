@@ -6,8 +6,8 @@ local naughty = require("naughty")
 
 local helpers = require("helpers")
 
-local notification_box = require("ui.notification-center.notification-box")
-local no_notifications = require("ui.notification-center.no-notifications")
+local notification_box = require("ui.info-docks.notification-center.notification-box")
+local no_notifications = require("ui.info-docks.notification-center.no-notifications")
 
 local all_notifications = {}
 local is_empty = true
