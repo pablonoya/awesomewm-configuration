@@ -37,6 +37,7 @@ local notification_center = border_popup {
 
 notification_center:connect_signal(
     "property::visible", function(self)
+        awesome.emit_signal("notification_center::visible", self.visible)
     end
 )
 
