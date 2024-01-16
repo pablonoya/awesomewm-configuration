@@ -15,6 +15,7 @@ local interval = wibox.widget {
     font = beautiful.font_name .. "11",
     valign = "center",
     halign = "right",
+    ellipsize = "none",
     widget = wibox.widget.textbox
 }
 

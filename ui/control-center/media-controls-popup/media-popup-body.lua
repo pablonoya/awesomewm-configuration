@@ -15,7 +15,8 @@ local media_buttons = wibox.widget {
     media_controls.prev(16),
     media_controls.play(21),
     media_controls.next(16),
-    spacing = dpi(2),
+    media_controls.loop(16),
+    spacing = dpi(1),
     layout = wibox.layout.fixed.horizontal
 }
 

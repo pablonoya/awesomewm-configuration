@@ -5,12 +5,14 @@ local wibox = require("wibox")
 local playerctl = require("signals.playerctl")
 local clickable_container = require("ui.widgets.clickable-container")
 
-local create_media_button = function(symbol, command, size, args)
+local create_media_button = function(symbol, size, command, args)
     return clickable_container {
         widget = {
             id = "icon",
             text = symbol,
             font = beautiful.icon_font_name .. (size or 14) .. " @FILL=1",
+            valign = "center",
+            halign = "center",
             ellipsize = "none",
             widget = wibox.widget.textbox
         },
@@ -27,15 +29,15 @@ function controls.prev(size)
         playerctl:previous()
     end
 
-    return create_media_button("", media_prev_command, size)
+    return create_media_button("", size, media_prev_command)
 end
 
-function controls.play(play_size)
+function controls.play(size)
     local media_play_command = function()
         playerctl:play_pause()
     end
 
-    local media_play = create_media_button("", media_play_command, play_size)
+    local media_play = create_media_button("", size, media_play_command)
 
     playerctl:connect_signal(
         "playback_status", function(_, playing, player)
@@ -50,12 +52,37 @@ function controls.play(play_size)
     return media_play
 end
 
-function controls.next(size, args)
+function controls.next(size)
     local media_next_command = function()
         playerctl:next()
     end
 
-    return create_media_button("", media_next_command, size)
+    return create_media_button("", size, media_next_command)
+end
+
+function controls.loop(size)
+    local cycle_loop = function()
+        playerctl:cycle_loop_status()
+    end
+
+    local loop = create_media_button("\u{e040}", size, cycle_loop)
+
+    playerctl:connect_signal(
+        "loop_status", function(_, loop_status)
+            if loop_status == "track" then
+                loop.widget.icon.text = "\u{e041}"
+                loop.opacity = 1
+            elseif loop_status == "playlist" then
+                loop.widget.icon.text = "\u{e040}"
+                loop.opacity = 1
+            else
+                loop.widget.icon.text = "\u{e040}"
+                loop.opacity = 0.7
+            end
+        end
+    )
+
+    return loop
 end
 
 return controls
