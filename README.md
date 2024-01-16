@@ -120,15 +120,26 @@ Set gcalendar command with your account and output as json
 theme.gcalendar_command = "gcalendar --account personal --output json"
 ```
 
+#### Weather
+
+Set your [openweathermap](https://openweathermap.org/) API key and your latitude and longitude.
+
+```lua
+-- openweathermap settings
+theme.weather_api_key = "yourapikeyhere"
+theme.weather_latitude = 12.345
+theme.weather_longitude = -67.890
+```
+
 </details>
 
 ### 🖼 Gallery
 
 ---
 
-#### Calendar + Google calendar events + Notification Center
+#### Information Docks: Calendar + Google calendar events, Weather and Notification Center
 
-![notif_center+calendar](./screenshots/notif_center.png)
+![info-docks](./screenshots/info-docks.png)
 
 #### Control center
 
