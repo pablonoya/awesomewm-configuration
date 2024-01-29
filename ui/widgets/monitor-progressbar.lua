@@ -15,7 +15,7 @@ local function monitor_progressbar(args)
 
     local information = wibox_widget {
         text = args.info,
-        font = beautiful.font_name .. 'Medium 10',
+        font = beautiful.font_name .. "Medium 10",
         align = "right",
         widget = wibox_widget.textbox
     }
@@ -31,23 +31,27 @@ local function monitor_progressbar(args)
         widget = wibox_widget.progressbar
     }
 
+    local function callback()
+        spawn.easy_async_with_shell(
+            args.watch_command, function(stdout)
+                local value, text = args.format_info(stdout)
+                progressbar:set_value(value)
+                information.markup = text
+            end
+        )
+    end
+
     local timer = gtimer {
         timeout = args.interval or 1,
         call_now = true,
-        callback = function()
-            spawn.easy_async_with_shell(
-                args.watch_command, function(stdout)
-                    local value, text = args.format_info(stdout)
-                    progressbar:set_value(value)
-                    information.markup = text
-                end
-            )
-        end
+        callback = callback
     }
 
     awesome.connect_signal(
         "control_center::monitor_mode", function(monitor_mode)
             if monitor_mode then
+                -- run callback immediately then periodically
+                callback()
                 timer:start()
             else
                 timer:stop()
@@ -70,7 +74,6 @@ local function monitor_progressbar(args)
         layout = wibox_layout.fixed.vertical,
         spacing = dpi(6)
     }
-
 end
 
 return monitor_progressbar
