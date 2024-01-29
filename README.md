@@ -83,6 +83,13 @@ Move the configuration folder to awesome directory
 mv awesomewm-configuration $HOME/.config/awesome
 ```
 
+Set your latitude and longitude in `theme/theme.lua` for redshift and optional weather widget.
+
+```lua
+theme.latitude = 12.345
+theme.longitude = -67.890
+```
+
 <details>
 <summary><b>Activate the optional features</b></summary>
 
@@ -98,13 +105,13 @@ theme.video_wallpaper_vertical_path = HOME .. "/videos/cyberpunk-city-pixel-vert
 
 #### Media controls with dominant colors
 
-Install my [dominantcolors script](https://github.com/pablonoya/dominantcolors) with pipx
+Install my [dominantcolors script](https://github.com/pablonoya/dominantcolors) with pipx.
 
 ```
 pipx install git+https://github.com/pablonoya/dominantcolors.git
 ```
 
-Set the script path
+Set the script path.
 
 ```lua
 -- Dominantcolors script path
@@ -113,7 +120,7 @@ theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
 
 #### Google Calendar events
 
-Set gcalendar command with your account and output as json
+Set gcalendar command with your account and output as json.
 
 ```lua
 -- gcalendar command
@@ -122,13 +129,11 @@ theme.gcalendar_command = "gcalendar --account personal --output json"
 
 #### Weather
 
-Set your [openweathermap](https://openweathermap.org/) API key and your latitude and longitude.
+Set your [OpenWeather](https://openweathermap.org/) API key.
 
 ```lua
--- openweathermap settings
+-- OpenWeather api key
 theme.weather_api_key = "yourapikeyhere"
-theme.weather_latitude = 12.345
-theme.weather_longitude = -67.890
 ```
 
 </details>

@@ -291,6 +291,9 @@ theme.window_switcher_name_normal_color = theme.xforeground .. "97"
 theme.window_switcher_name_focus_color = theme.accent
 theme.window_switcher_icon_width = dpi(28)
 
+theme.latitude = 12.345
+theme.longitude = -67.890
+
 -- Video wallpaper
 -- theme.video_wallpaper_path =  -- HOME .. "/videos/unicorn-kanistra.mp4"
 -- theme.video_wallpaper_vertical_path = HOME .. "/videos/unicorn-kanistra-vertical.mp4"
@@ -301,9 +304,7 @@ theme.window_switcher_icon_width = dpi(28)
 -- gcalendar command
 theme.gcalendar_command = "gcalendar --output json --no-of-days 3"
 
--- openweathermap settings
--- theme.weather_api_key = ""
-theme.weather_latitude = 12.345
-theme.weather_longitude = -67.890
+-- OpenWeather api key
+theme.weather_api_key = "9e6200f9333c416a2eeed22a4ceccfd5"
 
 return theme

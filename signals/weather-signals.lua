@@ -7,8 +7,8 @@ local endpoint = "https://api.openweathermap.org/data/2.5/weather"
 
 local query_params = {
     appid = beautiful.weather_api_key,
-    lat = beautiful.weather_latitude,
-    lon = beautiful.weather_longitude,
+    lat = beautiful.latitude,
+    lon = beautiful.longitude,
     units = "metric",
     lang = "en"
 }
@@ -36,7 +36,7 @@ local function emit_weather_signal()
 end
 
 local timer = gtimer {
-    timeout = 60 * 10,
+    timeout = 60 * 30,
     call_now = true,
     autostart = true,
     callback = emit_weather_signal

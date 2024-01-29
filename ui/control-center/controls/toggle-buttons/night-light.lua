@@ -5,15 +5,17 @@ local toggle_button = require("ui.widgets.toggle-button")
 
 local function onclick()
     spawn.easy_async_with_shell(
-        [[
+        string.format(
+            [[
             if [ ! -z $(pgrep redshift) ]; then
-                pkill redshift
+                pkill redshift &
                 echo 'OFF'
             else
-                redshift -l -19:-65 -t 6500:4200 &>/dev/null &
+                redshift -l %s:%s -t 6500:4200 &>/dev/null &
                 echo 'ON'
             fi
-        ]], function(stdout)
+        ]], beautiful.latitude, beautiful.longitude
+        ), function(stdout)
             awesome.emit_signal("blue_light:state", stdout:match("ON"))
         end
     )
