@@ -49,10 +49,11 @@ systray:connect_signal(
 client.connect_signal(
     "focus", function()
         local focused_screen = awful_screen.focused()
+        local is_vertical = focused_screen.geometry.height > focused_screen.geometry.width
 
-        if focused_screen.geometry.height > focused_screen.geometry.width then
+        if is_vertical then
             beautiful.systray_max_rows = 2
-            tray.base_size = 21
+            tray.base_size = 20
         else
             beautiful.systray_max_rows = 1
             tray.base_size = 24
