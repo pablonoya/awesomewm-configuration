@@ -28,23 +28,31 @@ local function emit_weather_signal(stdout, stderr)
     awesome.emit_signal("weather::update", json.decode(stdout))
 end
 
-local function check_internet_connection(stdout, stderr)
-    if stderr == "" then
-        -- Internet connection is available
-        local command = string.format(
-            "curl -s -m 7 '%s?%s'", endpoint, table_to_query_string(query_params)
-        )
-        spawn.easy_async_with_shell(command, emit_weather_signal)
-    else
-        gtimer.delayed_call(check_internet_connection, 5)
-    end
+local function check_internet_connection()
+    spawn.easy_async_with_shell(
+        "ping -c 1 8.8.8.8", function(stdout, stderr)
+            if stderr == "" then
+                -- Internet connection is available
+                local command = string.format(
+                    "curl -s -m 7 '%s?%s'", endpoint, table_to_query_string(query_params)
+                )
+                spawn.easy_async_with_shell(command, emit_weather_signal)
+            else
+                -- Retry after 5 seconds
+                gtimer {
+                    timeout = 5,
+                    autostart = true,
+                    single_shot = true,
+                    callback = check_internet_connection
+                }
+            end
+        end
+    )
 end
 
 local timer = gtimer {
     timeout = 60 * 30,
     call_now = true,
     autostart = true,
-    callback = function()
-        spawn.easy_async_with_shell("ping -c 1 8.8.8.8", check_internet_connection)
-    end
+    callback = check_internet_connection
 }
