@@ -5,16 +5,22 @@ local gcolor = require("gears.color")
 local menubar_utils = require("menubar.utils")
 local icons = require("ui.icons")
 
+local default_client_icon = gcolor.recolor_image(icons.window, beautiful.xforeground)
+
 local function get_icon(client)
+    if not client.instance then
+        return default_client_icon
+    end
+
     local class, _ = client.instance:gsub(" ", "-")
     local icon_path = menubar_utils.lookup_icon(class)
 
     -- try using the client class
-    if not icon_path then
+    if not icon_path and client.class then
         icon_path = menubar_utils.lookup_icon(client.class:gsub(" ", "-"))
     end
 
-    return icon_path or gcolor.recolor_image(icons.window, beautiful.xforeground)
+    return icon_path or default_client_icon
 end
 
 client.connect_signal(
