@@ -1,3 +1,4 @@
+local beautiful = require("beautiful")
 local gstring = require("gears.string")
 local wibox = require("wibox")
 
@@ -7,14 +8,13 @@ local scrolling_text = require("ui.widgets.scrolling-text")
 
 local media_title = scrolling_text {
     title = "Title",
-    font = "Roboto 12",
+    font = beautiful.font_name .. 12,
     speed = 32,
     step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
 }
 
 local artist_and_album = scrolling_text {
     text = "Artist",
-    font = "Roboto 11",
     speed = 32,
     step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
 }

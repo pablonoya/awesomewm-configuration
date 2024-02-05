@@ -25,7 +25,7 @@ local media_controls = wibox.widget {
 
 return function(screen_width, is_vertical)
     local media_info = scrolling_text {
-        font = "Roboto 11",
+        font = beautiful.font_name .. 'Medium 11',
         fps = 4,
         extra_space = 16,
         max_size = screen_width / (is_vertical and 24 or 10)
