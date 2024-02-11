@@ -1,10 +1,7 @@
--- pcall(require, "luarocks.loader")
 local spawn = require("awful.spawn")
 local gfs = require("gears.filesystem")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
-
-local revelation = require("away.third_party.revelation")
 
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -20,18 +17,14 @@ naughty.connect_signal(
 
 dpi = beautiful.xresources.apply_dpi
 
--- Autostart
+-- Autostart programs
 spawn.easy_async_with_shell(gfs.get_configuration_dir() .. "configuration/autostart.sh")
 
--- Theme, modules and config
+-- Theme + Configs
 beautiful.init(gfs.get_configuration_dir() .. "theme/theme.lua")
-revelation.init {
-    charorder = "wasdhjkluiopynmftgvceqzx1234567890"
-}
-require("module")
 require("configuration")
 
--- Import Daemons, UI & widgets
+-- Import Signals + UI
 require("signals")
 require("ui")
 
