@@ -99,8 +99,8 @@ Set Video paths in `theme/theme.lua`, vertical video is optional and it's used o
 
 ```lua
 -- Video wallpaper
-theme.video_wallpaper_path = HOME .. "/videos/cyberpunk-city-pixel.mp4"
-theme.video_wallpaper_vertical_path = HOME .. "/videos/cyberpunk-city-pixel-vertical.mp4"
+theme.videowallpaper_path = HOME .. "/videos/cyberpunk-city-pixel.mp4"
+theme.videowallpaper_vertical_path = HOME .. "/videos/cyberpunk-city-pixel-vertical.mp4"
 ```
 
 #### Media controls with dominant colors

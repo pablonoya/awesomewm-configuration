@@ -1,34 +1,64 @@
-local awful_screen = require("awful.screen")
-local beautiful = require("beautiful")
 local spawn = require("awful.spawn")
+local beautiful = require("beautiful")
 local gfs = require("gears.filesystem")
 
-local away_wallpaper = require("away.wallpaper")
+local function set_static_wallpaper(s)
+    local awful_wallpaper = require("awful.wallpaper")
 
---  pause mpv if there are open windows
-spawn.easy_async_with_shell(gfs.get_configuration_dir() .. "configuration/pause_videowallpaper.sh")
+    awful_wallpaper {
+        screen = s,
+        bg = beautiful.black
+    }
+end
 
-return function(filepath)
-    spawn.with_shell("killall xwinwrap")
-    awful_screen.connect_for_each_screen(
-        function(s)
-            local is_vertical = s.geometry.height > s.geometry.width
-            if is_vertical and beautiful.video_wallpaper_vertical_path then
-                filepath = beautiful.video_wallpaper_vertical_path
+local function set_videowallpaper(s)
+    local filepath = beautiful.videowallpaper_path
+
+    if not filepath then
+        set_static_wallpaper(s)
+        return
+    end
+
+    if s.videowallpaper then
+        s.videowallpaper.update()
+        return
+    end
+
+    local away_wallpaper = require("away.wallpaper")
+    local vertical_screen = s.geometry.height > s.geometry.width
+
+    if vertical_screen and beautiful.videowallpaper_vertical_path then
+        filepath = beautiful.videowallpaper_vertical_path
+    end
+
+    s.videowallpaper = away_wallpaper.get_videowallpaper(
+        s, {
+            id = "video test",
+            path = filepath,
+            player = "mpv",
+            xargs = {"-b -ov -ni -nf -un -s -st -sp"},
+            pargs = {
+                "-wid WID", "--fullscreen", "--no-stop-screensaver", "--loop", "--no-audio",
+                "--hwdec=auto", "--vo=gpu", "--no-border", "--no-osc", "--no-osd-bar"
+            }
+        }
+    )
+
+    --  pause mpv if there are open windows
+    spawn.easy_async(
+        "pgrep pause_videowall", function(stdout)
+            if stdout == "" then
+                spawn.once(gfs.get_configuration_dir() .. "configuration/pause_videowallpaper.sh")
             end
-
-            s.wallpaper = away_wallpaper.get_videowallpaper(
-                s, {
-                    id = "video test",
-                    path = filepath,
-                    player = "mpv",
-                    xargs = {"-b -ov -ni -nf -un -s -st -sp"},
-                    pargs = {
-                        "-wid WID", "--fullscreen", "--no-stop-screensaver", "--loop", "--no-audio",
-                        "--no-border", "--no-osc", "--no-osd-bar"
-                    }
-                }
-            )
         end
     )
 end
+
+local function remove_wallpaper(s)
+    if s.videowallpaper and s.videowallpaper.pid then
+        spawn.easy_async(string.format("kill %d", s.videowallpaper.pid))
+    end
+end
+
+screen.connect_signal("request::wallpaper", set_videowallpaper)
+screen.connect_signal("removed", remove_wallpaper)

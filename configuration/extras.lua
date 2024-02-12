@@ -47,8 +47,3 @@ task_preview.enable {
 revelation.init {
     charorder = "wasdhjkluiopynmftgvceqzx1234567890"
 }
-
-if beautiful.video_wallpaper_path then
-    local video_wallpaper = require("configuration.video_wallpaper")
-    video_wallpaper(beautiful.video_wallpaper_path)
-end

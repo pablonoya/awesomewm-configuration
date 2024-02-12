@@ -295,8 +295,8 @@ theme.latitude = 12.345
 theme.longitude = -67.890
 
 -- Video wallpaper
--- theme.video_wallpaper_path =  -- HOME .. "/videos/unicorn-kanistra.mp4"
--- theme.video_wallpaper_vertical_path = HOME .. "/videos/unicorn-kanistra-vertical.mp4"
+-- theme.videowallpaper_path = HOME .. "/videos/cyberpunk-city-pixel.mp4"
+-- theme.videowallpaper_vertical_path = HOME .. "/videos/cyberpunk-city-pixel-vertical.mp4"
 
 -- Dominantcolors script path
 -- theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
