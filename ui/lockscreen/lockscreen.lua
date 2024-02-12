@@ -319,6 +319,7 @@ end
 
 local function set_visibility(visible)
     naughty.suspended = visible
+    awful.spawn("sudo auto-cpufreq --force=" .. (visible and "powersave" or "reset"))
 
     for s in screen do
         s.lockscreen.visible = visible
@@ -337,8 +338,7 @@ local function grab_password()
         hooks = {
             -- Do not cancel input with Escape or Ctrl+Del
             -- This will just clear any input received so far.
-            {{}, 'Escape', reset_input},
-            {{'Control'}, 'Delete', reset_input},
+            {{}, 'Escape', reset_input}, {{'Control'}, 'Delete', reset_input},
 
             -- Prevent Awesomewm restarting
             {{'Control', 'Mod4'}, 'r', reset_input}
@@ -400,7 +400,11 @@ awful.screen.connect_for_each_screen(
             },
             widget = wibox.container.place
         }
+    end
+)
 
+screen.connect_signal(
+    "request::wallpaper", function(s)
         awful.placement.maximize(s.lockscreen)
     end
 )
