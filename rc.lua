@@ -22,6 +22,7 @@ spawn.easy_async_with_shell(gfs.get_configuration_dir() .. "configuration/autost
 
 -- Theme + Configs
 beautiful.init(gfs.get_configuration_dir() .. "theme/theme.lua")
+require("bindings")
 require("configuration")
 
 -- Import Signals + UI

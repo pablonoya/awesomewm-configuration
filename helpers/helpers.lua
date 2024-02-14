@@ -85,7 +85,7 @@ function helpers.float_and_resize(c, width, height)
             honor_padding = true
         }
     )
-    awful.client.property.set(c, 'floating_geometry', c:geometry())
+    awful.client.property.set(c, "floating_geometry", c:geometry())
     c.floating = true
     c:raise()
 end
@@ -125,6 +125,24 @@ function helpers.add_list_scrolling(widget)
             )
         )
     )
+end
+
+function helpers.get_next_screen(direction)
+    -- If there's a screen in the given direction, return it
+    local screen = awful.screen.focused()
+
+    if screen:get_next_in_direction(direction) then
+        return screen:get_next_in_direction(direction)
+    end
+
+    -- Alternatively, search for the farthest screen in the opposite direction
+    -- to create a circular navigation
+    local oposite_direction = (direction == "right" and "left") or "right"
+    while screen:get_next_in_direction(oposite_direction) ~= nil do
+        screen = screen:get_next_in_direction(oposite_direction)
+    end
+
+    return screen
 end
 
 return helpers

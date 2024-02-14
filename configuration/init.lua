@@ -1,4 +1,3 @@
-require("configuration.keys")
 require("configuration.ruled")
 require("configuration.tags")
 require("configuration.clients")
