@@ -231,7 +231,6 @@ theme.notif_center_radius = theme.border_radius
 
 -- Notification icons
 theme.notification_icon = gsurface.load_uncached(icons_dir .. "notification.svg")
-theme.notification_bell_icon = gsurface.load_uncached(icons_dir .. "notification_bell.svg")
 
 -- Systray
 theme.systray_icon_spacing = dpi(4)
