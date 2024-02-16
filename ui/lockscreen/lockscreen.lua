@@ -7,7 +7,15 @@ local wibox = require("wibox")
 local helpers = require("helpers")
 local color_helpers = require("helpers.color-helpers")
 
-local lock_screen = require("ui.lockscreen")
+local lock_screen = {}
+
+local config_dir = gears.filesystem.get_configuration_dir()
+package.cpath = package.cpath .. ";" .. config_dir .. "ui/lockscreen/lib/?.so;"
+local pam = require("liblua_pam")
+
+lock_screen.authenticate = function(password)
+    return pam.auth_current_user(password)
+end
 
 local lock_screen_box = function(s)
     return wibox {
@@ -172,8 +180,8 @@ gears.timer {
     call_now = true,
     autostart = true,
     callback = function()
-        local time = os.date('%I:%M')
-        local h, m = time:match('(%d+):(%d+)')
+        local time = os.date("%I:%M")
+        local h, m = time:match("(%d+):(%d+)")
         local hour = tonumber(h)
         local min = tonumber(m)
 
@@ -319,7 +327,7 @@ end
 
 local function set_visibility(visible)
     naughty.suspended = visible
-    awful.spawn("sudo auto-cpufreq --force=" .. (visible and "powersave" or "reset"))
+    -- awful.spawn("sudo auto-cpufreq --force=" .. (visible and "powersave" or "reset"))
 
     for s in screen do
         s.lockscreen.visible = visible
@@ -338,10 +346,10 @@ local function grab_password()
         hooks = {
             -- Do not cancel input with Escape or Ctrl+Del
             -- This will just clear any input received so far.
-            {{}, 'Escape', reset_input}, {{'Control'}, 'Delete', reset_input},
+            {{}, "Escape", reset_input}, {{"Control"}, "Delete", reset_input},
 
             -- Prevent Awesomewm restarting
-            {{'Control', 'Mod4'}, 'r', reset_input}
+            {{"Control", "Mod4"}, "r", reset_input}
         },
         keypressed_callback = function(mod, key, cmd)
             -- Only count single character keys (thus preventing

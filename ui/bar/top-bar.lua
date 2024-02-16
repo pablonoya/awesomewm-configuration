@@ -1,4 +1,6 @@
+local awful_screen = require("awful.screen")
 local awful_wibar = require("awful.wibar")
+
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
@@ -13,7 +15,7 @@ local mic_indicator = require("ui.bar.widgets.mic-indicator")
 local battery = require("ui.bar.widgets.battery")
 local layoutbox = require("ui.bar.widgets.layoutbox")
 
-return function(s)
+local function top_bar(s)
     local is_vertical = s.geometry.height > s.geometry.width
 
     local bar = awful_wibar {
@@ -68,3 +70,9 @@ return function(s)
 
     return bar
 end
+
+local function create_top_bar(s)
+    s.bar = top_bar(s)
+end
+
+screen.connect_signal("request::desktop_decoration", create_top_bar)

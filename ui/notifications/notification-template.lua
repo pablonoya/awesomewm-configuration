@@ -1,5 +1,5 @@
 local beautiful = require("beautiful")
-local naughty_layout = require("naughty.layout")
+local naughty = require("naughty")
 local wibox = require("wibox")
 
 local actions = require("ui.widgets.notification.actions")
@@ -16,7 +16,7 @@ local urgency_color = {
     critical = beautiful.red
 }
 
-return function(notification)
+local function notification_layout(notification)
     local template = {
         {
             icon {
@@ -59,13 +59,16 @@ return function(notification)
         widget = wibox.container.background
     }
 
-    naughty_layout.box {
+    naughty.layout.box {
         notification = notification,
         type = "notification",
         border_color = urgency_color[notification.urgency],
         border_width = dpi(2),
         maximum_width = dpi(320),
+        maximum_height = dpi(330),
         widget_template = template,
         shape = helpers.rrect(beautiful.border_radius)
     }
 end
+
+naughty.connect_signal("request::display", notification_layout)
