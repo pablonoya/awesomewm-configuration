@@ -1,6 +1,4 @@
-local button = require("awful.button")
 local beautiful = require("beautiful")
-local gtable = require("gears.table")
 local naughty = require("naughty")
 local wibox = require("wibox")
 
@@ -27,17 +25,17 @@ naughty.connect_signal(
     end
 )
 
+local function get_datetime_format(is_vertical)
+    local date = "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
+    local time = "<b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
+
+    return (date .. (is_vertical and "\n" or " ") .. time)
+end
+
 return function(is_vertical)
-    local get_datetime_format = function()
-        local date = "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
-        local time = "<b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
-
-        return (date .. (is_vertical and "\n" or " ") .. time)
-    end
-
     local datetime = wibox.widget {
         font = beautiful.font_name .. (is_vertical and 12 or 13),
-        format = get_datetime_format(),
+        format = get_datetime_format(is_vertical),
         refresh = 2,
         ellipsize = "none",
         halign = "center",
@@ -47,11 +45,11 @@ return function(is_vertical)
 
     datetime:connect_signal(
         "widget::redraw_needed", function()
-            datetime.format = get_datetime_format()
+            datetime.format = get_datetime_format(is_vertical)
         end
     )
 
-    local notifs_datetime = clickable_container {
+    local container = clickable_container {
         widget = {
             {
                 bell,
@@ -71,12 +69,12 @@ return function(is_vertical)
 
     awesome.connect_signal(
         "notification_center::visible", function(visible)
-            notifs_datetime.bg = visible and beautiful.focus or beautiful.wibar_bg
-            notifs_datetime.focused = visible
+            container.bg = visible and beautiful.focus or beautiful.wibar_bg
+            container.focused = visible
         end
     )
 
     return border_container {
-        widget = notifs_datetime
+        widget = container
     }
 end
