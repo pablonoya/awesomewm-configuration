@@ -6,9 +6,12 @@ local revelation = require("away.third_party.revelation")
 local helpers = require("helpers")
 local system_controls = require("helpers.system-controls")
 
+local apps = require("configuration.apps")
 local playerctl = require("signals.playerctl")
-local ytm_scratchpad = require("ui.scratchpad")
+
 local hotkeys_popup = require("ui.hotkeys_popup")
+local menu = require("ui.menu")
+local ytm_scratchpad = require("ui.scratchpad")
 
 local modkeys = require("bindings.modkeys")
 local modkey, alt, ctrl, shift = table.unpack(modkeys)
@@ -189,7 +192,7 @@ awful.keyboard.append_global_keybindings {
 awful.keyboard.append_global_keybindings {
     awful.key(
         {modkey}, "Return", function()
-            awful.spawn("wezterm-gui")
+            awful.spawn(apps.terminal)
         end, {
             description = "open terminal",
             group = "launcher"
@@ -204,7 +207,7 @@ awful.keyboard.append_global_keybindings {
         }
     ), awful.key(
         {modkey}, "e", function()
-            awful.spawn("thunar")
+            awful.spawn(apps.file_manager)
         end, {
             description = "open file manager",
             group = "launcher"
@@ -501,6 +504,15 @@ awful.keyboard.append_global_keybindings {
 
 -- Mouse bindings on desktop
 awful.mouse.append_global_mousebindings {
-    -- Scroll wheel
+    awful.button(
+        {}, 1, function()
+            menu.main:hide()
+        end
+    ), -- Right click
+    awful.button(
+        {}, 3, function()
+            menu.main:toggle()
+        end
+    ), -- Scroll wheel
     awful.button({modkey}, 4, awful.tag.viewprev), awful.button({modkey}, 5, awful.tag.viewnext)
 }

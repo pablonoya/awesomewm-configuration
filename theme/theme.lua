@@ -134,23 +134,20 @@ theme.taglist_fg_empty = theme.xbackground
 theme.taglist_bg_volatile = theme.jupiter
 
 -- Mainmenu
-theme.menu_font = theme.font_name .. "medium 10"
-theme.menu_height = dpi(32)
-theme.menu_width = dpi(160)
+theme.menu_font = theme.font_name .. "Medium 10"
+theme.menu_height = dpi(36)
+theme.menu_width = dpi(216)
 theme.menu_bg_normal = theme.xbackground
 theme.menu_bg_focus = theme.focus
 theme.menu_fg_normal = theme.xforeground
-theme.menu_fg_focus = theme.accent
-theme.menu_border_width = dpi(1)
-theme.menu_border_color = theme.blue
-theme.menu_submenu = "»  "
-theme.menu_submenu_icon = nil
+theme.menu_border_width = dpi(1.6)
+theme.menu_border_color = theme.focus
 
 -- Hotkeys Pop Up
 theme.hotkeys_bg = theme.black .. "F0"
 theme.hotkeys_fg = theme.xforeground
 theme.hotkeys_border_color = theme.focus
-theme.hotkeys_modifiers_fg = theme.xforeground .. 'F0'
+theme.hotkeys_modifiers_fg = theme.xforeground .. "E0"
 theme.hotkeys_font = theme.mono_font
 theme.hotkeys_description_font = theme.font_name .. "10"
 theme.hotkeys_group_margin = dpi(12)
