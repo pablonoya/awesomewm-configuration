@@ -28,7 +28,6 @@ end
 
 local timer = gtimer {
     timeout = 4,
-    autostart = true,
     callback = emit_devices_signal
 }
 
