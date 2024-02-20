@@ -1,10 +1,9 @@
 local beautiful = require("beautiful")
-local wibox_layout = require("wibox.layout")
-local wibox_widget = require("wibox.widget")
+local wibox = require("wibox")
 
 local ram_meter = require("ui.control-center.monitors.ram-meter")
 
-local cpu_usage = require("ui.control-center.monitors.cpu-usage")
+local cpu_usage = require("ui.control-center.monitors.cpu_usage")
 local gpu_usage = require("ui.control-center.monitors.gpu-usage")
 
 local cpu_temperature = require("ui.control-center.monitors.cpu-temperature")
@@ -12,46 +11,42 @@ local gpu_temperature = require("ui.control-center.monitors.gpu-temperature")
 
 local controls_container = require("ui.control-center.widgets.controls-container")
 
-local monitor_control_row_progressbars = wibox_widget {
+local function container_title(title)
+    return wibox.widget {
+        text = title,
+        font = beautiful.font_name .. "Bold 11",
+        halign = "center",
+        widget = wibox.widget.textbox
+    }
+end
+
+local monitors = wibox.widget {
     controls_container {
         widget = ram_meter
     },
     controls_container {
-        widget = wibox_widget {
-            wibox_widget {
-                text = "Usage %",
-                font = beautiful.font_name .. "Bold 11",
-                halign = "center",
-                widget = wibox_widget.textbox
-            },
+        widget = wibox.widget {
+            container_title "Usage %",
             cpu_usage,
             gpu_usage,
+
             spacing = dpi(8),
-            layout = wibox_layout.fixed.vertical
+            layout = wibox.layout.fixed.vertical
         }
     },
     controls_container {
-        widget = wibox_widget {
-            wibox_widget {
-                text = "Temperature °C",
-                font = beautiful.font_name .. "Bold 11",
-                halign = "center",
-                widget = wibox_widget.textbox
-            },
+        widget = wibox.widget {
+            container_title "Temperature °C",
             cpu_temperature,
             gpu_temperature,
+
             spacing = dpi(8),
-            layout = wibox_layout.fixed.vertical
+            layout = wibox.layout.fixed.vertical
         }
     },
-    layout = wibox_layout.fixed.vertical,
-    spacing = dpi(12)
-}
-
-local monitors = wibox_widget {
-    monitor_control_row_progressbars,
-    visible = false,
-    layout = wibox_layout.fixed.vertical
+    layout = wibox.layout.fixed.vertical,
+    spacing = dpi(12),
+    visible = false
 }
 
 awesome.connect_signal(

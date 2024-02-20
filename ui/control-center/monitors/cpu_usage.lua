@@ -35,7 +35,7 @@ local cpu_usage = monitor_progressbar {
     slider_color = {
         type = "linear",
         from = {0},
-        to = {100},
+        to = {110},
         stops = {{0, beautiful.cyan}, {0.7, beautiful.blue}}
     },
     bg_color = beautiful.blue .. "60",
