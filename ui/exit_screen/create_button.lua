@@ -1,19 +1,17 @@
-local awful_button = require("awful.button")
-local gtable = require("gears.table")
-local gshape = require("gears.shape")
 local beautiful = require("beautiful")
+local gshape = require("gears.shape")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
 local color_helpers = require("helpers.color-helpers")
 local text_icon = require("ui.widgets.text-icon")
 
-local button_size = dpi(120)
-local button_bg = beautiful.xbackground
+local SIZE = dpi(120)
+local BG = beautiful.xbackground
 
-local text_fg = beautiful.xforeground .. "C0"
-local key_icon_bg = button_bg .. "D0"
-local label_font = beautiful.font_name .. " 20"
+local FG = beautiful.xforeground .. "C0"
+local BG_KEY_ICON = BG .. "D0"
+local LABEL_FONT = beautiful.font_name .. 20
 
 return function(symbol, hover_color, key, text, command)
     local icon = text_icon {
@@ -25,22 +23,23 @@ return function(symbol, hover_color, key, text, command)
     local key_icon = wibox.widget {
         {
             markup = key,
-            font = label_font,
-            align = "center",
+            font = LABEL_FONT,
+            halign = "center",
+            valign = "center",
             widget = wibox.widget.textbox
         },
-        border_color = beautiful.xforeground .. 70,
-        border_width = dpi(1),
+        border_color = FG,
+        border_width = dpi(1.6),
         forced_width = dpi(32),
-        fg = text_fg,
-        bg = key_icon_bg,
+        fg = FG,
+        bg = BG_KEY_ICON,
         shape = helpers.rrect(beautiful.border_radius // 4),
         widget = wibox.container.background
     }
 
     local label = wibox.widget {
-        markup = color_helpers.colorize_text(text, text_fg),
-        font = label_font,
+        markup = color_helpers.colorize_text(text, FG),
+        font = LABEL_FONT,
         widget = wibox.widget.textbox
     }
 
@@ -60,10 +59,10 @@ return function(symbol, hover_color, key, text, command)
             icon,
             layout = wibox.container.place
         },
-        forced_height = button_size,
-        forced_width = button_size,
+        forced_height = SIZE,
+        forced_width = SIZE,
         shape = gshape.circle,
-        bg = button_bg,
+        bg = BG,
         border_width = beautiful.widget_border_width,
         border_color = hover_color,
         widget = wibox.container.background
@@ -92,16 +91,21 @@ return function(symbol, hover_color, key, text, command)
     labeled_button:connect_signal(
         "mouse::leave", function()
             icon.markup = color_helpers.colorize_text(icon.text, hover_color)
-            button.bg = button_bg
+            button.bg = BG
 
-            key_icon.fg = text_fg
-            key_icon.border_color = text_fg
+            key_icon.fg = FG
+            key_icon.border_color = FG
 
-            label.markup = color_helpers.colorize_text(label.text, text_fg)
+            label.markup = color_helpers.colorize_text(label.text, FG)
         end
     )
 
-    helpers.add_action(labeled_button, command)
+    helpers.add_action(
+        labeled_button, function()
+            awesome.emit_signal("exit_screen::hide")
+            command()
+        end
+    )
 
     return labeled_button
 end

@@ -5,7 +5,7 @@ local gtimer = require("gears.timer")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
-local create_button = require("ui.exit-screen.create-button")
+local create_button = require("ui.exit_screen.create_button")
 
 local dpi = beautiful.xresources.apply_dpi
 
@@ -14,35 +14,27 @@ local function hide_exit_screen()
 end
 
 -- Commands
-local poweroff_command = function()
-    awful.spawn.with_shell("systemctl poweroff")
-    awesome.emit_signal("exit_screen::hide")
+local function poweroff_command()
+    awful.spawn("systemctl poweroff")
 end
 
-local reboot_command = function()
-    awful.spawn.with_shell("systemctl reboot")
-    awesome.emit_signal("exit_screen::hide")
+local function reboot_command()
+    awful.spawn("systemctl reboot")
 end
 
-local suspend_command = function()
-    awesome.emit_signal("exit_screen::hide")
+local function suspend_command()
     lock_screen_show()
     gtimer {
         timeout = 1,
         autostart = true,
         single_shot = true,
         callback = function()
-            awful.spawn.with_shell("systemctl suspend")
+            awful.spawn("systemctl suspend")
         end
     }
 end
 
-local exit_command = function()
-    awesome.quit()
-end
-
 local lock_command = function()
-    awesome.emit_signal("exit_screen::hide")
     lock_screen_show()
 end
 
@@ -51,7 +43,7 @@ local poweroff = create_button("\u{e8ac}", beautiful.red, "P", "oweroff", powero
 local reboot = create_button("\u{f053}", beautiful.yellow, "R", "eboot", reboot_command)
 local suspend = create_button("\u{ef44}", beautiful.magenta, "S", "uspend", suspend_command)
 local lock = create_button("\u{e897}", beautiful.green, "L", "ock", lock_command)
-local exit = create_button("\u{e9ba}", beautiful.blue, "E", "xit", exit_command)
+local exit = create_button("\u{e9ba}", beautiful.blue, "E", "xit", awesome.quit)
 
 local create_exit_screen = function(s)
     s.exit_screen = wibox {
@@ -79,7 +71,7 @@ local create_exit_screen = function(s)
             {
                 {
                     markup = "Press any of the listed keys to perform an action",
-                    font = beautiful.font_name .. " 13",
+                    font = beautiful.font_name .. 13,
                     halign = "center",
                     widget = wibox.widget.textbox
                 },
@@ -100,25 +92,23 @@ local create_exit_screen = function(s)
 end
 
 screen.connect_signal("request::desktop_decoration", create_exit_screen)
-screen.connect_signal("removed", create_exit_screen)
 
 local exit_screen_grabber = awful.keygrabber {
     auto_start = true,
     stop_event = "release",
-    keypressed_callback = function(self, mod, key, command)
+    keypressed_callback = function(_, _, key)
         if key == "s" then
             suspend_command()
         elseif key == "e" then
-            exit_command()
+            awesome.quit()
         elseif key == "l" then
             lock_command()
         elseif key == "p" then
             poweroff_command()
         elseif key == "r" then
             reboot_command()
-        elseif key == "Escape" or key == "q" or key == "x" then
-            awesome.emit_signal("exit_screen::hide")
         end
+        hide_exit_screen()
     end
 }
 
