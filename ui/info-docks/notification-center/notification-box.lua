@@ -7,7 +7,7 @@ local actions = require("ui.widgets.notification.actions")
 local dismiss = require("ui.widgets.notification.dismiss")
 local icon = require("ui.widgets.notification.icon")
 local message = require("ui.widgets.notification.message")
-local time_elapsed = require("ui.widgets.notification.time-elapsed")
+local time_elapsed = require("ui.widgets.notification.time_elapsed")
 local title = require("ui.widgets.notification.title")
 
 local function notification_box(notification)
