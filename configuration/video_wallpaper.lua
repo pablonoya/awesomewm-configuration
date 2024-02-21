@@ -2,6 +2,9 @@ local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gfs = require("gears.filesystem")
 
+spawn("pkill xwinwrap")
+spawn("pkill pause_videowall")
+
 local function set_static_wallpaper(s)
     local awful_wallpaper = require("awful.wallpaper")
 
