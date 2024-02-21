@@ -7,6 +7,8 @@ local wibox = require("wibox")
 local helpers = require("helpers")
 local color_helpers = require("helpers.color-helpers")
 
+local lock_animation = require("ui.lockscreen.lock_animation")
+
 local lock_screen = {}
 
 local config_dir = gears.filesystem.get_configuration_dir()
@@ -15,16 +17,6 @@ local pam = require("liblua_pam")
 
 lock_screen.authenticate = function(password)
     return pam.auth_current_user(password)
-end
-
-local lock_screen_box = function(s)
-    return wibox {
-        visible = false,
-        ontop = true,
-        type = "splash",
-        screen = s,
-        bg = beautiful.black .. "42"
-    }
 end
 
 -- Vars
@@ -88,12 +80,12 @@ local reset_map = {
 }
 
 local function split_str(s, delimiter)
-    result = {};
+    local result = {}
     for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
-        table.insert(result, match);
+        table.insert(result, match)
     end
 
-    return result;
+    return result
 end
 
 local time_char = split_str(char, " ")
@@ -244,90 +236,8 @@ gears.timer {
     end
 }
 
--- Lock animation
-local lock_icon = "\u{e897}"
-local password_icon = "\u{f042}"
-local password_failed_icon = color_helpers.colorize_text(password_icon, beautiful.red)
-
-local lock_animation_icon = wibox.widget {
-    -- Set forced size to prevent flickering when the icon rotates
-    forced_height = dpi(80),
-    forced_width = dpi(80),
-    markup = color_helpers.colorize_text(lock_icon, beautiful.light_black),
-    font = beautiful.icon_font_name .. 24,
-    align = "center",
-    valign = "center",
-    widget = wibox.widget.textbox
-}
-
-local lock_animation_widget_rotate = wibox.container.rotate()
-
-local arc = function(cr, width, height)
-    gears.shape.arc(cr, width, height, dpi(5), 0, math.pi / 3, true, true)
-end
-
-local lock_animation_arc = wibox.widget {
-    shape = arc,
-    bg = "#00000000",
-    forced_width = dpi(50),
-    forced_height = dpi(50),
-    widget = wibox.container.background
-}
-
-local lock_animation = {
-    {
-        lock_animation_arc,
-        widget = lock_animation_widget_rotate
-    },
-    lock_animation_icon,
-    layout = wibox.layout.stack
-}
-
--- Lock helper functions
-local characters_entered = 0
-local function reset()
-    characters_entered = 0;
-    lock_animation_icon.markup = color_helpers.colorize_text(lock_icon, beautiful.light_black)
-    lock_animation_widget_rotate.direction = "north"
-    lock_animation_arc.bg = "#00000000"
-end
-
-local function fail()
-    characters_entered = 0;
-    lock_animation_icon.markup = password_failed_icon
-    lock_animation_widget_rotate.direction = "north"
-    lock_animation_arc.bg = "#00000000"
-end
-
-local animation_colors = { -- Rainbow sequence =)
-    beautiful.red, beautiful.magenta, beautiful.accent, beautiful.cyan, beautiful.green,
-    beautiful.yellow
-}
-
-local animation_directions = {"north", "west", "south", "east"}
-
--- Function that "animates" every key press
-local function key_animation(char_inserted)
-    local color
-    local direction = animation_directions[(characters_entered % 4) + 1]
-    if char_inserted then
-        color = animation_colors[(characters_entered % 6) + 1]
-        lock_animation_icon.markup = color_helpers.colorize_text(password_icon, beautiful.white)
-    else
-        if characters_entered == 0 then
-            reset()
-        else
-            color = beautiful.white .. "55"
-        end
-    end
-
-    lock_animation_arc.bg = color
-    lock_animation_widget_rotate.direction = direction
-end
-
 local function set_visibility(visible)
     naughty.suspended = visible
-    -- awful.spawn("sudo auto-cpufreq --force=" .. (visible and "powersave" or "reset"))
 
     for s in screen do
         s.lockscreen.visible = visible
@@ -338,7 +248,7 @@ end
 -- Get input from user
 local function grab_password()
     local function reset_input()
-        reset()
+        lock_animation.reset()
         grab_password()
     end
 
@@ -355,22 +265,18 @@ local function grab_password()
             -- Only count single character keys (thus preventing
             -- "Shift", "Escape", etc from triggering the animation)
             if #key == 1 then
-                characters_entered = characters_entered + 1
-                key_animation(true)
+                lock_animation.key_animation("insert")
             elseif key == "BackSpace" then
-                if characters_entered > 0 then
-                    characters_entered = characters_entered - 1
-                end
-                key_animation(false)
+                lock_animation.key_animation("remove")
             end
         end,
         exe_callback = function(input)
             -- Check input
             if lock_screen.authenticate(input) then
-                reset()
+                lock_animation.reset()
                 set_visibility(false)
             else
-                fail()
+                lock_animation.fail()
                 grab_password()
             end
         end,
@@ -384,6 +290,16 @@ function lock_screen_show()
 end
 
 -- Add lockscreen to each screen
+local lock_screen_box = function(s)
+    return wibox {
+        visible = false,
+        ontop = true,
+        type = "splash",
+        screen = s,
+        bg = beautiful.black .. "42"
+    }
+end
+
 awful.screen.connect_for_each_screen(
     function(s)
         s.lockscreen = lock_screen_box(s)
