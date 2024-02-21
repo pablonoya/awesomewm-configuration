@@ -62,19 +62,31 @@ awesome.connect_signal(
     end
 )
 
+local low_baterry_notification
+local function send_notification(value)
+    local message = string.format("VERY low battery (%s%%)", value)
+
+    if low_baterry_notification and not low_baterry_notification.is_expired then
+        low_baterry_notification.message = message
+        return
+    end
+    low_baterry_notification = notification {
+        message = message,
+        urgency = "critical"
+    }
+end
+
 awesome.connect_signal(
     "signal::battery", function(value)
         battery_bar.value = value
         last_value = value
 
         local color = beautiful.green
+
         if value <= critical_value then
             color = beautiful.red
-            if not charge_icon.visible then
-                notification {
-                    text = "VERY low battery (" .. value .. "%)",
-                    urgency = "critical"
-                }
+            if not is_charging then
+                send_notification(value)
             end
 
         elseif value <= low_value then

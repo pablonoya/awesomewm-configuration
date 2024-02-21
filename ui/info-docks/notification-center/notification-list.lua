@@ -43,6 +43,7 @@ naughty.connect_signal(
                 if reason == 1 then
                     add_notifbox(notification)
                 end
+                self.is_expired = true
             end
         )
     end
