@@ -9,14 +9,12 @@ local scrolling_text = require("ui.widgets.scrolling-text")
 local media_title = scrolling_text {
     title = "Title",
     font = beautiful.font_name .. 12,
-    speed = 32,
-    step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
+    speed = 32
 }
 
 local artist_and_album = scrolling_text {
     text = "Artist",
-    speed = 32,
-    step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
+    speed = 32
 }
 
 playerctl:connect_signal(

@@ -16,7 +16,8 @@ return function(args)
         extra_space = args.extra_space,
         expand = true,
         max_size = args.max_size,
-        step_function = args.step_function,
+        step_function = args.step_function
+            or wibox_container.scroll.step_functions.waiting_nonlinear_back_and_forth,
         forced_width = args.forced_width,
         widget = wibox_container.scroll.horizontal
     }

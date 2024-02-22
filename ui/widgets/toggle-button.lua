@@ -18,8 +18,7 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
     local action = scrolling_text {
         text = name,
         font = beautiful.font_name .. " Bold 10",
-        forced_width = dpi(100),
-        step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth
+        forced_width = dpi(100)
     }
 
     local icon = text_icon {
