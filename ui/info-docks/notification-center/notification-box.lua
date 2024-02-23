@@ -31,8 +31,7 @@ local function notification_box(notification)
                 {
                     {
                         title {
-                            title = notification.title,
-                            app_name = notification.app_name,
+                            notification = notification,
                             forced_width = dpi(170)
                         },
                         {

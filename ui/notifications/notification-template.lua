@@ -30,8 +30,7 @@ local function notification_layout(notification)
             {
                 {
                     title {
-                        title = notification.title,
-                        app_name = notification.app_name,
+                        notification = notification,
                         size = 12,
                         forced_width = dpi(188)
                     },

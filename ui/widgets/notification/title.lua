@@ -16,10 +16,20 @@ local function format_notification_title(title, app_name)
 end
 
 return function(args)
-    return scrolling_text {
-        markup = format_notification_title(args.title, args.app_name),
+    local title = scrolling_text {
+        markup = format_notification_title(args.notification.title, args.notification.app_name),
         font = beautiful.font_name .. (args.size or " 11"),
         speed = 40,
         forced_width = args.forced_width
     }
+
+    args.notification:connect_signal(
+        "property::title", function()
+            title.text.markup = format_notification_title(
+                args.notification.title, args.notification.app_name
+            )
+        end
+    )
+
+    return title
 end
