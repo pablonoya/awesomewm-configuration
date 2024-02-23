@@ -4,10 +4,10 @@ local gstring = require("gears.string")
 local scrolling_text = require("ui.widgets.scrolling-text")
 
 local function format_notification_title(title, app_name)
-    title = gstring.xml_unescape(title)
+    title = gstring.xml_escape(title)
 
     if app_name and app_name ~= "" then
-        app_name = gstring.xml_unescape(" • " .. app_name)
+        app_name = gstring.xml_escape(" • " .. app_name)
     else
         app_name = ""
     end
