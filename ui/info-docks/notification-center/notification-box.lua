@@ -22,7 +22,7 @@ local function notification_box(notification)
         {
             {
                 icon {
-                    icon = notification.icon
+                    notification = notification
                 },
                 bg = beautiful.black,
                 widget = wibox.container.background

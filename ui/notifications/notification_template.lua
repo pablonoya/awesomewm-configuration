@@ -20,7 +20,7 @@ local function notification_layout(notification)
     local template = {
         {
             icon {
-                icon = notification.icon,
+                notification = notification,
                 size = dpi(32)
             },
             bg = beautiful.black,

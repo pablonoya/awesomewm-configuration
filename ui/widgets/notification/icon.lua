@@ -3,16 +3,26 @@ local naughty = require("naughty")
 local wibox = require("wibox")
 
 return function(args)
-    return wibox.widget {
+    local icon = wibox.widget {
         {
-            image = args.icon,
+            id = "icon",
+            image = args.notification.icon,
+            valign = "top",
             forced_width = args.size or dpi(28),
             forced_height = args.size or dpi(28),
-            widget = naughty.widget.icon
+            widget = wibox.widget.imagebox
         },
         top = dpi(16),
         right = dpi(8),
         left = dpi(8),
         widget = wibox.container.margin
     }
+
+    args.notification:connect_signal(
+        "property::icon", function()
+            icon.icon.image = args.notification.icon
+        end
+    )
+
+    return icon
 end

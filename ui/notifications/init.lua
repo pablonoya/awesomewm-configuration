@@ -1,3 +1,3 @@
 require(... .. ".icon_lookup")
-require(... .. ".notification-template")
+require(... .. ".notification_template")
 require(... .. ".current_media")
