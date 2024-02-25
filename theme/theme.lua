@@ -112,6 +112,11 @@ theme.tasklist_bg_normal = theme.transparent
 theme.tasklist_bg_focus = theme.accent
 theme.tasklist_bg_minimize = theme.magenta
 
+theme.tasklist_floating = "☁"
+theme.tasklist_ontop = "⬆"
+theme.tasklist_sticky = "📌"
+theme.tasklist_maximized = "⬜"
+
 -- Taglist
 theme.taglist_spacing = dpi(2)
 theme.taglist_shape = helpers.rrect(theme.widget_radius)

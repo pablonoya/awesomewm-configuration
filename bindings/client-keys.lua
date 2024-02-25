@@ -25,6 +25,20 @@ client.connect_signal(
                     group = "client"
                 }
             ), awful.key(
+                {modkey, shift}, "a", function(c)
+                    c.ontop = not c.ontop
+                end, {
+                    description = "toggle ontop",
+                    group = "client"
+                }
+            ), awful.key(
+                {modkey, ctrl}, "a", function(c)
+                    c.sticky = not c.sticky
+                end, {
+                    description = "toggle sticky",
+                    group = "client"
+                }
+            ), awful.key(
                 {modkey}, "f", awful.client.floating.toggle, {
                     description = "toggle floating",
                     group = "client"
