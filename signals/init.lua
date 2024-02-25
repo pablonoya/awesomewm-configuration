@@ -1,6 +1,6 @@
 local beautiful = require("beautiful")
 
-require(... .. ".battery-signals")
+require(... .. ".battery_signals")
 require(... .. ".redshift")
 require(... .. ".wifi-signals")
 require(... .. ".bluetooth-signals")
