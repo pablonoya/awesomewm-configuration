@@ -14,6 +14,8 @@ local grab_password = require("ui.lockscreen.grab_password")
 local char =
     "I T L I S A S A M P M A C Q U A R T E R D C T W E N T Y F I V E X H A L F S T E N F T O P A S T E R U N I N E O N E S I X T H R E E F O U R F I V E T W O E I G H T E L E V E N S E V E N T W E L V E T E N S E O C L O C K"
 
+local time_chars = gears.string.split(char, " ")
+
 local pos_map = {
     ["it"] = {1, 2},
     ["is"] = {4, 5},
@@ -70,20 +72,9 @@ local reset_map = {
     4, 12, 14, 23, 29, 34, 39, 43, 45, 52, 56, 59, 62, 67, 71, 75, 78, 83, 89, 94, 100, 105
 }
 
-local function split_str(s, delimiter)
-    local result = {}
-    for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
-        table.insert(result, match)
-    end
-
-    return result
-end
-
-local time_char = split_str(char, " ")
-
 -- Helpers
 
-local time = wibox.widget {
+local wordclock = wibox.widget {
     forced_num_cols = 11,
     spacing = beautiful.useless_gap,
     layout = wibox.layout.grid
@@ -93,21 +84,21 @@ local function create_text_widget(index, w)
     local text_widget = wibox.widget {
         id = "t" .. index,
         markup = w,
-        font = beautiful.font_name .. " Bold 18",
-        align = "center",
+        font = beautiful.font_name .. "Bold 18",
+        halign = "center",
         valign = "center",
         forced_width = dpi(25),
         forced_height = dpi(30),
         widget = wibox.widget.textbox
     }
 
-    time:add(text_widget)
+    wordclock:add(text_widget)
 
     return text_widget
 end
 
 local var_count = 0
-for i, char in pairs(time_char) do
+for i, char in pairs(time_chars) do
     local text = color_helpers.colorize_text(char, beautiful.light_black .. "16")
 
     var_count = var_count + 1
@@ -158,7 +149,29 @@ local function reset_time()
     activate_word("is")
 end
 
-gears.timer {
+local lockscreen_body = wibox.widget {
+    {
+        {
+            {
+                wordclock,
+                lock_animation,
+                spacing = dpi(40),
+                layout = wibox.layout.fixed.vertical
+            },
+            margins = dpi(64),
+            widget = wibox.container.margin
+        },
+        id = "container",
+        shape = helpers.rrect(beautiful.border_radius),
+        bg = beautiful.xbackground,
+        border_color = beautiful.focus,
+        border_width = dpi(2),
+        widget = wibox.container.background
+    },
+    widget = wibox.container.place
+}
+
+local clock_timer = gears.timer {
     timeout = 2,
     call_now = true,
     autostart = true,
@@ -168,23 +181,16 @@ gears.timer {
         local hour = tonumber(h)
         local min = tonumber(m)
 
-        if last_hour ~= hour then
-            time_of_day_color = color_helpers.get_color_by_time_of_day()
-            last_hour = hour
-        end
-
-        -- update if minute has changed
+        -- update only if minute has changed
         if last_minute == min then
             return
         end
-        last_minute = min
 
-        for s in screen do
-            if s.lockscreen then
-                s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
-            end
+        if last_hour ~= hour then
+            time_of_day_color = color_helpers.get_color_by_time_of_day()
         end
 
+        lockscreen_body:get_children_by_id("container")[1].border_color = time_of_day_color
         reset_time()
 
         if min >= 0 and min <= 2 or min >= 58 and min <= 59 then
@@ -212,7 +218,6 @@ gears.timer {
         end
 
         local hh
-
         if min >= 0 and min <= 30 then
             hh = hour
         else
@@ -224,58 +229,40 @@ gears.timer {
         end
 
         activate_word(tostring(hh))
+
+        last_hour = hour
+        last_minute = min
     end
 }
+
+-- Add lockscreen to each screen
+awful.screen.connect_for_each_screen(
+    function(s)
+        s.lockscreen = wibox {
+            widget = lockscreen_body,
+            visible = false,
+            ontop = true,
+            type = "splash",
+            screen = s,
+            bg = beautiful.black .. "42"
+        }
+    end
+)
 
 awesome.connect_signal(
     "lockscreen::visible", function(visible)
         if visible then
             grab_password()
+            clock_timer:start()
+        else
+            clock_timer:stop()
         end
 
         naughty.suspended = visible
         for s in screen do
             s.lockscreen.visible = visible
-            s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
+            lockscreen_body:get_children_by_id("container")[1].border_color = time_of_day_color
         end
-    end
-)
-
--- Add lockscreen to each screen
-local lock_screen_box = function(s)
-    return wibox {
-        visible = false,
-        ontop = true,
-        type = "splash",
-        screen = s,
-        bg = beautiful.black .. "42"
-    }
-end
-
-awful.screen.connect_for_each_screen(
-    function(s)
-        s.lockscreen = lock_screen_box(s)
-        s.lockscreen:setup{
-            {
-                {
-                    {
-                        time,
-                        lock_animation,
-                        spacing = dpi(40),
-                        layout = wibox.layout.fixed.vertical
-                    },
-                    margins = dpi(64),
-                    widget = wibox.container.margin
-                },
-                id = "container",
-                shape = helpers.rrect(beautiful.border_radius),
-                bg = beautiful.xbackground,
-                border_color = beautiful.focus,
-                border_width = dpi(2),
-                widget = wibox.container.background
-            },
-            widget = wibox.container.place
-        }
     end
 )
 
