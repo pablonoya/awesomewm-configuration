@@ -10,13 +10,14 @@ local color_helpers = require("helpers.color-helpers")
 local lock_animation = require("ui.lockscreen.lock_animation")
 local grab_password = require("ui.lockscreen.grab_password")
 
--- Vars
-local char =
-    "I T L I S A S A M P M A C Q U A R T E R D C T W E N T Y F I V E X H A L F S T E N F T O P A S T E R U N I N E O N E S I X T H R E E F O U R F I V E T W O E I G H T E L E V E N S E V E N T W E L V E T E N S E O C L O C K"
+local INACTIVE_COLOR = beautiful.light_black .. 20
 
-local time_chars = gears.string.split(char, " ")
+local CHARMAP =
+    "I T L I S A S A M P M A I Q U A R T E R D C T W E N T Y F I V E X H A L F S T E N F T O P A S T E R U N I N E O N E S I X T H R E E F O U R F I V E T W O E I G H T E L E V E N S E V E N T W E L V E T E N S E O C L O C K"
 
-local pos_map = {
+local time_chars = gears.string.split(CHARMAP, " ")
+
+local POS_MAP = {
     ["it"] = {1, 2},
     ["is"] = {4, 5},
     ["a"] = {12, 12},
@@ -42,107 +43,46 @@ local pos_map = {
     ["oclock"] = {105, 110}
 }
 
-local char_map = {
-    ["it"] = {},
-    ["is"] = {},
-    ["a"] = {},
-    ["quarter"] = {},
-    ["twenty"] = {},
-    ["five"] = {},
-    ["half"] = {},
-    ["ten"] = {},
-    ["past"] = {},
-    ["to"] = {},
-    ["1"] = {},
-    ["2"] = {},
-    ["3"] = {},
-    ["4"] = {},
-    ["5"] = {},
-    ["6"] = {},
-    ["7"] = {},
-    ["8"] = {},
-    ["9"] = {},
-    ["10"] = {},
-    ["11"] = {},
-    ["12"] = {},
-    ["oclock"] = {}
-}
-
-local reset_map = {
-    4, 12, 14, 23, 29, 34, 39, 43, 45, 52, 56, 59, 62, 67, 71, 75, 78, 83, 89, 94, 100, 105
-}
-
--- Helpers
-
 local wordclock = wibox.widget {
     forced_num_cols = 11,
-    spacing = beautiful.useless_gap,
+    spacing = dpi(4),
     layout = wibox.layout.grid
 }
 
-local function create_text_widget(index, w)
+local char_widgets = {}
+for pos, char in pairs(time_chars) do
     local text_widget = wibox.widget {
-        id = "t" .. index,
-        markup = w,
+        markup = color_helpers.colorize_text(char, INACTIVE_COLOR),
         font = beautiful.font_name .. "Bold 18",
         halign = "center",
         valign = "center",
-        forced_width = dpi(25),
-        forced_height = dpi(30),
+        forced_width = dpi(28),
+        forced_height = dpi(32),
         widget = wibox.widget.textbox
     }
 
+    char_widgets[pos] = text_widget
     wordclock:add(text_widget)
-
-    return text_widget
-end
-
-local var_count = 0
-for i, char in pairs(time_chars) do
-    local text = color_helpers.colorize_text(char, beautiful.light_black .. "16")
-
-    var_count = var_count + 1
-    local create_dummy_text = true
-
-    for j, k in pairs(pos_map) do
-        if i >= pos_map[j][1] and i <= pos_map[j][2] then
-            char_map[j][var_count] = create_text_widget(i, text)
-            create_dummy_text = false
-        end
-
-        for _, n in pairs(reset_map) do
-            if i == n then
-                var_count = 1
-            end
-        end
-
-    end
-
-    if create_dummy_text then
-        create_text_widget(i, text)
-    end
-
 end
 
 local last_hour
 local last_minute
-local time_of_day_color
+local active_color
 
-local function activate_word(w)
-    for i, char in pairs(char_map[w]) do
-        char.markup = color_helpers.colorize_text(char.text, time_of_day_color)
+local function colorize_word(word, color)
+    local start, limit = table.unpack(POS_MAP[word])
+    for pos = start, limit do
+        char_widgets[pos].markup = color_helpers.colorize_text(char_widgets[pos].text, color)
     end
 end
 
-local function deactivate_word(w)
-    for i, char in pairs(char_map[w]) do
-        char.markup = color_helpers.colorize_text(char.text, beautiful.light_black .. "16")
-    end
+local function activate_word(word)
+    colorize_word(word, active_color)
 end
 
-local function reset_time()
-    for j, k in pairs(char_map) do
-        deactivate_word(j)
+local function reset_clock()
+    for word, _ in pairs(POS_MAP) do
+        colorize_word(word, INACTIVE_COLOR)
     end
 
     activate_word("it")
@@ -174,25 +114,23 @@ local lockscreen_body = wibox.widget {
 local clock_timer = gears.timer {
     timeout = 2,
     call_now = true,
-    autostart = true,
     callback = function()
         local time = os.date("%I:%M")
         local h, m = time:match("(%d+):(%d+)")
         local hour = tonumber(h)
         local min = tonumber(m)
 
-        -- update only if minute has changed
-        if last_minute == min then
+        -- update only if time has changed
+        if last_hour == hour and last_minute == min then
             return
         end
 
         if last_hour ~= hour then
-            time_of_day_color = color_helpers.get_color_by_time_of_day()
+            active_color = color_helpers.get_color_by_time_of_day()
+            lockscreen_body:get_children_by_id("container")[1].border_color = active_color
         end
 
-        lockscreen_body:get_children_by_id("container")[1].border_color = time_of_day_color
-        reset_time()
-
+        reset_clock()
         if min >= 0 and min <= 2 or min >= 58 and min <= 59 then
             activate_word("oclock")
         elseif min >= 3 and min <= 7 or min >= 53 and min <= 57 then
@@ -217,13 +155,7 @@ local clock_timer = gears.timer {
             activate_word("to")
         end
 
-        local hh
-        if min >= 0 and min <= 30 then
-            hh = hour
-        else
-            hh = hour + 1
-        end
-
+        local hh = (min >= 0 and min <= 30) and hour or (hour + 1)
         if hh > 12 then
             hh = hh - 12
         end
@@ -261,7 +193,7 @@ awesome.connect_signal(
         naughty.suspended = visible
         for s in screen do
             s.lockscreen.visible = visible
-            lockscreen_body:get_children_by_id("container")[1].border_color = time_of_day_color
+            lockscreen_body:get_children_by_id("container")[1].border_color = active_color
         end
     end
 )
