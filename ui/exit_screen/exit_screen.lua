@@ -22,8 +22,12 @@ local function reboot_command()
     awful.spawn("systemctl reboot")
 end
 
+local lock_command = function()
+    awesome.emit_signal("lockscreen::visible", true)
+end
+
 local function suspend_command()
-    lock_screen_show()
+    lock_command()
     gtimer {
         timeout = 1,
         autostart = true,
@@ -32,10 +36,6 @@ local function suspend_command()
             awful.spawn("systemctl suspend")
         end
     }
-end
-
-local lock_command = function()
-    lock_screen_show()
 end
 
 -- Create the buttons

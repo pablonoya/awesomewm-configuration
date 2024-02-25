@@ -62,7 +62,7 @@ awful.keyboard.append_global_keybindings {
         }
     ), awful.key(
         {modkey}, "l", function()
-            lock_screen_show()
+            awesome.emit_signal("lockscreen::visible", true)
         end, {
             description = "lock screen",
             group = "awesome"

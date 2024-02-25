@@ -236,15 +236,6 @@ gears.timer {
     end
 }
 
-local function set_visibility(visible)
-    naughty.suspended = visible
-
-    for s in screen do
-        s.lockscreen.visible = visible
-        s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
-    end
-end
-
 -- Get input from user
 local function grab_password()
     local function reset_input()
@@ -274,7 +265,7 @@ local function grab_password()
             -- Check input
             if lock_screen.authenticate(input) then
                 lock_animation.reset()
-                set_visibility(false)
+                awesome.emit_signal("lockscreen::visible", false)
             else
                 lock_animation.fail()
                 grab_password()
@@ -284,10 +275,19 @@ local function grab_password()
     }
 end
 
-function lock_screen_show()
-    set_visibility(true)
-    grab_password()
-end
+awesome.connect_signal(
+    "lockscreen::visible", function(visible)
+        if visible then
+            grab_password()
+        end
+
+        naughty.suspended = visible
+        for s in screen do
+            s.lockscreen.visible = visible
+            s.lockscreen:get_children_by_id("container")[1].border_color = time_of_day_color
+        end
+    end
+)
 
 -- Add lockscreen to each screen
 local lock_screen_box = function(s)
