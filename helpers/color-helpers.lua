@@ -18,8 +18,8 @@ function _color.colorize_text(txt, fg)
     return "<span foreground='" .. fg .. "'>" .. txt .. "</span>"
 end
 
-function _color.get_color_by_time_of_day()
-    local hour = tonumber(os.date("%H"))
+function _color.get_color_by_time_of_day(hour)
+    hour = tonumber(hour or os.date("%H"))
 
     for _, map in pairs(color_map) do
         if hour >= map[1] and hour < map[2] then
