@@ -15,7 +15,7 @@ local last_minute
 local active_color
 
 local function update_time()
-    local hour, min = os.date("%I:%M"):match("(%d+):(%d+)")
+    local hour, min = os.date("%H:%M"):match("(%d+):(%d+)")
     local hour = tonumber(hour)
     local min = tonumber(min)
 
