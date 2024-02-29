@@ -18,6 +18,7 @@ local profile_info = wibox_widget {
     markup = "user@hostname",
     align = "left",
     valign = "center",
+    scaling_quality = "best",
     widget = wibox_widget.textbox
 }
 

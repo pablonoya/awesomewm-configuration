@@ -10,6 +10,7 @@ return function(args)
             valign = "top",
             forced_width = args.size or dpi(28),
             forced_height = args.size or dpi(28),
+            scaling_quality = "best",
             widget = wibox.widget.imagebox
         },
         top = dpi(16),

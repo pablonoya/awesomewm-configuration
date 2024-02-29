@@ -11,6 +11,7 @@ return function(size, widget_type)
         {
             id = "img",
             valign = "center",
+            scaling_quality = "best",
             widget = wibox.widget.imagebox
         },
         forced_width = dpi(size),
@@ -30,7 +31,7 @@ return function(size, widget_type)
 
             player_icon.img.image = gcolor.recolor_image(
                 media_icons[playerctl:get_active_player().player_name] or media_icons.music_note,
-                widget_type == "popup" and fg_color or fg_bar_color
+                    widget_type == "popup" and fg_color or fg_bar_color
             )
         end
     )

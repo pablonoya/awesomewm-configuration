@@ -12,6 +12,7 @@ local meter_icon = wibox_widget {
         image = gcolor.recolor_image(icons.gpu, beautiful.xforeground),
         forced_width = dpi(16),
         forced_height = dpi(18),
+        scaling_quality = "best",
         widget = wibox_widget.imagebox
     },
     margins = dpi(2),

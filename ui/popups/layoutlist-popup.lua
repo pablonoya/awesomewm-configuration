@@ -13,6 +13,7 @@ local layout_list = awful.widget.layoutlist {
         {
             {
                 id = "icon_role",
+                scaling_quality = "best",
                 widget = wibox.widget.imagebox
             },
             margins = dpi(12),
@@ -58,11 +59,19 @@ awful.keygrabber {
     keybindings = {
         {
             {"Mod4"}, " ", function()
-                awful.layout.set((gears.table.cycle_value(layout_list.layouts, layout_list.current_layout, 1)))
+                awful.layout.set(
+                    (gears.table.cycle_value(
+                        layout_list.layouts, layout_list.current_layout, 1
+                    ))
+                )
             end
         }, {
             {"Mod4", "Shift"}, " ", function()
-                awful.layout.set(gears.table.cycle_value(layout_list.layouts, layout_list.current_layout, -1), nil)
+                awful.layout.set(
+                    gears.table.cycle_value(
+                        layout_list.layouts, layout_list.current_layout, -1
+                    ), nil
+                )
             end
         }
     }

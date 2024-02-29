@@ -12,6 +12,7 @@ local meter_icon = wibox_widget {
         image = gcolor.recolor_image(icons.ram, beautiful.xforeground),
         forced_width = dpi(16),
         forced_height = dpi(18),
+        scaling_quality = "best",
         widget = wibox_widget.imagebox
     },
     margins = dpi(2),
@@ -39,7 +40,7 @@ local ram_meter = monitor_progressbar {
         stops = {{0, beautiful.moon}, {1, beautiful.yellow}}
     },
     bg_color = beautiful.yellow .. "60",
-    watch_command = 'bash -c "free --kilo"',
+    watch_command = "bash -c 'free --kilo'",
     format_info = format_info,
     interval = 5
 }

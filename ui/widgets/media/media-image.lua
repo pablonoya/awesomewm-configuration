@@ -9,6 +9,7 @@ return function(radius)
     local media_image = wibox.widget {
         {
             id = "img",
+            scaling_quality = "best",
             widget = wibox.widget.imagebox
         },
         shape = helpers.rrect(radius),
