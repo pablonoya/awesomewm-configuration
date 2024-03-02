@@ -59,7 +59,7 @@ end
 
 local function remove_wallpaper(s)
     if s.videowallpaper and s.videowallpaper.pid then
-        spawn.easy_async(string.format("kill %d", s.videowallpaper.pid))
+        spawn("kill " .. s.videowallpaper.pid)
     end
 end
 

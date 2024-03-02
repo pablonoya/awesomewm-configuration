@@ -60,7 +60,7 @@ local function get_events()
         beautiful.gcalendar_command, function(stdout)
             local decoded, _, err = json.decode(stdout)
 
-            if #decoded > 0 then
+            if decoded and #decoded > 0 then
                 events:reset()
                 for i, event in ipairs(decoded) do
                     events:add(calendar_event(event))
@@ -76,7 +76,7 @@ end
 helpers.add_action(icon, get_events)
 helpers.add_list_scrolling(events)
 
-get_events()
+-- get_events()
 
 return wibox.widget {
     {
