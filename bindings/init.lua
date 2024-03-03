@@ -1,2 +1,2 @@
-require(... .. ".global-keys")
-require(... .. ".client-keys")
+require(... .. ".global_keys")
+require(... .. ".client_keys")

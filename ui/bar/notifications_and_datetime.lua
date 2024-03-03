@@ -15,8 +15,8 @@ local bell = text_icon {
     widget = wibox.widget.textbox
 }
 
-naughty.connect_signal(
-    "property::suspended", function(_, suspended)
+awesome.connect_signal(
+    "notifications::suspended", function(suspended)
         if suspended then
             bell.markup = color_helpers.colorize_text("\u{e7f6}", beautiful.accent)
         else

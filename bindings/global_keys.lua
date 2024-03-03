@@ -82,14 +82,8 @@ awful.keyboard.append_global_keybindings {
             group = "awesome"
         }
     ), awful.key(
-        {modkey}, "x", function()
-            if not naughty.suspended then
-                naughty.destroy_all_notifications()
-            end
-            naughty.suspended = not naughty.suspended
-            naughty.emit_signal("property::suspended", naughty, naughty.suspended)
-        end, {
-            description = "toggle don't disturb",
+        {modkey}, "x", helpers.toggle_silent_mode, {
+            description = "toggle silent mode",
             group = "awesome"
         }
     ), awful.key(

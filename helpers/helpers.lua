@@ -1,25 +1,26 @@
 local awful = require("awful")
-local gears = require("gears")
 local beautiful = require("beautiful")
+local gears = require("gears")
+local naughty = require("naughty")
 local wibox = require("wibox")
--- local naughty = require("naughty")
-local helpers = {}
+
+local _helpers = {}
 
 -- Create rounded rectangle shape (in one line)
-function helpers.rrect(radius)
+function _helpers.rrect(radius)
     return function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, radius)
     end
 end
 
-function helpers.vertical_pad(height)
+function _helpers.vertical_pad(height)
     return wibox.widget {
         forced_height = height,
         layout = wibox.layout.fixed.vertical
     }
 end
 
-function helpers.horizontal_pad(width)
+function _helpers.horizontal_pad(width)
     return wibox.widget {
         forced_width = width,
         layout = wibox.layout.fixed.horizontal
@@ -27,7 +28,7 @@ function helpers.horizontal_pad(width)
 end
 
 local double_tap_timer = nil
-function helpers.single_double_tap(single_tap_function, double_tap_function)
+function _helpers.single_double_tap(single_tap_function, double_tap_function)
     if double_tap_timer then
         double_tap_timer:stop()
         double_tap_timer = nil
@@ -54,7 +55,7 @@ end
 -- cursor theme and looking in the "cursors folder"
 -- For example: "hand1" is the cursor that appears when hovering over
 -- links
-function helpers.add_hover_cursor(w, hover_cursor)
+function _helpers.add_hover_cursor(w, hover_cursor)
     local original_cursor = "left_ptr"
 
     w:connect_signal(
@@ -76,7 +77,7 @@ function helpers.add_hover_cursor(w, hover_cursor)
     )
 end
 
-function helpers.float_and_resize(c, width, height)
+function _helpers.float_and_resize(c, width, height)
     c.width = width
     c.height = height
     awful.placement.centered(
@@ -90,12 +91,12 @@ function helpers.float_and_resize(c, width, height)
     c:raise()
 end
 
-function helpers.add_action(widget, action)
-    helpers.add_hover_cursor(widget)
+function _helpers.add_action(widget, action)
+    _helpers.add_hover_cursor(widget)
     widget:buttons(gears.table.join(awful.button({}, 1, action)))
 end
 
-function helpers.add_list_scrolling(widget)
+function _helpers.add_list_scrolling(widget)
     local function scroll_down(widget)
         if #widget.children == 1 then
             return
@@ -127,7 +128,7 @@ function helpers.add_list_scrolling(widget)
     )
 end
 
-function helpers.get_next_screen(direction)
+function _helpers.get_next_screen(direction)
     -- If there's a screen in the given direction, return it
     local screen = awful.screen.focused()
 
@@ -145,4 +146,12 @@ function helpers.get_next_screen(direction)
     return screen
 end
 
-return helpers
+function _helpers.toggle_silent_mode()
+    if not naughty.suspended then
+        naughty.destroy_all_notifications()
+    end
+    naughty.suspended = not naughty.suspended
+    awesome.emit_signal("notifications::suspended", naughty.suspended)
+end
+
+return _helpers
