@@ -4,7 +4,7 @@ local gears_string = require("gears.string")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
-local system_controls = require("helpers.system-controls")
+local system_controls = require("helpers.system_controls")
 
 local slider = require("ui.widgets.slider")
 local clickable_container = require("ui.widgets.clickable-container")

@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local gears = require("gears")
 local wibox = require("wibox")
 
-local system_controls = require("helpers.system-controls")
+local system_controls = require("helpers.system_controls")
 local text_icon = require("ui.widgets.text-icon")
 local helpers = require("helpers")
 

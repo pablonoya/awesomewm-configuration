@@ -4,7 +4,7 @@ local naughty = require("naughty")
 local revelation = require("away.third_party.revelation")
 
 local helpers = require("helpers")
-local system_controls = require("helpers.system-controls")
+local system_controls = require("helpers.system_controls")
 
 local apps = require("configuration.apps")
 local playerctl = require("signals.playerctl")
@@ -348,10 +348,8 @@ awful.keyboard.append_global_keybindings {
             group = "hotkeys (asusctl)"
         }
     ), awful.key(
-        {}, "XF86Launch4", function()
-            awful.spawn("asusctl profile -n")
-        end, {
-            description = "asusctl next fan profile",
+        {}, "XF86Launch4", system_controls.next_asusctl_profile, {
+            description = "asusctl next profile",
             group = "hotkeys (asusctl)"
         }
     )

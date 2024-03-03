@@ -7,7 +7,7 @@ local wibox = require("wibox")
 
 local helpers = require("helpers")
 local color_helpers = require("helpers.color-helpers")
-local system_controls = require("helpers.system-controls")
+local system_controls = require("helpers.system_controls")
 
 local text_icon = require("ui.widgets.text-icon")
 

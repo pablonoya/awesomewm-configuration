@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local gears_string = require("gears.string")
 local wibox = require("wibox")
 
-local system_controls = require("helpers.system-controls")
+local system_controls = require("helpers.system_controls")
 local ui_helpers = require("helpers.ui-helpers")
 
 local slider = require("ui.widgets.slider")
@@ -43,7 +43,7 @@ local volume_device = clickable_container {
 }
 
 local volume_slider = slider {
-    bar_bg_color = beautiful.accent .. '60',
+    bar_bg_color = beautiful.accent .. "60",
     bar_color = beautiful.accent,
     handle_color = beautiful.accent
 }
@@ -51,7 +51,7 @@ local volume_slider = slider {
 local function set_muted_style(muted)
     if muted then
         volume_icon.text = "\u{e04f}"
-        volume_slider.bar_active_color = beautiful.accent .. '60'
+        volume_slider.bar_active_color = beautiful.accent .. "60"
         volume_slider.handle_color = beautiful.focus
     else
         volume_icon.text = ui_helpers.get_volume_icon(volume_slider:get_value())

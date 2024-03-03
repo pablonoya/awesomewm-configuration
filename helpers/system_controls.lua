@@ -1,6 +1,8 @@
 local spawn = require("awful.spawn")
 local gears_string = require("gears.string")
 
+local _controls = {}
+
 local function get_volume()
     spawn.easy_async(
         "pamixer --get-mute --get-volume", function(stdout)
@@ -11,7 +13,7 @@ local function get_volume()
 end
 
 -- Volume Control
-local function volume_control(type, value)
+function _controls.volume_control(type, value)
     local cmd
     if type == "increase" then
         cmd = "pamixer -i " .. tostring(value)
@@ -36,7 +38,7 @@ local function get_brightness()
     )
 end
 
-local function brightness_control(type, value)
+function _controls.brightness_control(type, value)
     local cmd
     if type == "increase" then
         cmd = "brightnessctl set 5%+ -q"
@@ -49,7 +51,7 @@ local function brightness_control(type, value)
     spawn.easy_async(cmd, get_brightness)
 end
 
-local function keyboard_brightness()
+function _controls.keyboard_brightness()
     spawn.easy_async(
         "asusctl -k", function(stdout)
             awesome.emit_signal("brightness::keyboard", stdout:match("%d") * 100 / 3)
@@ -66,13 +68,16 @@ local function get_mic_mute()
     )
 end
 
-local function mic_toggle(type, value)
+function _controls.mic_toggle(type, value)
     spawn.easy_async("pactl set-source-mute @DEFAULT_SOURCE@ toggle", get_mic_mute)
 end
 
-return {
-    volume_control = volume_control,
-    brightness_control = brightness_control,
-    keyboard_brightness = keyboard_brightness,
-    mic_toggle = mic_toggle
-}
+function _controls.next_asusctl_profile()
+    spawn.easy_async_with_shell(
+        "asusctl profile -n && asusctl profile -p | awk '{print $NF}'", function(stdout)
+            awesome.emit_signal("asusctl::profile", stdout:gsub("\n", ""))
+        end
+    )
+end
+
+return _controls
