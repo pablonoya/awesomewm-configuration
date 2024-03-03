@@ -5,6 +5,7 @@ require(... .. ".redshift")
 require(... .. ".wifi-signals")
 require(... .. ".bluetooth-signals")
 require(... .. ".volume-signals")
+require(... .. ".asusctl_signals")
 
 if beautiful.dominantcolors_path then
     require(... .. ".media-dominantcolors")
