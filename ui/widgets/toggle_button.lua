@@ -1,29 +1,27 @@
-local button = require("awful.button")
 local beautiful = require("beautiful")
-local gtable = require("gears.table")
 local gcolor = require("gears.color")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
 
-local clickable_container = require("ui.widgets.clickable-container")
 local scrolling_text = require("ui.widgets.scrolling-text")
 local text_icon = require("ui.widgets.text-icon")
 
-local function toggle_button(icon, name, bg_color, onclick, signal, signal_label)
-    local button_fg = beautiful.xforeground
-    local button_bg = beautiful.control_center_button_bg
+return function(args)
+    local bg_color = args.active_color or beautiful.accent
+    local last_fg = beautiful.xforeground
+    local last_bg = beautiful.control_center_button_bg
     local hover_bg = gcolor.change_opacity(bg_color, 0.4)
 
-    local action = scrolling_text {
-        text = name,
-        font = beautiful.font_name .. " Bold 10",
-        forced_width = dpi(100)
+    local icon = text_icon {
+        markup = args.icon,
+        size = 16
     }
 
-    local icon = text_icon {
-        markup = icon,
-        size = 16
+    local action = scrolling_text {
+        text = args.name,
+        font = beautiful.font_name .. " Bold 10",
+        forced_width = dpi(100)
     }
 
     local filled_button = wibox.widget {
@@ -42,34 +40,7 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
         widget = wibox.container.background
     }
 
-    helpers.add_action(filled_button, onclick)
-
-    local toggle = function(state)
-        if state then
-            filled_button.bg = bg_color
-            filled_button.fg = beautiful.xbackground
-            hover_bg = gcolor.change_opacity(bg_color, 0.8)
-        else
-            filled_button.bg = beautiful.control_center_button_bg
-            filled_button.fg = beautiful.xforeground
-            action.text:set_markup(name)
-            hover_bg = gcolor.change_opacity(bg_color, 0.4)
-        end
-
-        button_bg = filled_button.bg
-        button_fg = filled_button.fg
-    end
-
-    signal(toggle)
-
-    if signal_label then
-        awesome.connect_signal(
-            signal_label, function(label)
-                action.text:set_markup(label)
-            end
-        )
-    end
-
+    -- Change color on hover
     filled_button:connect_signal(
         "mouse::enter", function()
             filled_button.bg = hover_bg
@@ -78,12 +49,38 @@ local function toggle_button(icon, name, bg_color, onclick, signal, signal_label
 
     filled_button:connect_signal(
         "mouse::leave", function()
-            filled_button.bg = button_bg
-            filled_button.fg = button_fg
+            filled_button.bg = last_bg
+            filled_button.fg = last_fg
         end
     )
 
+    local function toggle(state)
+        if state then
+            filled_button.bg = bg_color
+            filled_button.fg = beautiful.xbackground
+            hover_bg = gcolor.change_opacity(bg_color, 0.8)
+        else
+            filled_button.bg = beautiful.control_center_button_bg
+            filled_button.fg = beautiful.xforeground
+            hover_bg = gcolor.change_opacity(bg_color, 0.4)
+
+            action.text:set_markup(args.name)
+        end
+
+        last_bg = filled_button.bg
+        last_fg = filled_button.fg
+    end
+
+    awesome.connect_signal(
+        args.signal_label, function(label)
+            if type(label) == "string" then
+                action.text:set_markup(label)
+            end
+            toggle(label)
+        end
+    )
+
+    helpers.add_action(filled_button, args.onclick)
+
     return filled_button
 end
-
-return toggle_button

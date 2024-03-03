@@ -1,7 +1,9 @@
 local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 
-local toggle_button = require("ui.widgets.toggle-button")
+local toggle_button = require("ui.widgets.toggle_button")
+
+local signal_label = "blue_light:state"
 
 local function onclick()
     spawn.easy_async_with_shell(
@@ -13,16 +15,17 @@ local function onclick()
             else
                 redshift -l %s:%s -t 6500:4200 &>/dev/null &
                 echo 'ON'
-            fi
-        ]], beautiful.latitude, beautiful.longitude
+            fi ]], beautiful.latitude, beautiful.longitude
         ), function(stdout)
-            awesome.emit_signal("blue_light:state", stdout:match("ON"))
+            awesome.emit_signal(signal_label, stdout:match("ON"))
         end
     )
 end
 
-local signal = function(callback)
-    awesome.connect_signal("blue_light:state", callback)
-end
-
-return toggle_button("\u{ef44}", "Night light", beautiful.moon, onclick, signal)
+return toggle_button {
+    icon = "\u{ef44}",
+    name = "Night light",
+    active_color = beautiful.moon,
+    signal_label = signal_label,
+    onclick = onclick
+}

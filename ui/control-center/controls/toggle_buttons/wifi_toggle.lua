@@ -1,7 +1,8 @@
 local spawn = require("awful.spawn")
-local beautiful = require("beautiful")
 
-local toggle_button = require("ui.widgets.toggle-button")
+local toggle_button = require("ui.widgets.toggle_button")
+
+local signal_label = "wifi::ssid"
 
 local function onclick()
     spawn.easy_async_with_shell(
@@ -13,13 +14,15 @@ local function onclick()
                 echo 'ON'
             fi
         ]], function(stdout)
+            awesome.emit_signal(signal_label, stdout ~= "")
             awesome.emit_signal("wifi::state", stdout ~= "")
         end
     )
 end
 
-local signal = function(callback)
-    awesome.connect_signal("wifi::state", callback)
-end
-
-return toggle_button("\u{e63e}", "Wi-Fi", beautiful.accent, onclick, signal, "wifi::ssid")
+return toggle_button {
+    icon = "\u{e63e}",
+    name = "Wi-Fi",
+    signal_label = signal_label,
+    onclick = onclick
+}
