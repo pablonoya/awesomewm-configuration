@@ -54,8 +54,8 @@ return function(args)
         end
     )
 
-    local function toggle(state)
-        if state then
+    local function toggle(value)
+        if value and value ~= "" then
             filled_button.bg = bg_color
             filled_button.fg = beautiful.xbackground
             hover_bg = gcolor.change_opacity(bg_color, 0.8)
@@ -64,6 +64,11 @@ return function(args)
             filled_button.fg = beautiful.xforeground
             hover_bg = gcolor.change_opacity(bg_color, 0.4)
 
+        end
+
+        if type(value) == "string" then
+            action.text:set_markup(value)
+        else
             action.text:set_markup(args.name)
         end
 
@@ -71,15 +76,7 @@ return function(args)
         last_fg = filled_button.fg
     end
 
-    awesome.connect_signal(
-        args.signal_label, function(label)
-            if type(label) == "string" then
-                action.text:set_markup(label)
-            end
-            toggle(label)
-        end
-    )
-
+    awesome.connect_signal(args.signal_label, toggle)
     helpers.add_action(filled_button, args.onclick)
 
     return filled_button
