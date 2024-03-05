@@ -14,7 +14,6 @@ local function onclick()
             fi
         ]], function(stdout)
             awesome.emit_signal(signal_label, stdout ~= "")
-            awesome.emit_signal("bluetooth::state", stdout ~= "")
         end
     )
 end

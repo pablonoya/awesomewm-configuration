@@ -15,7 +15,6 @@ local function onclick()
             fi
         ]], function(stdout)
             awesome.emit_signal(signal_label, stdout ~= "")
-            awesome.emit_signal("wifi::state", stdout ~= "")
         end
     )
 end
