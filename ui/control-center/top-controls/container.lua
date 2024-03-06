@@ -1,6 +1,6 @@
 local wibox = require("wibox")
 
-local user_info = require("ui.control-center.top-controls.user-info")
+local user_info = require("ui.control-center.top-controls.user_info")
 local control_center_switch = require("ui.control-center.top-controls.control-center-switch")
 local end_session = require("ui.control-center.top-controls.end-session")
 
