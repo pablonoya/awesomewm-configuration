@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 local color_helpers = require("helpers.color-helpers")
 local ui_helpers = require("helpers.ui-helpers")
 
-local system_popup = require("ui.popups.system-popup")
+local system_popup = require("ui.popups.system_popup")
 
 local icon_markup
 local progressbar_color

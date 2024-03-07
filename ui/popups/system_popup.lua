@@ -2,7 +2,6 @@ local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
-
 local helpers = require("helpers")
 
 local text_icon = require("ui.widgets.text-icon")
@@ -52,8 +51,9 @@ local system_popup = awful.popup {
     visible = false
 }
 
-local timeout = gears.timer {
+local timer = gears.timer {
     timeout = 1.6,
+    single_shot = true,
     callback = function()
         system_popup.visible = false
     end
@@ -78,10 +78,10 @@ system_popup.show = function(icon_markup, value, color)
     )
 
     if system_popup.visible then
-        timeout:again()
+        timer:again()
     else
         system_popup.visible = true
-        timeout:start()
+        timer:start()
     end
 end
 
