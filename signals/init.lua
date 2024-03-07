@@ -3,7 +3,7 @@ local beautiful = require("beautiful")
 require(... .. ".battery_signals")
 require(... .. ".wifi_signals")
 require(... .. ".bluetooth_signals")
-require(... .. ".volume-signals")
+require(... .. ".volume_signals")
 require(... .. ".redshift")
 require(... .. ".asusctl_signals")
 
