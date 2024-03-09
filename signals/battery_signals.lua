@@ -1,26 +1,32 @@
 local spawn = require("awful.spawn")
-local awful_widget = require("awful.widget")
+local gtimer = require("gears.timer")
 
-local update_interval = 40
+local function emit_battery_state(battery_file)
+    spawn.easy_async_with_shell(
+        "sleep 0.5; cat " .. battery_file, function(stdout)
+            awesome.emit_signal("signal::charger", stdout == "Charging\n")
+        end
+    )
+end
 
 spawn.easy_async_with_shell(
     "echo /sys/class/power_supply/BAT?/status | head -1 || false",
         function(battery_file, _, __, exit_code)
-            -- No battery file found
-            if not (exit_code == 0) then
+            -- No battery status found
+            if exit_code ~= 0 then
                 return
             end
 
-            -- Periodically get battery info
-            awful_widget.watch(
-                "cat " .. battery_file, 5, function(_, stdout)
-                    local status = (stdout == "Charging\n" or stdout == "Not charging\n")
+            -- Check actual state
+            emit_battery_state(battery_file)
 
-                    -- increase update_interval if charging
-                    update_interval = status and 60 or 40
-
-                    awesome.emit_signal("signal::charger", status)
-                end
+            -- Listen to battery events
+            spawn.with_line_callback(
+                [[ sh -c "acpi_listen 2> /dev/null | grep --line-buffered 'battery'" ]], {
+                    stdout = function(line)
+                        emit_battery_state(battery_file)
+                    end
+                }
             )
         end
 )
@@ -28,15 +34,28 @@ spawn.easy_async_with_shell(
 spawn.easy_async_with_shell(
     "echo /sys/class/power_supply/BAT?/capacity | head -1 || false",
         function(battery_file, _, __, exit_code)
-            -- No battery file found
-            if not (exit_code == 0) then
+            -- No battery capacity found
+            if exit_code ~= 0 then
                 return
             end
 
             -- Periodically get battery info
-            awful_widget.watch(
-                "cat " .. battery_file, update_interval, function(_, stdout)
-                    awesome.emit_signal("signal::battery", tonumber(stdout))
+            local timer = gtimer {
+                timeout = 40,
+                call_now = true,
+                callback = function()
+                    spawn.easy_async_with_shell(
+                        "cat " .. battery_file, function(stdout)
+                            awesome.emit_signal("signal::battery", tonumber(stdout))
+                        end
+                    )
+                end
+            }
+
+            awesome.connect_signal(
+                "signal::charger", function(is_charging)
+                    timer.timeout = is_charging and 40 or 60
+                    timer:again()
                 end
             )
         end
