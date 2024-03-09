@@ -34,10 +34,10 @@ end
 local function emit_mic_muted()
     spawn.easy_async_with_shell(
         [[
-            pamixer --list-sources
-            | grep -v '"Monitor of'
-            | grep -o '"Running" "[^"]*"'
-            | cut -d '"' -f4
+            pamixer --list-sources |
+            grep -v '"Monitor of' |
+            grep -o '"Running" "[^"]*"' |
+            cut -d '"' -f4
         ]], function(stdout)
             awesome.emit_signal("microphone::state", stdout ~= "")
         end

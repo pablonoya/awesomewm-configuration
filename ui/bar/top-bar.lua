@@ -11,7 +11,7 @@ local control_center_button = require("ui.bar.control-center-button")
 local client_info = require("ui.bar.widgets.client_info")
 local mediabar = require("ui.bar.mediabar")
 local systray = require("ui.bar.widgets.systray")
-local mic_indicator = require("ui.bar.widgets.mic-indicator")
+local mic_indicator = require("ui.bar.widgets.mic_indicator")
 local battery = require("ui.bar.widgets.battery")
 local layoutbox = require("ui.bar.widgets.layoutbox")
 
