@@ -5,7 +5,7 @@ local wibox_widget = require("wibox.widget")
 
 local icons = require("ui.icons")
 
-local monitor_progressbar = require("ui.widgets.monitor-progressbar")
+local monitor_progressbar = require("ui.control-center.monitors.monitor_progressbar")
 
 local meter_icon = wibox_widget {
     {

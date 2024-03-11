@@ -1,13 +1,13 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local ram_meter = require("ui.control-center.monitors.ram-meter")
+local ram_meter = require("ui.control-center.monitors.ram_meter")
 
 local cpu_usage = require("ui.control-center.monitors.cpu_usage")
-local gpu_usage = require("ui.control-center.monitors.gpu-usage")
+local gpu_usage = require("ui.control-center.monitors.gpu_usage")
 
-local cpu_temperature = require("ui.control-center.monitors.cpu-temperature")
-local gpu_temperature = require("ui.control-center.monitors.gpu-temperature")
+local cpu_temperature = require("ui.control-center.monitors.cpu_temperature")
+local gpu_temperature = require("ui.control-center.monitors.gpu_temperature")
 
 local controls_container = require("ui.control-center.widgets.controls-container")
 

@@ -1,7 +1,7 @@
 local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 
-local monitor_progressbar = require("ui.widgets.monitor-progressbar")
+local monitor_progressbar = require("ui.control-center.monitors.monitor_progressbar")
 local text_icon = require("ui.widgets.text-icon")
 
 local meter_icon = text_icon {
