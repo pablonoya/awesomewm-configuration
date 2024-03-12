@@ -1,8 +1,7 @@
 local beautiful = require("beautiful")
-local gcolor = require("gears.color")
 local wibox = require("wibox")
 
-local no_notifications = wibox.widget {
+return wibox.widget {
     {
         text = "No notifications",
         ellipsize = "none",
@@ -10,8 +9,7 @@ local no_notifications = wibox.widget {
         font = beautiful.font_name .. "Medium 12",
         widget = wibox.widget.textbox
     },
-    margins = dpi(20),
+    top = dpi(8),
+    bottom = dpi(24),
     widget = wibox.container.margin
 }
-
-return no_notifications

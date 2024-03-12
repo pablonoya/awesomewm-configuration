@@ -1,11 +1,11 @@
 local awful_screen = require("awful.screen")
 local beautiful = require("beautiful")
 
-local animation = require('helpers.animation')
+local animation = require("helpers.animation")
 
-local notification_center = require('ui.info-docks.notification-center.notification-center')
-local weather_popup = require('ui.info-docks.weather-popup')
-local calendar_popup = require('ui.info-docks.calendar-box.calendar-popup')
+local notification_center = require("ui.info-docks.notification_center.notification_center")
+local weather_popup = require("ui.info-docks.weather-popup")
+local calendar_popup = require("ui.info-docks.calendar-box.calendar-popup")
 
 local slide_calendar = animation.create_timed_slide(0.2, calendar_popup)
 local slide_weather = animation.create_timed_slide(0.25, weather_popup)

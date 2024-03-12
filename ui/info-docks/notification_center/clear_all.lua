@@ -1,4 +1,3 @@
-local awful = require("awful")
 local wibox = require("wibox")
 local gshape = require("gears.shape")
 

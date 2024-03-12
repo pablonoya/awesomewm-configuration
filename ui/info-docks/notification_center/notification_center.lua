@@ -1,15 +1,15 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local border_popup = require('ui.widgets.border-popup')
+local border_popup = require("ui.widgets.border-popup")
 
-local notification_list = require("ui.info-docks.notification-center.notification-list")
-local clear_all = require("ui.info-docks.notification-center.clear-all")
+local notification_list = require("ui.info-docks.notification_center.notification_list")
+local clear_all = require("ui.info-docks.notification_center.clear_all")
 
 local header = wibox.widget {
     {
-        text = "Notification center",
-        font = beautiful.font_name .. "Bold 14",
+        text = "Notifications",
+        font = beautiful.font_name .. "Bold 12",
         align = "left",
         valign = "center",
         widget = wibox.widget.textbox

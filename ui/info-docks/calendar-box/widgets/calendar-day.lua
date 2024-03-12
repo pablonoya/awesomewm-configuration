@@ -20,7 +20,7 @@ return function(widget, flag, date)
             widget,
             halign = "center",
             valign = "center",
-            forced_width = dpi(38),
+            forced_width = dpi(40),
             widget = wibox.container.place
         },
         shape = style.shape,
