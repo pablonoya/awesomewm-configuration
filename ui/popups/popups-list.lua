@@ -20,7 +20,7 @@ awesome.connect_signal(
             progressbar_color = beautiful.popup_volume_color
         end
 
-        system_popup.show(icon_markup, value, progressbar_color)
+        system_popup:show(icon_markup, value, progressbar_color)
     end
 )
 
@@ -36,7 +36,7 @@ awesome.connect_signal(
             progressbar_color = beautiful.popup_brightness_color
         end
 
-        system_popup.show(icon_markup, value, progressbar_color)
+        system_popup:show(icon_markup, value, progressbar_color)
     end
 )
 
@@ -48,7 +48,7 @@ awesome.connect_signal(
             icon_markup = color_helpers.colorize_text("\u{e029}", beautiful.popup_mic_color)
         end
 
-        system_popup.show(icon_markup, -1)
+        system_popup:show(icon_markup, -1)
     end
 )
 
@@ -64,6 +64,6 @@ awesome.connect_signal(
             progressbar_color = beautiful.white
         end
 
-        system_popup.show(icon_markup, value, progressbar_color)
+        system_popup:show(icon_markup, value, progressbar_color)
     end
 )

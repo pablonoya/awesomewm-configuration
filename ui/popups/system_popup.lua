@@ -1,52 +1,74 @@
 local awful = require("awful")
-local gears = require("gears")
 local beautiful = require("beautiful")
+local gears = require("gears")
 local wibox = require("wibox")
+
+local rubato = require("module.rubato")
 local helpers = require("helpers")
 
 local text_icon = require("ui.widgets.text-icon")
 
 local popup_icon = text_icon {
     text = "\u{e050}",
-    size = 80
+    size = 40
 }
 
 local progressbar = wibox.widget {
     max_value = 100,
-    value = 0,
     background_color = beautiful.black,
     color = beautiful.accent,
     shape = gears.shape.rounded_bar,
-    bar_shape = helpers.rrect(beautiful.popup_border_radius),
+    bar_shape = gears.shape.rounded_bar,
     border_width = dpi(2),
     border_color = beautiful.focus,
     paddings = dpi(6),
-    forced_height = dpi(44),
+    forced_height = dpi(40),
     widget = wibox.widget.progressbar
 }
+
+local slide = rubato.timed {
+    duration = 0.2,
+    subscribed = function(val)
+        progressbar:set_value(val)
+    end
+}
+
+local function placement_fn(obj, args)
+    awful.placement.top(
+        obj, {
+            margins = {
+                top = dpi(80)
+            }
+        }
+    )
+end
 
 local system_popup = awful.popup {
     widget = {
         {
             {
                 popup_icon,
-                progressbar,
-                spacing = dpi(4),
-                layout = wibox.layout.fixed.vertical
+                {
+                    progressbar,
+                    widget = wibox.container.place
+                },
+                spacing = dpi(12),
+                layout = wibox.layout.fixed.horizontal
             },
-            margins = dpi(16),
-            widget = wibox.container.margin
+            widget = wibox.container.place
         },
-        bg = beautiful.popup_bg,
-        border_width = dpi(2),
-        border_color = beautiful.focus,
-        shape = helpers.rrect(beautiful.popup_border_radius),
-        widget = wibox.container.background
+        top = dpi(4),
+        bottom = dpi(4),
+        left = dpi(16),
+        right = dpi(16),
+        widget = wibox.container.margin
     },
-    minimum_width = beautiful.popup_size - dpi(28),
-    maximum_height = beautiful.popup_size,
+    bg = beautiful.popup_bg,
+    border_width = dpi(2),
+    border_color = beautiful.focus,
     maximum_width = beautiful.popup_size,
-    placement = awful.placement.centered,
+
+    placement = placement_fn,
     ontop = true,
     visible = false
 }
@@ -59,11 +81,12 @@ local timer = gears.timer {
     end
 }
 
-system_popup.show = function(icon_markup, value, color)
+function system_popup:show(icon_markup, value, color)
+    self.screen = awful.screen.focused()
     popup_icon.markup = icon_markup
 
     if value >= 0 then
-        progressbar.value = value
+        slide.target = value
         progressbar.color = color
         progressbar.border_color = color
         progressbar.visible = true
@@ -71,16 +94,10 @@ system_popup.show = function(icon_markup, value, color)
         progressbar.visible = false
     end
 
-    awful.placement.centered(
-        system_popup, {
-            parent = awful.screen.focused()
-        }
-    )
-
-    if system_popup.visible then
+    if self.visible then
         timer:again()
     else
-        system_popup.visible = true
+        self.visible = true
         timer:start()
     end
 end
