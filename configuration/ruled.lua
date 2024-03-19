@@ -25,7 +25,6 @@ ruled.client.connect_signal(
                 border_width = dpi(2),
                 placement = awful.placement.no_overlap + awful.placement.no_offscreen,
                 shape = helpers.rrect(beautiful.client_border_radius)
-
             }
         }
 
@@ -43,13 +42,12 @@ ruled.client.connect_signal(
             rule_any = {
                 class = {
                     "Lxappearance", "Nm-connection-editor", "slack", "Slack", "discord",
-                    "ulauncher", "Ulauncher", "telegram-desktop", "TelegramDesktop",
-                    "blueman-manager", "Blueman-manager", "pavucontrol", "Pavucontrol",
-                    "youtube music", "YouTube Music"
+                    "ulauncher", "Ulauncher", "blueman-manager", "Blueman-manager", "pavucontrol",
+                    "Pavucontrol", "youtube music", "YouTube Music", "anytype", "Thunar"
                 },
                 name = {
                     -- xev
-                    "Event Tester", "zoom", ""
+                    "Event Tester", "zoom", "Picture in picture", ""
                 },
                 role = {"AlarmWindow", "pop-up", "GtkFileChooserDialog"},
                 type = {"dialog"}
@@ -62,7 +60,7 @@ ruled.client.connect_signal(
 
         -- No border
         ruled.client.append_rule {
-            id = "border",
+            id = "no border",
             rule_any = {
                 class = {"ulauncher", "Ulauncher"}
             },
@@ -76,26 +74,12 @@ ruled.client.connect_signal(
             id = "centered",
             rule_any = {
                 type = {"dialog"},
-                class = {
-                    -- "discord",
-                },
                 role = {"GtkFileChooserDialog", "conversation"}
             },
             properties = {
                 placement = awful.placement.centered
             }
         }
-
-        -- Below
-        ruled.client.append_rule {
-            rule = {
-                class = 'xwinwrap'
-            },
-            properties = {
-                below = true
-            }
-        }
-
     end
 )
 
