@@ -7,10 +7,10 @@ local focused_screen = awful.screen.focused()
 
 local function pause_video(should_pause)
     if should_pause ~= paused then
-        awful.spawn("xdotool search --class mpv key --window %@ p")
+        awful.spawn.with_shell("sleep 0.3 ; xdotool search --class mpv key --window %@ p")
         paused = not paused
+        should_pause = false
     end
-    should_pause = false
 end
 
 -- Pause if there are open windows on focused screen
@@ -26,13 +26,17 @@ screen.connect_signal(
 -- Pause on every new client
 tag.connect_signal(
     "tagged", function(c)
-        pause_video(true)
+        if c.screen == awful.screen.focused() then
+            pause_video(not c.minimized)
+        end
     end
 )
 
 -- Unpause if there are no clients after a client is closed
 tag.connect_signal(
     "untagged", function(c)
-        pause_video(#awful.client.visible(c.screen) > 0)
+        if c.screen == awful.screen.focused() then
+            pause_video(#awful.client.visible(c.screen) > 0)
+        end
     end
 )
