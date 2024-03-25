@@ -33,7 +33,7 @@ local arc = wibox.widget {
     forced_width = dpi(50),
     forced_height = dpi(50),
     shape = function(cr, width, height)
-        gshape.arc(cr, width, height, dpi(5), 0, math.pi / 3, true, true)
+        gshape.arc(cr, width, height, 5, 0, math.pi / 2, true, true)
     end,
     widget = wibox.container.background
 }
