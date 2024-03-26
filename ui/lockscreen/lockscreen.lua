@@ -33,7 +33,7 @@ local function update_time()
 end
 
 local clock_timer = gtimer {
-    timeout = 30,
+    timeout = 2,
     call_now = true,
     callback = update_time
 }
