@@ -18,7 +18,7 @@ naughty.connect_signal(
 dpi = beautiful.xresources.apply_dpi
 
 -- Autostart programs
-spawn.easy_async_with_shell(gfs.get_configuration_dir() .. "configuration/autostart.sh")
+spawn.with_shell(gfs.get_configuration_dir() .. "configuration/autostart.sh")
 
 -- Theme + Configs
 beautiful.init(gfs.get_configuration_dir() .. "theme/theme.lua")

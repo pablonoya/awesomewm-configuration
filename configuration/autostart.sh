@@ -13,5 +13,5 @@ start blueman-applet
 start redshift -l -19:-65
 start picom --config=$HOME/.config/awesome/theme/picom.conf
 start diodon
-start /usr/bin/fusuma
+start fusuma -d
 start ulauncher --hide-window
