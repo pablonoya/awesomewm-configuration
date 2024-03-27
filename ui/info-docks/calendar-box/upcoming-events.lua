@@ -5,7 +5,9 @@ local wibox = require("wibox")
 
 local json = require("away.third_party.dkjson")
 
+local variables = require("configuration.variables")
 local helpers = require("helpers")
+
 local text_icon = require("ui.widgets.text-icon")
 local clickable_container = require("ui.widgets.clickable-container")
 
@@ -57,7 +59,7 @@ local function get_events()
     placeholder.message.text = "Loading events..."
 
     spawn.easy_async(
-        beautiful.gcalendar_command, function(stdout)
+        variables.gcalendar_command, function(stdout)
             local decoded, _, err = json.decode(stdout)
 
             if decoded and #decoded > 0 then
@@ -76,7 +78,7 @@ end
 helpers.add_action(icon, get_events)
 helpers.add_list_scrolling(events)
 
--- get_events()
+get_events()
 
 return wibox.widget {
     {

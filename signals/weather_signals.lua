@@ -1,15 +1,15 @@
 local spawn = require("awful.spawn")
-local beautiful = require("beautiful")
 local gtimer = require("gears.timer")
 
 local json = require("away.third_party.dkjson")
+local variables = require("configuration.variables")
 
 local endpoint = "https://api.openweathermap.org/data/2.5/weather"
 
 local query_params = {
-    appid = beautiful.weather_api_key,
-    lat = beautiful.latitude,
-    lon = beautiful.longitude,
+    appid = variables.weather_api_key,
+    lat = variables.latitude,
+    lon = variables.longitude,
     units = "metric",
     lang = "en"
 }

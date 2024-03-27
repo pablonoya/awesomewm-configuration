@@ -4,9 +4,11 @@ local gshape = require("gears.shape")
 local gtimer = require("gears.timer")
 local wibox = require("wibox")
 
+local variables = require("configuration.variables")
+
 local profile_pic = wibox.widget {
     id = "icon",
-    image = beautiful.pfp,
+    image = variables.pfp,
     clip_shape = gshape.circle,
     scaling_quality = "best",
     widget = wibox.widget.imagebox

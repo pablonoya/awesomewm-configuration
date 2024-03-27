@@ -1,13 +1,11 @@
 local naughty = require("naughty")
-local gsurface = require("gears.surface")
 local gfs = require("gears.filesystem")
 local xrdb = require("beautiful.xresources").get_current_theme()
 
 local helpers = require("helpers")
 
 local HOME = os.getenv("HOME")
-local local_dir = gfs.get_configuration_dir()
-local icons_dir = local_dir .. "ui/icons/"
+local icons_dir = gfs.get_configuration_dir() .. "ui/icons/"
 
 local theme = {}
 
@@ -105,7 +103,7 @@ theme.tooltip_bg = theme.black
 theme.tooltip_fg = theme.xforeground
 theme.tooltip_border_color = theme.focus
 theme.tooltip_border_width = dpi(1)
-theme.tooltip_font = theme.font_name .. '12'
+theme.tooltip_font = theme.font_name .. 12
 
 -- Tasklist
 theme.tasklist_bg_normal = theme.transparent
@@ -127,11 +125,11 @@ theme.taglist_squares_unsel = nil
 theme.taglist_bg_focus = theme.focus
 theme.taglist_fg_focus = theme.xforeground
 
-theme.taglist_bg_urgent = theme.uranus .. 'B7'
+theme.taglist_bg_urgent = theme.uranus .. "B7"
 theme.taglist_fg_urgent = theme.wibar_bg
 
 theme.taglist_bg_occupied = theme.wibar_bg
-theme.taglist_fg_occupied = theme.xforeground .. 'F0'
+theme.taglist_fg_occupied = theme.xforeground .. "F0"
 
 theme.taglist_bg_empty = theme.black
 theme.taglist_fg_empty = theme.xbackground
@@ -209,8 +207,6 @@ theme.snap_shape = helpers.rrect(theme.client_border_radius)
 -- Control center
 theme.control_center_width = dpi(360)
 theme.control_center_button_bg = theme.focus
--- PFP
-theme.pfp = gsurface.load_uncached(local_dir .. "theme/assets/kirby_snowboard.jpg")
 
 -- Notifications
 naughty.config.defaults.ontop = true
@@ -232,7 +228,7 @@ theme.notification_position = "top_right"
 theme.notif_center_radius = theme.border_radius
 
 -- Notification icons
-theme.notification_icon = gsurface.load_uncached(icons_dir .. "notification.svg")
+theme.notification_icon = icons_dir .. "notification.svg"
 
 -- Systray
 theme.systray_icon_spacing = dpi(4)
@@ -291,21 +287,5 @@ theme.window_switcher_name_font = theme.font_name .. "Medium 11"
 theme.window_switcher_name_normal_color = theme.xforeground .. "97"
 theme.window_switcher_name_focus_color = theme.accent
 theme.window_switcher_icon_width = dpi(28)
-
-theme.latitude = 12.345
-theme.longitude = -67.890
-
--- Video wallpaper
--- theme.videowallpaper_path = HOME .. "/videos/cyberpunk-city-pixel.mp4"
--- theme.videowallpaper_vertical_path = HOME .. "/videos/cyberpunk-city-pixel-vertical.mp4"
-
--- Dominantcolors script path
--- theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
-
--- gcalendar command
-theme.gcalendar_command = "gcalendar --output json --no-of-days 3"
-
--- OpenWeather api key
-theme.weather_api_key = "9e6200f9333c416a2eeed22a4ceccfd5"
 
 return theme

@@ -12,7 +12,6 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
 ---
 
 - 🐧 **OS:** EndeavourOS
-- 🧑‍💻 **Terminal:** Kitty
 - 🌙 **Icons:** [Küyen](https://github.com/fabianalexisinostroza/Kuyen-icons)
 - 🔡 **Fonts**
   - Regular: [Manrope](https://www.gent.media/manrope)
@@ -32,7 +31,8 @@ My personal AwesomeWM configuration for work and daily tasks 👨🏼‍💻
 #### Optional features
 
 - ⏯ Auto-pausing video wallpaper.
-- 🎶 Media controls with dominant colors.
+- 🌦 Weather popup widget.
+- 🎶 Media controls using dominant colors of from cover art.
 - 📅 Google Calendar events.
 
 ### ⚙ Installation
@@ -83,39 +83,41 @@ Move the configuration folder to awesome directory
 mv awesomewm-configuration $HOME/.config/awesome
 ```
 
-Set your latitude and longitude in `theme/theme.lua` for redshift and optional weather widget.
+Set your latitude and longitude in `configuration/variables.lua` for redshift and the optional weather widget.
 
 ```lua
-theme.latitude = 12.345
-theme.longitude = -67.890
+latitude = 12.345
+longitude = -67.890
 ```
 
 <details>
 <summary><b>Activate the optional features</b></summary>
 
+Set corresponding parameters `configuration/variables.lua`,
+
 #### Auto pausing Video wallpaper
 
-Set Video paths in `theme/theme.lua`, vertical video is optional and it's used on vertical screens.
+Set video paths, vertical video is optional and it's used on vertical screens.
 
 ```lua
 -- Video wallpaper
-theme.videowallpaper_path = HOME .. "/videos/cyberpunk-city-pixel.mp4"
-theme.videowallpaper_vertical_path = HOME .. "/videos/cyberpunk-city-pixel-vertical.mp4"
+videowallpaper_path = HOME .. "/videos/cyberpunk-city-pixel.mp4"
+videowallpaper_vertical_path = HOME .. "/videos/cyberpunk-city-pixel-vertical.mp4"
 ```
 
 #### Media controls with dominant colors
 
-Install my [dominantcolors script](https://github.com/pablonoya/dominantcolors) with pipx.
+1. Install my [dominantcolors script](https://github.com/pablonoya/dominantcolors) with pipx.
 
 ```
 pipx install git+https://github.com/pablonoya/dominantcolors.git
 ```
 
-Set the script path.
+2. Set the script path.
 
 ```lua
 -- Dominantcolors script path
-theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
+dominantcolors_path = HOME .. "/.local/bin/dominantcolors",
 ```
 
 #### Google Calendar events
@@ -123,8 +125,8 @@ theme.dominantcolors_path = HOME .. "/.local/bin/dominantcolors"
 Set gcalendar command with your account and output as json.
 
 ```lua
--- gcalendar command
-theme.gcalendar_command = "gcalendar --account personal --output json"
+-- gcalendar requires output in json
+gcalendar_command = "gcalendar --output json --no-of-days 3",
 ```
 
 #### Weather
@@ -133,7 +135,7 @@ Set your [OpenWeather](https://openweathermap.org/) API key.
 
 ```lua
 -- OpenWeather api key
-theme.weather_api_key = "yourapikeyhere"
+weather_api_key = "y0ur4p1k3yc0m35h3r3"
 ```
 
 </details>

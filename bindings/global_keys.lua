@@ -6,7 +6,7 @@ local revelation = require("away.third_party.revelation")
 local helpers = require("helpers")
 local system_controls = require("helpers.system_controls")
 
-local apps = require("configuration.apps")
+local variables = require("configuration.variables")
 local playerctl = require("signals.playerctl")
 
 local hotkeys_popup = require("ui.hotkeys_popup")
@@ -186,7 +186,7 @@ awful.keyboard.append_global_keybindings {
 awful.keyboard.append_global_keybindings {
     awful.key(
         {modkey}, "Return", function()
-            awful.spawn(apps.terminal)
+            awful.spawn(variables.terminal)
         end, {
             description = "open terminal",
             group = "launcher"
@@ -201,7 +201,7 @@ awful.keyboard.append_global_keybindings {
         }
     ), awful.key(
         {modkey}, "e", function()
-            awful.spawn(apps.file_manager)
+            awful.spawn(variables.file_manager)
         end, {
             description = "open file manager",
             group = "launcher"

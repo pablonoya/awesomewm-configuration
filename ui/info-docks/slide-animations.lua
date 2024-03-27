@@ -1,6 +1,7 @@
 local awful_screen = require("awful.screen")
 local beautiful = require("beautiful")
 
+local variables = require("configuration.variables")
 local animation = require("helpers.animation")
 
 local notification_center = require("ui.info-docks.notification_center.notification_center")
@@ -18,7 +19,7 @@ local function show()
     animation.slide_in(reserved_height, slide_calendar, calendar_popup)
     reserved_height = reserved_height + calendar_popup.height + 12
 
-    if beautiful.weather_api_key then
+    if variables.weather_api_key then
         animation.slide_in(reserved_height, slide_weather, weather_popup)
         reserved_height = reserved_height + weather_popup.height + 12
     end
@@ -31,7 +32,7 @@ local function hide()
     animation.slide_out(slide_calendar, calendar_popup)
     animation.slide_out(slide_notif_center, notification_center)
 
-    if beautiful.weather_api_key then
+    if variables.weather_api_key then
         animation.slide_out(slide_weather, weather_popup)
     end
 end

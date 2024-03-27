@@ -1,5 +1,6 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
+local gstring = require("gears.string")
 
 local helpers = require("helpers")
 
@@ -54,7 +55,7 @@ local function calendar_event(event)
     end
 
     local time_range = format_time(event.start_time) .. " - " .. format_time(event.end_time)
-    description.markup = "<b>" .. event.summary .. "</b>\n" .. time_range
+    description.markup = "<b>" .. gstring.xml_escape(event.summary) .. "</b>\n" .. time_range
 
     return wibox.widget {
         {

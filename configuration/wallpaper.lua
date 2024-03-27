@@ -1,7 +1,8 @@
 local beautiful = require("beautiful")
+local variables = require("configuration.variables")
 
 -- Set static wallpaper if there is no video wallpaper path
-if not beautiful.videowallpaper_path then
+if not variables.videowallpaper_path then
     screen.connect_signal(
         "request::wallpaper", function(s)
             local awful_wallpaper = require("awful.wallpaper")
@@ -31,11 +32,8 @@ screen.connect_signal(
         end
 
         local vertical_screen = s.geometry.height > s.geometry.width
-        local filepath = beautiful.videowallpaper_path
-
-        if vertical_screen and beautiful.videowallpaper_vertical_path then
-            filepath = beautiful.videowallpaper_vertical_path
-        end
+        local filepath = (vertical_screen and variables.videowallpaper_vertical_path
+                             or variables.videowallpaper_path)
 
         s.videowallpaper = away_wallpaper.get_videowallpaper(
             s, {

@@ -1,13 +1,13 @@
-local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local border_popup = require('ui.widgets.border-popup')
+local variables = require("configuration.variables")
+local border_popup = require("ui.widgets.border-popup")
 local calendar = require("ui.info-docks.calendar-box.calendar")
 
 local container_height = dpi(280)
 local upcoming_events = nil
 
-if beautiful.gcalendar_command then
+if variables.gcalendar_command then
     upcoming_events = require("ui.info-docks.calendar-box.upcoming-events")
     container_height = dpi(440)
 end

@@ -1,4 +1,4 @@
-local beautiful = require("beautiful")
+local variables = require("configuration.variables")
 
 require(... .. ".battery_signals")
 require(... .. ".wifi_signals")
@@ -7,10 +7,10 @@ require(... .. ".volume_signals")
 require(... .. ".redshift")
 require(... .. ".asusctl_signals")
 
-if beautiful.dominantcolors_path then
-    require(... .. ".media-dominantcolors")
+if variables.dominantcolors_path then
+    require(... .. ".media_dominantcolors")
 end
 
-if beautiful.weather_api_key then
-    require(... .. ".weather-signals")
+if variables.weather_api_key then
+    require(... .. ".weather_signals")
 end
