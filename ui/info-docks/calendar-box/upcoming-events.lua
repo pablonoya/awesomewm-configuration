@@ -53,11 +53,7 @@ local events = wibox.widget {
     widget = wibox.layout.fixed.vertical
 }
 
-local function get_events()
-    events:reset()
-    events:add(placeholder)
-    placeholder.message.text = "Loading events..."
-
+local function on_connection()
     spawn.easy_async(
         variables.gcalendar_command, function(stdout)
             local decoded, _, err = json.decode(stdout)
@@ -70,14 +66,22 @@ local function get_events()
             else
                 placeholder.message.text = "No events."
             end
-
         end
     )
+end
+
+local function get_events()
+    events:reset()
+    events:add(placeholder)
+    placeholder.message.text = "Loading events..."
+
+    helpers.check_internet_connection(on_connection)
 end
 
 helpers.add_action(icon, get_events)
 helpers.add_list_scrolling(events)
 
+-- Initial call
 get_events()
 
 return wibox.widget {

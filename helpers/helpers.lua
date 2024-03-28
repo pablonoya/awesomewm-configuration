@@ -154,4 +154,37 @@ function _helpers.toggle_silent_mode()
     awesome.emit_signal("notifications::suspended", naughty.suspended)
 end
 
+local connection_max_retries = 5
+local connection_retries = 0
+function _helpers.check_internet_connection(on_connection)
+    if connection_retries >= connection_max_retries then
+        naughty.notification {
+            text = "No internet connection available",
+            urgency = "critical"
+        }
+        return
+    end
+
+    awful.spawn.easy_async_with_shell(
+        "ping -c 1 8.8.8.8", function(stdout, stderr)
+            if stderr == "" then
+                -- Internet connection is available
+                on_connection()
+                connection_retries = 0
+            else
+                -- Retry after 5 seconds
+                gears.timer {
+                    timeout = 5,
+                    autostart = true,
+                    single_shot = true,
+                    callback = function()
+                        _helpers.check_internet_connection(on_connection)
+                    end
+                }
+                connection_retries = connection_retries + 1
+            end
+        end
+    )
+end
+
 return _helpers
