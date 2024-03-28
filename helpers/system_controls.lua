@@ -63,7 +63,7 @@ end
 local function get_mic_mute()
     spawn.easy_async(
         "pamixer --default-source --get-mute", function(stdout)
-            awesome.emit_signal("microphone::mute", stdout:match("true"))
+            awesome.emit_signal("microphone::muted", stdout:match("true"))
         end
     )
 end

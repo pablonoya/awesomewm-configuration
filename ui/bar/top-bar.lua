@@ -11,7 +11,7 @@ local control_center_button = require("ui.bar.control-center-button")
 local client_info = require("ui.bar.widgets.client_info")
 local mediabar = require("ui.bar.mediabar")
 local systray = require("ui.bar.widgets.systray")
-local mic_indicator = require("ui.bar.widgets.mic_indicator")
+local device_indicators = require("ui.bar.widgets.device_indicators")
 local battery = require("ui.bar.widgets.battery")
 local layoutbox = require("ui.bar.widgets.layoutbox")
 
@@ -53,8 +53,8 @@ local function top_bar(s)
                 -- end
                 {
                     mediabar(s.geometry.width, is_vertical),
+                    device_indicators,
                     systray,
-                    mic_indicator,
                     battery(is_vertical),
                     notifications_and_datetime(is_vertical),
                     control_center_button,
