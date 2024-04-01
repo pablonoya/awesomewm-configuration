@@ -28,8 +28,9 @@ local add_notifbox = function(notification)
     end
 
     local new_notification = notification_box(notification)
-    table.insert(all_notifications, new_notification)
+
     list:insert(1, new_notification)
+    all_notifications = list.children
 end
 
 naughty.connect_signal(
@@ -62,13 +63,7 @@ clear_notification = function(notification_widget)
         clear_all_notifications()
     else
         list:remove_widgets(notification_widget)
-
-        for i, notification in ipairs(all_notifications) do
-            if notification_widget == notification then
-                table.remove(all_notifications, i)
-                break
-            end
-        end
+        all_notifications = list.children
     end
 end
 
@@ -77,14 +72,11 @@ awesome.connect_signal(
         if visible and #all_notifications > 1 then
             table.sort(
                 all_notifications, function(n1, n2)
-                    return n1.creation_time < n2.creation_time
+                    return n1.creation_time > n2.creation_time
                 end
             )
 
-            list:reset()
-            for _, notification in ipairs(all_notifications) do
-                list:insert(1, notification)
-            end
+            list.children = all_notifications
         end
     end
 )
