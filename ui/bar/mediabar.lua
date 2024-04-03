@@ -7,7 +7,7 @@ local playerctl = require("signals.playerctl")
 
 local media_controls = require("ui.widgets.media.media-controls")
 local media_image = require("ui.widgets.media.media-image")
-local player_icon = require("ui.widgets.media.player-icon")
+local player_icon = require("ui.widgets.media.player_icon")
 
 local scrolling_text = require("ui.widgets.scrolling-text")
 
@@ -25,7 +25,7 @@ local media_controls = wibox.widget {
 
 return function(screen_width, is_vertical)
     local media_info = scrolling_text {
-        font = beautiful.font_name .. 'Medium 11',
+        font = beautiful.font_name .. "Medium 11",
         fps = 4,
         extra_space = 16,
         max_size = screen_width / (is_vertical and 24 or 10)

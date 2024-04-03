@@ -5,7 +5,7 @@ local instance = nil
 local function new_instance()
     return playerctl.lib(
         {
-            player = {"youtube-music", "spotify", "mpd", "%any"}
+            player = {"YoutubeMusic", "youtube-music", "spotify", "mpd", "%any"}
         }
     )
 end

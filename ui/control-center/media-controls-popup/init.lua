@@ -1,6 +1,6 @@
 local playerctl = require("signals.playerctl")
 
-local media_controls_popup = require("ui.control-center.media-controls-popup.media-popup-body")
+local media_controls_popup = require("ui.control-center.media-controls-popup.media_popup_body")
 
 playerctl:connect_signal(
     "no_players", function(_)

@@ -1,11 +1,11 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local border_popup = require('ui.widgets.border-popup')
+local border_popup = require("ui.widgets.border-popup")
 
 local media_controls = require("ui.widgets.media.media-controls")
 local media_image = require("ui.widgets.media.media-image")
-local player_icon = require("ui.widgets.media.player-icon")
+local player_icon = require("ui.widgets.media.player_icon")
 
 local interval = require("ui.control-center.media-controls-popup.media-interval")
 local media_info = require("ui.control-center.media-controls-popup.media-info")
