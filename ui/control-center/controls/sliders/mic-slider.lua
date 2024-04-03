@@ -31,37 +31,22 @@ local mic_device_name = wibox.widget {
 }
 
 local mic_slider = slider {
-    bar_bg_color = beautiful.accent .. '60',
+    bar_bg_color = beautiful.accent .. "60",
     bar_color = beautiful.accent,
     handle_color = beautiful.accent
 }
 
-local function set_muted_style(muted)
-    if muted then
-        mic_icon.text = "\u{e02b}"
-        mic_slider.bar_active_color = beautiful.accent .. '60'
-        mic_slider.handle_color = beautiful.focus
-    else
-        mic_icon.text = "\u{e029}"
-        mic_slider.bar_active_color = beautiful.accent
-        mic_slider.handle_color = beautiful.accent
-    end
-end
-
 mic_slider:connect_signal(
     "property::value", function(_, new_value)
-        spawn("pactl set-source-volume @DEFAULT_SOURCE@ " .. new_value .. '%')
+        spawn("pactl set-source-volume @DEFAULT_SOURCE@ " .. new_value .. "%")
         mic_value.text = new_value .. "%"
     end
 )
 
 local function check_volume_and_mute()
     spawn.easy_async_with_shell(
-        "pamixer --default-source --get-mute --get-volume", function(stdout)
-            local muted, volume = table.unpack(gears_string.split(stdout, " "))
-
-            set_muted_style(muted == "true")
-            mic_slider:set_value(tonumber(volume))
+        "pamixer --default-source --get-volume", function(stdout)
+            mic_slider:set_value(tonumber(stdout))
         end
     )
 end
@@ -105,7 +90,19 @@ awesome.connect_signal(
     end
 )
 
-awesome.connect_signal("microphone::mute", set_muted_style)
+awesome.connect_signal(
+    "microphone::muted", function(muted)
+        if muted then
+            mic_icon.text = "\u{e02b}"
+            mic_slider.bar_active_color = beautiful.accent .. "60"
+            mic_slider.handle_color = beautiful.focus
+        else
+            mic_icon.text = "\u{e029}"
+            mic_slider.bar_active_color = beautiful.accent
+            mic_slider.handle_color = beautiful.accent
+        end
+    end
+)
 
 check_volume_and_mute()
 

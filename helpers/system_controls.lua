@@ -60,7 +60,7 @@ function _controls.keyboard_brightness()
 end
 
 -- Mic toggle
-local function get_mic_mute()
+function _controls.emit_mic_muted()
     spawn.easy_async(
         "pamixer --default-source --get-mute", function(stdout)
             awesome.emit_signal("microphone::muted", stdout:match("true"))
@@ -69,7 +69,7 @@ local function get_mic_mute()
 end
 
 function _controls.mic_toggle(type, value)
-    spawn.easy_async("pactl set-source-mute @DEFAULT_SOURCE@ toggle", get_mic_mute)
+    spawn.easy_async("pactl set-source-mute @DEFAULT_SOURCE@ toggle", _controls.emit_mic_muted)
 end
 
 function _controls.next_asusctl_profile()

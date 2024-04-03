@@ -41,7 +41,7 @@ awesome.connect_signal(
 )
 
 awesome.connect_signal(
-    "microphone::mute", function(muted)
+    "microphone::muted", function(muted)
         if muted then
             icon_markup = color_helpers.colorize_text("\u{e02b}", beautiful.focus)
         else

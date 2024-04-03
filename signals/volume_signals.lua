@@ -1,5 +1,7 @@
 local spawn = require("awful.spawn")
 
+local system_controls = require("helpers.system_controls")
+
 local last_volume_device
 local last_mic_device
 
@@ -31,7 +33,7 @@ local function emit_mic_device()
     )
 end
 
-local function emit_mic_muted()
+local function emit_mic_state()
     spawn.easy_async_with_shell(
         [[
             pamixer --list-sources |
@@ -46,8 +48,10 @@ end
 
 -- Check initial states
 emit_volume_device()
+
 emit_mic_device()
-emit_mic_muted()
+emit_mic_state()
+system_controls.emit_mic_muted()
 
 -- Kill previous instances of pactl
 spawn.with_shell("killall pactl")
@@ -66,7 +70,7 @@ spawn.with_line_callback(
         {
             stdout = function(line)
                 emit_mic_device()
-                emit_mic_muted()
+                emit_mic_state()
             end
         }
 )
