@@ -30,9 +30,10 @@ local notification_center = border_popup {
         top = dpi(4),
         left = dpi(12),
         right = dpi(12),
-        forced_width = dpi(320),
         widget = wibox.container.margin
-    }
+    },
+    minimum_width = beautiful.notif_center_width,
+    maximum_width = beautiful.notif_center_width
 }
 
 notification_center:connect_signal(

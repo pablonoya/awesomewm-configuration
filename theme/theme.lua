@@ -226,6 +226,7 @@ theme.notification_position = "top_right"
 
 -- Notif center
 theme.notif_center_radius = theme.border_radius
+theme.notif_center_width = dpi(320)
 
 -- Notification icons
 theme.notification_icon = icons_dir .. "notification.svg"
