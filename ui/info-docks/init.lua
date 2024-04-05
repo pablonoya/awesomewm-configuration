@@ -1,2 +1,2 @@
 -- initialize animations
-require(... .. ".slide-animations")
+require(... .. ".slide_animations")

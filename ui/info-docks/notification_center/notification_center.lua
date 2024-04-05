@@ -8,6 +8,7 @@ local clear_all = require("ui.info-docks.notification_center.clear_all")
 
 local header = wibox.widget {
     {
+        id = "label",
         text = "Notifications",
         font = beautiful.font_name .. "Bold 12",
         align = "left",

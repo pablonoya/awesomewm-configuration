@@ -63,7 +63,7 @@ local function notification_layout(notification)
         type = "notification",
         border_color = urgency_color[notification.urgency],
         border_width = dpi(2),
-        maximum_width = dpi(320),
+        maximum_width = beautiful.notif_center_width,
         maximum_height = dpi(330),
         widget_template = template,
         shape = helpers.rrect(beautiful.border_radius)

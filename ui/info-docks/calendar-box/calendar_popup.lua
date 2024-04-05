@@ -1,3 +1,4 @@
+local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local variables = require("configuration.variables")
@@ -17,7 +18,7 @@ local calendar_popup = border_popup {
         calendar,
         upcoming_events,
         spacing = dpi(4),
-        forced_width = dpi(320),
+        forced_width = beautiful.notif_center_width,
         forced_height = container_height,
         layout = wibox.layout.fixed.vertical
     }

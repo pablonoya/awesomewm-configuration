@@ -125,7 +125,7 @@ local weather_popup = border_popup {
             right = dpi(16),
             widget = wibox.container.margin
         },
-        forced_width = dpi(320),
+        forced_width = beautiful.notif_center_width,
         widget = wibox.container.background
     }
 }

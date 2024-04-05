@@ -5,8 +5,8 @@ local variables = require("configuration.variables")
 local animation = require("helpers.animation")
 
 local notification_center = require("ui.info-docks.notification_center.notification_center")
-local weather_popup = require("ui.info-docks.weather-popup")
-local calendar_popup = require("ui.info-docks.calendar-box.calendar-popup")
+local weather_popup = require("ui.info-docks.weather_popup")
+local calendar_popup = require("ui.info-docks.calendar-box.calendar_popup")
 
 local slide_calendar = animation.create_timed_slide(0.2, calendar_popup)
 local slide_weather = animation.create_timed_slide(0.25, weather_popup)
