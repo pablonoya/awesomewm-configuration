@@ -162,6 +162,7 @@ function _helpers.check_internet_connection(on_connection)
             text = "No internet connection available",
             urgency = "critical"
         }
+        connection_retries = 0
         return
     end
 
