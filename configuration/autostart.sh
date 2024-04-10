@@ -15,3 +15,4 @@ start picom --config=$HOME/.config/awesome/theme/picom.conf
 start diodon
 start fusuma -d
 start ulauncher --hide-window
+start easyeffects --gapplication-service
