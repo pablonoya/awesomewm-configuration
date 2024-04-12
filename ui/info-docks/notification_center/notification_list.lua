@@ -1,5 +1,3 @@
-local awful_button = require("awful.button")
-local gtable = require("gears.table")
 local wibox_layout = require("wibox.layout")
 local wibox_widget = require("wibox.widget")
 local naughty = require("naughty")
@@ -31,6 +29,7 @@ local add_notifbox = function(notification)
 
     list:insert(1, new_notification)
     all_notifications = list.children
+    awesome.emit_signal("notifications::count", #all_notifications)
 end
 
 naughty.connect_signal(
@@ -56,6 +55,7 @@ clear_all_notifications = function()
 
     all_notifications = {}
     is_empty = true
+    awesome.emit_signal("notifications::count", 0)
 end
 
 clear_notification = function(notification_widget)
@@ -64,6 +64,7 @@ clear_notification = function(notification_widget)
     else
         list:remove_widgets(notification_widget)
         all_notifications = list.children
+        awesome.emit_signal("notifications::count", #all_notifications)
     end
 end
 

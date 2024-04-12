@@ -20,6 +20,14 @@ local header = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 
+awesome.connect_signal(
+    "notifications::count", function(count)
+        header.label:set_markup_silently(
+            "Notifications" .. (count > 0 and string.format(" (%d)", count) or "")
+        )
+    end
+)
+
 local notification_center = border_popup {
     widget = wibox.widget {
         {
