@@ -1,14 +1,14 @@
 local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gears_string = require("gears.string")
-local wibox = require("wibox")
+local wibox_widget = require("wibox.widget")
 
 local system_controls = require("helpers.system_controls")
 local ui_helpers = require("helpers.ui-helpers")
 
+local clickable_container = require("ui.widgets.clickable-container")
 local slider = require("ui.widgets.slider")
 local text_icon = require("ui.widgets.text-icon")
-local clickable_container = require("ui.widgets.clickable-container")
 
 local value_text = require("ui.control-center.widgets.value-text")
 local setting_slider = require("ui.control-center.widgets.setting-slider")
@@ -21,13 +21,12 @@ local vol_value = value_text {
     text = "0%"
 }
 
-local volume_device_name = wibox.widget {
-    text = "",
+local volume_device_name = wibox_widget {
+    text = "-",
     font = beautiful.font_name .. " Medium 10",
     valign = "center",
-    align = "right",
     forced_height = dpi(12),
-    widget = wibox.widget.textbox
+    widget = wibox_widget.textbox
 }
 
 local volume_device = clickable_container {
@@ -48,6 +47,14 @@ local volume_slider = slider {
     handle_color = beautiful.accent
 }
 
+volume_slider:connect_signal(
+    "property::value", function(_, new_value)
+        volume_icon.text = ui_helpers.get_volume_icon(new_value)
+        vol_value.text = new_value .. "%"
+        spawn("pamixer --set-volume " .. tostring(new_value))
+    end
+)
+
 local function set_muted_style(muted)
     if muted then
         volume_icon.text = "\u{e04f}"
@@ -60,33 +67,10 @@ local function set_muted_style(muted)
     end
 end
 
-local function check_volume_and_mute()
-    spawn.easy_async(
-        "pamixer --get-mute --get-volume", function(stdout)
-            local muted, volume = table.unpack(gears_string.split(stdout, " "))
-
-            volume_slider:set_value(tonumber(volume))
-            set_muted_style(muted == "true")
-        end
-    )
-end
-
-local function toggle_mute()
-    system_controls.volume_control("mute")
-end
-
 awesome.connect_signal(
     "signal::volume", function(value, muted)
         volume_slider:set_value(tonumber(value))
         set_muted_style(muted)
-    end
-)
-
-volume_slider:connect_signal(
-    "property::value", function(_, new_value)
-        volume_icon.text = ui_helpers.get_volume_icon(new_value)
-        vol_value.text = new_value .. "%"
-        spawn("pamixer --set-volume " .. tostring(new_value))
     end
 )
 
@@ -96,20 +80,29 @@ awesome.connect_signal(
     end
 )
 
-check_volume_and_mute()
+-- check volume and mute
+spawn.easy_async(
+    "pamixer --get-mute --get-volume", function(stdout)
+        local muted, volume = table.unpack(gears_string.split(stdout, " "))
+
+        volume_slider:set_value(tonumber(volume))
+        set_muted_style(muted == "true")
+    end
+)
 
 return setting_slider {
     name = "Volume",
     device_widget = volume_device,
     icon = volume_icon,
-    action_button = toggle_mute,
-
     slider = volume_slider,
+    value_text = vol_value,
+    action_button = function()
+        system_controls.volume_control("mute")
+    end,
     action_up = function()
         volume_slider:set_value(volume_slider:get_value() + 5)
     end,
     action_down = function()
         volume_slider:set_value(volume_slider:get_value() - 5)
-    end,
-    value_text = vol_value
+    end
 }

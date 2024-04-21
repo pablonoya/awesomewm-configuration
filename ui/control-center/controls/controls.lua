@@ -2,8 +2,8 @@ local wibox_widget = require("wibox.widget")
 local wibox_layout = require("wibox.layout")
 
 local brightness_slider = require("ui.control-center.controls.sliders.brightness-slider")
-local mic_slider = require("ui.control-center.controls.sliders.mic-slider")
-local volume_slider = require("ui.control-center.controls.sliders.volume-slider")
+local mic_slider = require("ui.control-center.controls.sliders.mic_slider")
+local volume_slider = require("ui.control-center.controls.sliders.volume_slider")
 
 local controls_container = require("ui.control-center.widgets.controls-container")
 local toggle_buttons = require("ui.control-center.controls.toggle_buttons")

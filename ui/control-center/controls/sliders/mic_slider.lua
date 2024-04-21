@@ -1,13 +1,11 @@
 local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
-local gears_string = require("gears.string")
-local wibox = require("wibox")
+local wibox_widget = require("wibox.widget")
 
-local helpers = require("helpers")
 local system_controls = require("helpers.system_controls")
 
-local slider = require("ui.widgets.slider")
 local clickable_container = require("ui.widgets.clickable-container")
+local slider = require("ui.widgets.slider")
 local text_icon = require("ui.widgets.text-icon")
 
 local value_text = require("ui.control-center.widgets.value-text")
@@ -21,13 +19,12 @@ local mic_value = value_text {
     text = "0%"
 }
 
-local mic_device_name = wibox.widget {
+local mic_device_name = wibox_widget {
     text = "-",
     font = beautiful.font_name .. " Medium 10",
     valign = "center",
-    align = "right",
     forced_height = dpi(12),
-    widget = wibox.widget.textbox
+    widget = wibox_widget.textbox
 }
 
 local mic_slider = slider {
@@ -42,14 +39,6 @@ mic_slider:connect_signal(
         mic_value.text = new_value .. "%"
     end
 )
-
-local function check_volume_and_mute()
-    spawn.easy_async_with_shell(
-        "pamixer --default-source --get-volume", function(stdout)
-            mic_slider:set_value(tonumber(stdout))
-        end
-    )
-end
 
 local mic_device = clickable_container {
     widget = mic_device_name,
@@ -104,7 +93,12 @@ awesome.connect_signal(
     end
 )
 
-check_volume_and_mute()
+-- check_volume
+spawn.easy_async_with_shell(
+    "pamixer --default-source --get-volume", function(stdout)
+        mic_slider:set_value(tonumber(stdout))
+    end
+)
 
 return setting_slider {
     name = "Microphone",
