@@ -85,13 +85,22 @@ ruled.client.connect_signal(
 
 ruled.notification.connect_signal(
     "request::rules", function()
-        -- Add a red border for urgent notifications.
         ruled.notification.append_rule {
             rule = {
                 urgency = "critical"
             },
             properties = {
                 timeout = 0
+            }
+        }
+
+        -- decrease the urgency of blueman notifications
+        ruled.notification.append_rule {
+            rule = {
+                app_name = "blueman"
+            },
+            properties = {
+                urgency = "low"
             }
         }
 
