@@ -28,46 +28,52 @@ return function(screen_width, is_vertical)
         font = beautiful.font_name .. "Medium 11",
         fps = 4,
         extra_space = 16,
+        step_function = wibox.container.scroll.step_functions.linear_increase,
         max_size = screen_width / (is_vertical and 24 or 10)
     }
 
-    local player_interface
+    local cover = wibox.widget {
+        media_image(4),
+        player_icon(is_vertical and 20 or 16, "bar"),
+        spacing = dpi(-2),
+        layout = wibox.layout.fixed.horizontal
+    }
+
+    local media_container
     if is_vertical then
-        player_interface = wibox.widget {
-            media_info,
-            media_controls,
-            spacing = dpi(2),
-            layout = wibox.layout.fixed.vertical
+        media_container = wibox.widget {
+            {
+                media_info,
+                {
+                    media_controls,
+                    cover,
+                    spacing = dpi(4),
+                    layout = wibox.layout.fixed.horizontal
+                },
+                layout = wibox.layout.fixed.vertical
+            },
+            left = dpi(2),
+            right = dpi(4),
+            widget = wibox.container.margin
         }
     else
-        player_interface = wibox.widget {
-            media_controls,
-            media_info,
-            spacing = dpi(4),
-            layout = wibox.layout.fixed.horizontal
+        media_container = wibox.widget {
+            {
+                media_controls,
+                media_info,
+                cover,
+                spacing = dpi(8),
+                layout = wibox.layout.fixed.horizontal
+            },
+            left = dpi(2),
+            right = dpi(2),
+            widget = wibox.container.margin
         }
     end
 
-    local media = wibox.widget {
-        player_interface,
-        {
-            media_image(4),
-            player_icon(is_vertical and 20 or 16, "bar"),
-            spacing = dpi(-2),
-            layout = wibox.layout.fixed.horizontal
-        },
-        spacing = dpi(8),
-        layout = wibox.layout.fixed.horizontal,
-        widget = wibox.container.background
-    }
-
     local progress_container = wibox.widget {
-        {
-            media,
-            left = dpi(4),
-            right = dpi(4),
-            widget = wibox.container.margin
-        },
+        media_container,
+
         visible = false,
         value = 0.01,
         border_width = dpi(1.6),
