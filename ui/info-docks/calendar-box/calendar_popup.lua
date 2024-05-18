@@ -9,13 +9,18 @@ local container_height = dpi(280)
 local upcoming_events = nil
 
 if variables.gcalendar_command then
-    upcoming_events = require("ui.info-docks.calendar-box.upcoming-events")
-    container_height = dpi(440)
+    upcoming_events = require("ui.info-docks.calendar-box.upcoming_events")
+    container_height = dpi(412)
 end
 
 local calendar_popup = border_popup {
     widget = wibox.widget {
         calendar,
+        {
+            forced_height = dpi(1),
+            color = beautiful.focus,
+            widget = wibox.widget.separator
+        },
         upcoming_events,
         spacing = dpi(4),
         forced_width = beautiful.notif_center_width,

@@ -11,7 +11,7 @@ local helpers = require("helpers")
 local text_icon = require("ui.widgets.text-icon")
 local clickable_container = require("ui.widgets.clickable-container")
 
-local calendar_event = require("ui.info-docks.calendar-box.calendar-event")
+local calendar_event = require("ui.info-docks.calendar-box.calendar_event")
 
 local placeholder = wibox.widget {
     {
@@ -20,10 +20,7 @@ local placeholder = wibox.widget {
         font = beautiful.font_name .. "12",
         widget = wibox.widget.textbox
     },
-    top = dpi(4),
-    left = dpi(8),
-    right = dpi(8),
-    bottom = dpi(8),
+    margins = dpi(8),
     widget = wibox.container.margin
 }
 
@@ -37,14 +34,14 @@ local icon = clickable_container {
 }
 
 local header = wibox.widget {
-    icon,
     {
         text = "Upcoming events",
-        font = beautiful.font_name .. "Bold 12",
+        font = beautiful.font_name .. "Semibold 12",
         widget = wibox.widget.textbox
     },
-    spacing = dpi(4),
-    layout = wibox.layout.fixed.horizontal
+    nil,
+    icon,
+    layout = wibox.layout.align.horizontal
 }
 
 local events = wibox.widget {
@@ -54,17 +51,24 @@ local events = wibox.widget {
 }
 
 local function on_connection()
+    local added_events = {}
     spawn.easy_async(
         variables.gcalendar_command, function(stdout)
             local decoded, _, err = json.decode(stdout)
 
-            if decoded and #decoded > 0 then
-                events:reset()
-                for i, event in ipairs(decoded) do
-                    events:add(calendar_event(event))
-                end
-            else
+            if not (decoded and #decoded > 0) then
                 placeholder.message.text = "No events."
+                return
+            end
+            events:reset()
+
+            for i, event in ipairs(decoded) do
+                local key = event.start_date .. ":" .. event.summary
+
+                if not added_events[key] then
+                    events:add(calendar_event(event))
+                    added_events[key] = true
+                end
             end
         end
     )
@@ -86,24 +90,12 @@ get_events()
 
 return wibox.widget {
     {
-        {
-            {
-                header,
-                events,
-                spacing = dpi(4),
-                layout = wibox.layout.fixed.vertical
-            },
-            top = dpi(2),
-            left = dpi(8),
-            right = dpi(8),
-            widget = wibox.container.margin
-        },
-        border_width = dpi(1),
-        border_color = beautiful.focus,
-        shape = helpers.rrect(beautiful.border_radius - dpi(8)),
-        widget = wibox.container.background
+        header,
+        events,
+        spacing = dpi(4),
+        layout = wibox.layout.fixed.vertical
     },
-    left = dpi(8),
-    right = dpi(8),
+    left = dpi(12),
+    right = dpi(12),
     widget = wibox.container.margin
 }
