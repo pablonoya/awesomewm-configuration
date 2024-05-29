@@ -8,7 +8,6 @@ return function(widget)
         {
             widget,
             halign = "center",
-            forced_width = dpi(36),
             widget = wibox.container.place
         },
         fg = beautiful.accent,

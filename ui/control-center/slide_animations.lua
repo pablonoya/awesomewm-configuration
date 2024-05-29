@@ -1,9 +1,9 @@
 local awful_screen = require("awful.screen")
 
 local playerctl = require("signals.playerctl")
-local animation = require('helpers.animation')
+local animation = require("helpers.animation")
 
-local control_center = require("ui.control-center.control-center")
+local control_center = require("ui.control-center.control_center")
 local media_controls_popup = require("ui.control-center.media-controls-popup")
 
 local slide_control_center = animation.create_timed_slide(0.2, control_center)

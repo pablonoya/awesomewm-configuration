@@ -119,10 +119,7 @@ local weather_popup = border_popup {
                 },
                 layout = wibox.layout.align.horizontal
             },
-            top = dpi(12),
-            bottom = dpi(12),
-            left = dpi(16),
-            right = dpi(16),
+            margins = dpi(12),
             widget = wibox.container.margin
         },
         forced_width = beautiful.notif_center_width,

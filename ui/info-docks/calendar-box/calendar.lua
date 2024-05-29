@@ -1,9 +1,9 @@
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 
-local header = require("ui.info-docks.calendar-box.widgets.calendar-header")
-local weekday = require("ui.info-docks.calendar-box.widgets.calendar-weekday")
-local day = require("ui.info-docks.calendar-box.widgets.calendar-day")
+local header = require("ui.info-docks.calendar-box.widgets.calendar_header")
+local weekday = require("ui.info-docks.calendar-box.widgets.calendar_weekday")
+local day = require("ui.info-docks.calendar-box.widgets.calendar_day")
 
 local function decorate_cell(widget, flag, date)
     if flag == "header" then
@@ -18,8 +18,9 @@ local function decorate_cell(widget, flag, date)
     elseif flag == "month" then
         return {
             widget,
-            top = dpi(6),
-            bottom = dpi(2),
+            top = dpi(4),
+            left = dpi(12),
+            right = dpi(12),
             widget = wibox.container.margin
         }
     end
@@ -31,7 +32,8 @@ local calendar = wibox.widget {
     font = "Manrope 12",
     long_weekdays = true,
     fn_embed = decorate_cell,
-    spacing = dpi(2),
+    spacing = dpi(1.5),
+    empty_cell_mode = "rolling",
     widget = wibox.widget.calendar.month
 }
 

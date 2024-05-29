@@ -10,7 +10,7 @@ local upcoming_events = nil
 
 if variables.gcalendar_command then
     upcoming_events = require("ui.info-docks.calendar-box.upcoming_events")
-    container_height = dpi(412)
+    container_height = dpi(404)
 end
 
 local calendar_popup = border_popup {

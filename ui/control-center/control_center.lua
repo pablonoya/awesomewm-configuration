@@ -3,7 +3,7 @@ local wibox = require("wibox")
 
 local helpers = require("helpers")
 
-local border_popup = require('ui.widgets.border-popup')
+local border_popup = require("ui.widgets.border-popup")
 
 local info_and_buttons = require("ui.control-center.top-controls.container")
 local controls = require("ui.control-center.controls.controls")
@@ -22,7 +22,7 @@ local body_container = wibox.widget {
             layout = wibox.layout.fixed.vertical,
             spacing = dpi(12)
         },
-        margins = dpi(16),
+        margins = dpi(12),
         widget = wibox.container.margin
     },
     bg = beautiful.wibar_bg,
