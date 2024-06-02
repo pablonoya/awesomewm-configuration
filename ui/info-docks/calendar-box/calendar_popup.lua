@@ -32,6 +32,7 @@ local calendar_popup = border_popup {
 calendar_popup:connect_signal(
     "property::visible", function(self)
         if self.visible then
+            awesome.emit_signal("calendar::date", "today")
         end
     end
 )
