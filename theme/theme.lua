@@ -90,9 +90,14 @@ theme.border_activate = theme.accent
 theme.border_marked = theme.uranus
 theme.widget_border_width = dpi(2)
 
+-- Client borders
+theme.border_color_active = theme.accent
+theme.border_color_urgent = theme.uranus
+theme.border_color_floating_urgent = theme.uranus
+
 -- Border radius
 theme.border_radius = dpi(16)
-theme.client_border_radius = dpi(12)
+theme.client_border_radius = dpi(16)
 theme.widget_radius = theme.border_radius
 
 -- Titlebars

@@ -3,6 +3,7 @@ local beautiful = require("beautiful")
 local gsurface = require("gears.surface")
 local gcolor = require("gears.color")
 local menubar_utils = require("menubar.utils")
+
 local icons = require("ui.icons")
 
 local default_client_icon = gcolor.recolor_image(icons.window, beautiful.xforeground)
@@ -47,17 +48,5 @@ client.connect_signal(
                 raise = false
             }
         )
-    end
-)
-
-client.connect_signal(
-    "focus", function(c)
-        c.border_color = beautiful.border_focus
-    end
-)
-
-client.connect_signal(
-    "unfocus", function(c)
-        c.border_color = beautiful.xbackground
     end
 )

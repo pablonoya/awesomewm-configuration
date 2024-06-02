@@ -1,7 +1,5 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
-local gears = require("gears")
-local naughty = require("naughty")
 local ruled = require("ruled")
 
 local helpers = require("helpers")
@@ -22,7 +20,6 @@ ruled.client.connect_signal(
                 size_hints_honor = false,
                 screen = awful.screen.preferred,
                 titlebars_enabled = beautiful.titlebar_enabled,
-                border_width = dpi(2),
                 placement = awful.placement.no_overlap + awful.placement.no_offscreen,
                 shape = helpers.rrect(beautiful.client_border_radius)
             }
