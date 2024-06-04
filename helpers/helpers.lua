@@ -148,7 +148,9 @@ end
 
 function _helpers.toggle_silent_mode()
     if not naughty.suspended then
-        naughty.destroy_all_notifications()
+        naughty.destroy_all_notifications(
+            nil, naughty.notification_closed_reason.dismissed_by_command
+        )
     end
     naughty.suspended = not naughty.suspended
     awesome.emit_signal("notifications::suspended", naughty.suspended)

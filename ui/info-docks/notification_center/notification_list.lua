@@ -58,7 +58,7 @@ naughty.connect_signal(
 
         notification:connect_signal(
             "destroyed", function(self, reason, keep_visble)
-                if reason == 1 then
+                if reason == naughty.notification_closed_reason.expired then
                     add_to_list(notification)
                 end
                 self.is_expired = true
