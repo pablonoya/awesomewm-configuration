@@ -1,5 +1,6 @@
 local spawn = require("awful.spawn")
 local gears_string = require("gears.string")
+local asusctl_signals = require("signals.asusctl_signals")
 
 local _controls = {}
 
@@ -73,9 +74,9 @@ function _controls.mic_toggle(type, value)
 end
 
 function _controls.next_asusctl_profile()
-    spawn.easy_async_with_shell(
-        "asusctl profile -n && asusctl profile -p | awk '{print $NF}'", function(stdout)
-            awesome.emit_signal("asusctl::profile", stdout:gsub("\n", ""))
+    spawn.easy_async(
+        "asusctl profile -n", function()
+            asusctl_signals.emit_profile()
         end
     )
 end
