@@ -47,7 +47,6 @@ end
 
 local function get_description(description)
     local mapping = {
-        ["clear sky"] = "Clear",
         ["overcast clouds"] = "Cloudy",
         ["broken clouds"] = "Mostly cloudy",
         ["scattered clouds"] = "Partly cloudy"
@@ -56,48 +55,66 @@ local function get_description(description)
     return mapping[description] or capitalize(description)
 end
 
+local function colorize_by_temp(icon, temp)
+    local color = beautiful.moon
+
+    if temp < 12 then
+        color = beautiful.blue
+    elseif temp > 22 then
+        color = beautiful.yellow
+    elseif temp > 26 then
+        color = beautiful.red
+    end
+
+    return color_helpers.colorize_text(icon, color)
+end
+
+local location_icon = wibox.widget {
+    markup = "\u{e0c8}",
+    font = beautiful.icon_font_name .. 12,
+    widget = wibox.widget.textbox
+}
+
 local station = wibox.widget {
     markup = "Station",
     font = beautiful.font_name .. 11,
     widget = wibox.widget.textbox
 }
 
-local current_temp = wibox.widget {
-    markup = "-- °C",
-    font = beautiful.font_name .. "Semibold 28",
+local feels_like = wibox.widget {
+    markup = "Feels like -°",
+    font = beautiful.font_name .. 12,
     widget = wibox.widget.textbox
 }
 
-local feels_like = wibox.widget {
-    markup = "Feels like - °C",
-    font = beautiful.font_name .. "Medium 11",
+local description = wibox.widget {
+    markup = "Clear sky",
+    font = beautiful.font_name .. "Medium 12",
+    halign = "right",
+    widget = wibox.widget.textbox
+}
+local current_temp = wibox.widget {
+    markup = "-°",
+    font = beautiful.font_name .. "Medium 28",
     widget = wibox.widget.textbox
 }
 
 local icon = wibox.widget {
     markup = "\u{e2c1}",
-    font = beautiful.icon_font_name .. "45 @FILL=1",
-    valign = "center",
-    halign = "center",
-    widget = wibox.widget.textbox
-}
-
-local description = wibox.widget {
-    markup = "Clear",
-    font = beautiful.font_name .. "Medium 11",
-    halign = "center",
+    font = beautiful.icon_font_name .. 26,
     widget = wibox.widget.textbox
 }
 
 awesome.connect_signal(
     "weather::update", function(data)
-        station.markup = string.format("%s, %s", data.name, data.sys.country)
+        local degree_symbol = colorize_by_temp("°", data.main.temp)
 
-        current_temp.markup = string.format("%.0f °C", data.main.temp)
-        feels_like.markup = string.format("Feels like %.0f °C", data.main.feels_like)
+        current_temp.markup = string.format("%.0f", data.main.temp) .. degree_symbol
+        icon.markup = colorize_by_temp(icon_map[data.weather[1].icon], data.main.temp)
+        feels_like.markup = string.format("Feels like %.0f", data.main.feels_like) .. degree_symbol
 
-        icon.markup = color_helpers.colorize_by_time_of_day(icon_map[data.weather[1].icon])
         description.markup = get_description(data.weather[1].description)
+        station.markup = string.format("%s, %s", data.name, data.sys.country)
     end
 )
 
@@ -106,20 +123,42 @@ local weather_popup = border_popup {
         {
             {
                 {
-                    station,
-                    current_temp,
-                    feels_like,
-                    layout = wibox.layout.fixed.vertical
+                    {
+
+                        {
+                            current_temp,
+                            icon,
+                            spacing = dpi(8),
+                            layout = wibox.layout.fixed.horizontal
+                        },
+                        feels_like,
+
+                        spacing = dpi(-2),
+                        layout = wibox.layout.fixed.vertical
+                    },
+                    widget = wibox.container.background
                 },
                 nil,
                 {
-                    icon,
-                    description,
-                    layout = wibox.layout.fixed.vertical
+                    {
+                        description,
+                        {
+                            location_icon,
+                            station,
+                            spacing = dpi(4),
+                            layout = wibox.layout.fixed.horizontal
+                        },
+                        layout = wibox.layout.fixed.vertical
+                    },
+                    top = dpi(4),
+                    widget = wibox.container.margin
                 },
                 layout = wibox.layout.align.horizontal
             },
-            margins = dpi(12),
+            top = dpi(4),
+            bottom = dpi(8),
+            left = dpi(16),
+            right = dpi(16),
             widget = wibox.container.margin
         },
         forced_width = beautiful.notif_center_width,
