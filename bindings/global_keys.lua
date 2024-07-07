@@ -7,6 +7,7 @@ local helpers = require("helpers")
 local system_controls = require("helpers.system_controls")
 
 local variables = require("configuration.variables")
+local asusctl_signals = require("signals.asusctl_signals")
 local playerctl = require("signals.playerctl")
 
 local hotkeys_popup = require("ui.hotkeys_popup")
@@ -27,7 +28,7 @@ local function swap_all_clients_between_screens(new_direction)
     local screen = awful.screen.focused()
 
     if next_screen == nil or next_screen == screen then
-        notification {
+        naughty.notification {
             title = "No screen",
             text = "There's no other screen available!",
             urgency = "low"
@@ -333,16 +334,16 @@ awful.keyboard.append_global_keybindings {
 awful.keyboard.append_global_keybindings {
     awful.key(
         {}, "XF86KbdBrightnessUp", function()
-            awful.spawn("asusctl -n")
-            system_controls.keyboard_brightness()
+            awful.spawn.easy_async("asusctl -n", asusctl_signals.keyboard_brightness)
+
         end, {
             description = "increase keyboard brightness",
             group = "hotkeys (asusctl)"
         }
     ), awful.key(
         {}, "XF86KbdBrightnessDown", function()
-            awful.spawn("asusctl -p")
-            system_controls.keyboard_brightness()
+            awful.spawn.easy_async("asusctl -p", asusctl_signals.keyboard_brightness)
+
         end, {
             description = "decrease keyboard brightness",
             group = "hotkeys (asusctl)"

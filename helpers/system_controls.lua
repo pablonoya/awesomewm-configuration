@@ -52,14 +52,6 @@ function _controls.brightness_control(type, value)
     spawn.easy_async(cmd, get_brightness)
 end
 
-function _controls.keyboard_brightness()
-    spawn.easy_async(
-        "asusctl -k", function(stdout)
-            awesome.emit_signal("brightness::keyboard", stdout:match("%d") * 100 / 3)
-        end
-    )
-end
-
 -- Mic toggle
 function _controls.emit_mic_muted()
     spawn.easy_async(
