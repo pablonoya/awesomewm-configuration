@@ -66,11 +66,7 @@ function _controls.mic_toggle(type, value)
 end
 
 function _controls.next_asusctl_profile()
-    spawn.easy_async(
-        "asusctl profile -n", function()
-            asusctl_signals.emit_profile()
-        end
-    )
+    spawn.easy_async("asusctl profile -n", asusctl_signals.emit_profile)
 end
 
 return _controls
