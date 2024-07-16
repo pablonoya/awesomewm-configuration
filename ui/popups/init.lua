@@ -1,2 +1,2 @@
 require(... .. ".layoutlist-popup")
-require(... .. ".popups-list")
+require(... .. ".popups_list")

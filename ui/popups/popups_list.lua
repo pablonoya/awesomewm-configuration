@@ -15,7 +15,7 @@ awesome.connect_signal(
             progressbar_color = beautiful.focus
         else
             icon_markup = color_helpers.colorize_text(
-                ui_helpers.get_volume_icon(value), beautiful.popup_volume_color
+                ui_helpers.get_volume_icon(value), beautiful.xbackground
             )
             progressbar_color = beautiful.popup_volume_color
         end
@@ -27,11 +27,11 @@ awesome.connect_signal(
 awesome.connect_signal(
     "brightness::value", function(value)
         if value == 0 then
-            icon_markup = color_helpers.colorize_text("\u{e1ad}", beautiful.focus)
+            icon_markup = color_helpers.colorize_text("\u{e1ad}", beautiful.black)
             progressbar_color = beautiful.focus
         else
             icon_markup = color_helpers.colorize_text(
-                ui_helpers.get_brightness_icon(value), beautiful.popup_brightness_color
+                ui_helpers.get_brightness_icon(value), beautiful.xbackground
             )
             progressbar_color = beautiful.popup_brightness_color
         end
@@ -55,11 +55,11 @@ awesome.connect_signal(
 awesome.connect_signal(
     "brightness::keyboard", function(value)
         if value == 0 then
-            icon_markup = color_helpers.colorize_text("\u{f7ec}", beautiful.focus)
+            icon_markup = color_helpers.colorize_text("\u{f7ec}", beautiful.black)
             progressbar_color = beautiful.focus
         else
             icon_markup = color_helpers.colorize_text(
-                value < 50 and "\u{f7ec}" or "\u{f7ed}", beautiful.white
+                value < 50 and "\u{f7ec}" or "\u{f7ed}", beautiful.xbackground
             )
             progressbar_color = beautiful.white
         end

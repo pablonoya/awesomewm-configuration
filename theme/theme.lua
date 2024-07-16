@@ -179,7 +179,7 @@ theme.wibar_margins = {
 theme.wibar_shape = helpers.rrect(theme.client_border_radius)
 
 -- Pop up notifications
-theme.popup_size = dpi(220)
+theme.popup_size = dpi(240)
 theme.popup_bg = theme.black
 theme.popup_volume_color = theme.accent
 theme.popup_brightness_color = theme.moon
