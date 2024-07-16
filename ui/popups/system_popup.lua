@@ -20,7 +20,8 @@ end
 
 local font_icon = text_icon {
     text = "\u{e050}",
-    size = 24
+    size = 24,
+    fill = 0
 }
 
 font_icon.point = {}
