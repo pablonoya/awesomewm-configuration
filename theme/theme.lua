@@ -97,7 +97,7 @@ theme.border_color_floating_urgent = theme.uranus
 
 -- Border radius
 theme.border_radius = dpi(16)
-theme.client_border_radius = dpi(16)
+theme.client_border_radius = dpi(12)
 theme.widget_radius = theme.border_radius
 
 -- Titlebars
@@ -265,11 +265,11 @@ theme.tabbar_size = 40
 theme.mstab_bar_ontop = true
 
 -- Tag Preview
-theme.tag_preview_client_border_radius = theme.client_border_radius
+theme.tag_preview_client_border_radius = dpi(5)
 theme.tag_preview_client_opacity = 1
 theme.tag_preview_client_bg = theme.xbackground
 theme.tag_preview_client_border_color = theme.focus
-theme.tag_preview_client_border_width = dpi(1.6)
+theme.tag_preview_client_border_width = dpi(1.2)
 theme.tag_preview_widget_border_radius = theme.border_radius
 theme.tag_preview_widget_bg = theme.black
 theme.tag_preview_widget_border_color = theme.focus
@@ -277,7 +277,7 @@ theme.tag_preview_widget_border_width = theme.border_width
 theme.tag_preview_widget_margin = dpi(12)
 
 -- Task Preview
-theme.task_preview_widget_border_radius = theme.client_border_radius
+theme.task_preview_widget_border_radius = dpi(5)
 theme.task_preview_widget_bg = theme.black
 theme.task_preview_widget_border_color = theme.focus
 theme.task_preview_widget_border_width = theme.border_width
