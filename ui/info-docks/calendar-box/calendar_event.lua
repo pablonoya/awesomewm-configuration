@@ -49,15 +49,15 @@ local function calendar_event(event)
 
     if many_days then
         event_date.font = beautiful.font_name .. "Medium 11"
-        event_date.markup = format_date(event.start_date, many_days) .. "\n"
-                                .. format_date(event.end_date, many_days)
+        event_date.markup = format_date(event.start_date, many_days) .. "\n" ..
+                                format_date(event.end_date, many_days)
     else
         event_date.font = beautiful.font_name .. "Medium 12"
         event_date.markup = format_date(event.start_date)
     end
 
-    description.markup = "<b>" .. gstring.xml_escape(event.summary) .. "</b>\n"
-                             .. format_time(event.start_time) .. " - " .. format_time(event.end_time)
+    description.markup = "<b>" .. gstring.xml_escape(event.summary) .. "</b>\n" ..
+                             format_time(event.start_time) .. " - " .. format_time(event.end_time)
 
     return wibox.widget {
         {
@@ -74,7 +74,7 @@ local function calendar_event(event)
                 left = dpi(8),
                 widget = wibox.container.margin
             },
-            bg = event.calendar_color .. "D0",
+            bg = event.calendar_color .. "B0",
             shape = helpers.rrect(beautiful.border_radius / 2),
             widget = wibox.container.background
         },

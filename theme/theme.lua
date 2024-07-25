@@ -78,7 +78,6 @@ theme.useless_gap = dpi(4)
 theme.font_name = "Manrope "
 theme.font = theme.font_name .. "10"
 theme.icon_font_name = "Material Symbols Rounded "
-theme.icon_font = theme.icon_font_name .. "16 @FILL=1"
 theme.mono_font = "JetBrains Mono Slashed 10"
 
 -- Borders

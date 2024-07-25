@@ -5,15 +5,15 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local taglist = require("ui.bar.taglist")
+local mediabar = require("ui.bar.mediabar")
 local notifications_and_datetime = require("ui.bar.notifications_and_datetime")
 local control_center_button = require("ui.bar.control-center-button")
 
-local client_info = require("ui.bar.widgets.client_info")
-local mediabar = require("ui.bar.mediabar")
-local systray = require("ui.bar.widgets.systray")
-local device_indicators = require("ui.bar.widgets.device_indicators")
-local battery = require("ui.bar.widgets.battery")
 local layoutbox = require("ui.bar.widgets.layoutbox")
+local client_info = require("ui.bar.widgets.client_info")
+local device_indicators = require("ui.bar.widgets.device_indicators")
+local systray = require("ui.bar.widgets.systray")
+local battery = require("ui.bar.widgets.battery")
 
 local function top_bar(s)
     local is_vertical = s.geometry.height > s.geometry.width
@@ -32,13 +32,6 @@ local function top_bar(s)
                 -- start
                 {
                     layoutbox(s),
-                    wibox.widget.separator {
-                        orientation = "vertical",
-                        color = beautiful.xforeground .. "70",
-                        thickness = dpi(2),
-                        span_ratio = 0.6,
-                        forced_width = dpi(2)
-                    },
                     client_info,
                     spacing = dpi(4),
                     layout = wibox.layout.fixed.horizontal
