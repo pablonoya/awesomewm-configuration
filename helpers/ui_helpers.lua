@@ -1,3 +1,5 @@
+local beautiful = require("beautiful")
+
 local _helpers = {}
 
 function _helpers.get_volume_icon(value)
@@ -18,6 +20,10 @@ function _helpers.get_brightness_icon(value)
         return "\u{e1ac}"
     end
     return "\u{e1ad}"
+end
+
+function _helpers.toggle_filled_icon(icon, size, filled)
+    icon.font = beautiful.icon_font_name .. size .. " @FILL=" .. (filled and 1 or 0)
 end
 
 return _helpers

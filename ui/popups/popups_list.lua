@@ -1,7 +1,7 @@
 local beautiful = require("beautiful")
 
 local color_helpers = require("helpers.color-helpers")
-local ui_helpers = require("helpers.ui-helpers")
+local ui_helpers = require("helpers.ui_helpers")
 
 local system_popup = require("ui.popups.system_popup")
 

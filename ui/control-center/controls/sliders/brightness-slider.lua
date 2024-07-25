@@ -2,7 +2,7 @@ local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 
-local ui_helpers = require("helpers.ui-helpers")
+local ui_helpers = require("helpers.ui_helpers")
 
 local slider = require("ui.widgets.slider")
 local text_icon = require("ui.widgets.text-icon")

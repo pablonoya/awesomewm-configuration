@@ -4,6 +4,7 @@ local wibox = require("wibox")
 
 local helpers = require("helpers")
 local color_helpers = require("helpers.color-helpers")
+local ui_helpers = require("helpers.ui_helpers")
 
 local border_container = require("ui.widgets.border-container")
 local clickable_container = require("ui.widgets.clickable-container")
@@ -11,8 +12,8 @@ local text_icon = require("ui.widgets.text-icon")
 
 local bell = text_icon {
     markup = color_helpers.colorize_text("\u{e7f4}", beautiful.moon),
-    size = 14,
-    widget = wibox.widget.textbox
+    size = 16,
+    fill = 0
 }
 
 awesome.connect_signal(
@@ -22,6 +23,12 @@ awesome.connect_signal(
         else
             bell.markup = color_helpers.colorize_text("\u{e7f4}", beautiful.moon)
         end
+    end
+)
+
+awesome.connect_signal(
+    "notification_center::visible", function(visible)
+        ui_helpers.toggle_filled_icon(bell, 16, visible)
     end
 )
 

@@ -7,7 +7,7 @@ local wibox = require("wibox")
 local taglist = require("ui.bar.taglist")
 local mediabar = require("ui.bar.mediabar")
 local notifications_and_datetime = require("ui.bar.notifications_and_datetime")
-local control_center_button = require("ui.bar.control-center-button")
+local control_center_button = require("ui.bar.control_center_button")
 
 local layoutbox = require("ui.bar.widgets.layoutbox")
 local client_info = require("ui.bar.widgets.client_info")
