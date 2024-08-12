@@ -30,6 +30,10 @@ end
 
 playerctl:connect_signal(
     "metadata", function(_, title, artist, album_path, album, new)
+        if not album_path or album_path == "" then
+            return
+        end
+
         if not actual_colors or new == true then
             spawn.easy_async_with_shell(
                 variables.dominantcolors_path .. " " .. album_path, extract_dominantcolors
