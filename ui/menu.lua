@@ -20,16 +20,16 @@ local menu = {}
 menu.main = awful.menu {
     items = {
         {
-            "Hotkeys               Super+F1", function()
+            "Hotkeys                  Super+F1", function()
                 hotkeys_popup.show_help(client.focus, awful.screen.focused())
             end, icon_from_text("\u{eae7}")
         },
 
-        {"Terminal       Super+Enter", variables.terminal, icon_from_text("\u{eb8e}")},
+        {"Terminal           Super+Enter", variables.terminal, icon_from_text("\u{eb8e}")},
 
         {"Edit config", variables.editor .. " " .. awesome.conffile, icon_from_text("\u{e745}")},
 
-        {"Restart       Ctrl+Super+R", awesome.restart, icon_from_text("\u{f053}")},
+        {"Restart           Ctrl+Super+R", awesome.restart, icon_from_text("\u{f053}")},
 
         {"Quit", awesome.quit, icon_from_text("\u{e9ba}")}
     }
