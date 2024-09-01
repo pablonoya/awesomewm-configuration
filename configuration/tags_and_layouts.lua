@@ -7,13 +7,14 @@ local bling_layout = require("module.bling.layout")
 tag.connect_signal(
     "request::default_layouts", function()
         awful_layout.append_default_layouts {
-            awful_layout.suit.tile,
-            awful_layout.suit.max,
-            awful_layout.suit.magnifier,
-            bling_layout.horizontal,
             awful_layout.suit.spiral,
+            awful_layout.suit.max,
+            bling_layout.equalarea,
+            bling_layout.centered,
+            bling_layout.vertical,
             bling_layout.mstab,
             bling_layout.deck,
+            awful_layout.suit.magnifier,
             awful_layout.suit.floating
         }
     end
@@ -27,15 +28,14 @@ screen.connect_signal(
         local is_vertical = s.geometry.height > s.geometry.width
         if is_vertical then
             for _, tag in ipairs(s.tags) do
-                tag.layout = awful_layout.suit.tile.bottom
+                tag.layout = bling_layout.equalarea
 
                 tag.layouts = {
-                    awful_layout.suit.tile.bottom,
-                    awful_layout.suit.max,
-                    awful_layout.suit.magnifier,
+                    bling_layout.equalarea,
+                    awful_layout.suit.fair.horizontal,
                     bling_layout.horizontal,
-                    awful_layout.suit.spiral,
                     bling_layout.deck,
+                    awful_layout.suit.magnifier,
                     awful_layout.suit.floating
                 }
             end

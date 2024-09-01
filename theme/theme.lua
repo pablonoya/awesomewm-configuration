@@ -203,6 +203,10 @@ theme.layout_spiral = icons_dir .. "layouts/spiral.svg"
 theme.layout_mstab = icons_dir .. "layouts/mstab.svg"
 theme.layout_deck = icons_dir .. "layouts/deck.svg"
 theme.layout_floating = icons_dir .. "layouts/floating.svg"
+theme.layout_vertical = icons_dir .. "layouts/vertical.svg"
+theme.layout_equalarea = icons_dir .. "layouts/equalarea.svg"
+theme.layout_centered = icons_dir .. "layouts/centered.svg"
+theme.layout_fairh = icons_dir .. "layouts/fairh.svg"
 
 -- Edge snap
 theme.snap_bg = theme.cyan

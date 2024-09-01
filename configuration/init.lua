@@ -1,5 +1,5 @@
 require(... .. ".ruled")
-require(... .. ".tags")
+require(... .. ".tags_and_layouts")
 require(... .. ".clients")
 require(... .. ".wallpaper")
 require(... .. ".extras")
