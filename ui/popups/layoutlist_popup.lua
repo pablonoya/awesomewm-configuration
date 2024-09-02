@@ -6,22 +6,37 @@ local wibox = require("wibox")
 local layout_list = awful.widget.layoutlist {
     base_layout = wibox.widget {
         spacing = dpi(4),
-        forced_num_cols = 4,
+        column_count = 3,
         layout = wibox.layout.grid.vertical
     },
     widget_template = {
         {
             {
-                id = "icon_role",
-                scaling_quality = "best",
-                widget = wibox.widget.imagebox
+                {
+                    {
+                        id = "icon_role",
+                        scaling_quality = "best",
+                        widget = wibox.widget.imagebox
+                    },
+                    left = dpi(8),
+                    right = dpi(8),
+                    widget = wibox.container.margin
+                },
+                {
+                    id = "text_role",
+                    halign = "center",
+                    widget = wibox.widget.textbox
+                },
+                layout = wibox.layout.fixed.vertical
             },
-            margins = dpi(12),
+            top = dpi(8),
+            left = dpi(8),
+            right = dpi(8),
             widget = wibox.container.margin
         },
         id = "background_role",
-        forced_width = dpi(64),
-        forced_height = dpi(64),
+        forced_width = dpi(80),
+        forced_height = dpi(84),
         widget = wibox.container.background
     }
 }
