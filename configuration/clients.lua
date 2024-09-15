@@ -24,6 +24,28 @@ local function get_icon(client)
     return icon_path or default_client_icon
 end
 
+local function reduce_topbar_margins(tag)
+    if not tag then
+        return
+    end
+
+    local has_maximized = false
+    for _, c in ipairs(tag:clients()) do
+        if c.maximized then
+            has_maximized = true
+            break
+        end
+    end
+
+    if has_maximized then
+        tag.screen.bar.margins.top = 0
+        tag.screen.bar.margins.bottom = 0
+    else
+        tag.screen.bar.margins.top = 8
+        tag.screen.bar.margins.bottom = -8
+    end
+end
+
 client.connect_signal(
     "request::manage", function(c)
         -- Add missing icon to client
@@ -48,5 +70,17 @@ client.connect_signal(
                 raise = false
             }
         )
+    end
+)
+
+client.connect_signal(
+    "property::maximized", function(c)
+        reduce_topbar_margins(c.first_tag)
+    end
+)
+
+client.connect_signal(
+    "focus", function(c)
+        reduce_topbar_margins(c.first_tag)
     end
 )
