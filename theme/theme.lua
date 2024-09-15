@@ -72,7 +72,7 @@ theme.dusk_color = theme.chibimoon
 theme.night_color = theme.blue
 
 -- Gaps
-theme.useless_gap = dpi(4)
+theme.useless_gap = dpi(8)
 
 -- Fonts
 theme.font_name = "Manrope "
@@ -170,10 +170,10 @@ theme.wibar_position = "bottom"
 theme.wibar_border_color = theme.focus
 theme.wibar_border_width = theme.border_width
 theme.wibar_margins = {
-    top = dpi(4),
-    left = dpi(8),
-    right = dpi(8),
-    bottom = dpi(-4)
+    top = dpi(8),
+    left = dpi(12),
+    right = dpi(12),
+    bottom = dpi(-8)
 }
 theme.wibar_shape = helpers.rrect(theme.client_border_radius)
 
