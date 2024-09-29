@@ -12,10 +12,10 @@ return wibox.widget {
             {
                 wordclock,
                 lock_animation,
-                spacing = dpi(40),
+                spacing = dpi(32),
                 layout = wibox.layout.fixed.vertical
             },
-            margins = dpi(64),
+            margins = dpi(52),
             widget = wibox.container.margin
         },
         id = "container",

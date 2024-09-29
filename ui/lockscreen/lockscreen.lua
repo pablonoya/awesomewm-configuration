@@ -9,6 +9,9 @@ local color_helpers = require("helpers.color-helpers")
 local wordclock = require("ui.lockscreen.wordclock")
 local lockscreen_body = require("ui.lockscreen.lockscreen_body")
 local grab_password = require("ui.lockscreen.grab_password")
+local power_buttons = require("ui.lockscreen.power_buttons")
+local weather_box = require("ui.lockscreen.weather_box")
+local media_controls_box = require("ui.lockscreen.media_controls_box")
 
 local last_hour
 local last_minute
@@ -34,7 +37,7 @@ end
 
 local clock_timer = gtimer {
     timeout = 2,
-    call_now = true,
+    call_now = false,
     callback = update_time
 }
 
@@ -42,12 +45,27 @@ local clock_timer = gtimer {
 awful.screen.connect_for_each_screen(
     function(s)
         s.lockscreen = wibox {
-            widget = lockscreen_body,
+            widget = {
+                {
+                    lockscreen_body,
+                    {
+                        power_buttons,
+                        weather_box,
+                        media_controls_box,
+
+                        spacing = dpi(12),
+                        layout = wibox.layout.fixed.vertical
+                    },
+                    spacing = dpi(12),
+                    layout = wibox.layout.fixed.horizontal
+                },
+                widget = wibox.container.place
+            },
             visible = false,
             ontop = true,
             type = "splash",
             screen = s,
-            bg = beautiful.black .. "42"
+            bg = beautiful.black .. "A0"
         }
     end
 )
