@@ -69,4 +69,17 @@ function _controls.next_asusctl_profile()
     spawn.easy_async("asusctl profile -n", asusctl_signals.emit_profile)
 end
 
+-- Power Control commands
+function _controls.poweroff()
+    spawn("systemctl poweroff")
+end
+
+function _controls.reboot()
+    spawn("systemctl reboot")
+end
+
+function _controls.suspend()
+    spawn("systemctl suspend")
+end
+
 return _controls

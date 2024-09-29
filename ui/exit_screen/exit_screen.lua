@@ -5,6 +5,7 @@ local gtimer = require("gears.timer")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
+local system_controls = require("helpers.system_controls")
 local create_button = require("ui.exit_screen.create_button")
 
 local dpi = beautiful.xresources.apply_dpi
@@ -14,15 +15,7 @@ local function hide_exit_screen()
 end
 
 -- Commands
-local function poweroff_command()
-    awful.spawn("systemctl poweroff")
-end
-
-local function reboot_command()
-    awful.spawn("systemctl reboot")
-end
-
-local lock_command = function()
+local function lock_command()
     awesome.emit_signal("lockscreen::visible", true)
 end
 
@@ -32,15 +25,13 @@ local function suspend_command()
         timeout = 1,
         autostart = true,
         single_shot = true,
-        callback = function()
-            awful.spawn("systemctl suspend")
-        end
+        callback = system_controls.suspend
     }
 end
 
 -- Create the buttons
-local poweroff = create_button("\u{e8ac}", beautiful.red, "P", "oweroff", poweroff_command)
-local reboot = create_button("\u{f053}", beautiful.yellow, "R", "eboot", reboot_command)
+local poweroff = create_button("\u{e8ac}", beautiful.red, "P", "oweroff", system_controls.poweroff)
+local reboot = create_button("\u{f053}", beautiful.yellow, "R", "eboot", system_controls.reboot)
 local suspend = create_button("\u{ef44}", beautiful.magenta, "S", "uspend", suspend_command)
 local lock = create_button("\u{e897}", beautiful.green, "L", "ock", lock_command)
 local exit = create_button("\u{e9ba}", beautiful.blue, "E", "xit", awesome.quit)
@@ -104,9 +95,9 @@ local exit_screen_grabber = awful.keygrabber {
         elseif key == "l" then
             lock_command()
         elseif key == "p" then
-            poweroff_command()
+            system_controls.poweroff()
         elseif key == "r" then
-            reboot_command()
+            system_controls.reboot()
         end
         hide_exit_screen()
     end
