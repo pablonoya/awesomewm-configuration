@@ -36,7 +36,7 @@ playerctl:connect_signal(
 
         if not actual_colors or new == true then
             spawn.easy_async_with_shell(
-                variables.dominantcolors_path .. " " .. album_path, extract_dominantcolors
+                variables.dominantcolors_path .. " -c 3.5 " .. album_path, extract_dominantcolors
             )
         end
     end

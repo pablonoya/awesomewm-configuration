@@ -77,7 +77,7 @@ function controls.loop(size)
                 loop.opacity = 1
             else
                 loop.widget.icon.text = "\u{e040}"
-                loop.opacity = 0.7
+                loop.opacity = 0.6
             end
         end
     )
