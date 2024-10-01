@@ -21,27 +21,27 @@ client.connect_signal(
                     c.fullscreen = not c.fullscreen
                     c:raise()
                 end, {
-                    description = "toggle fullscreen",
-                    group = "client"
-                }
-            ), awful.key(
-                {modkey, shift}, "a", function(c)
-                    c.ontop = not c.ontop
-                end, {
-                    description = "toggle ontop",
-                    group = "client"
+                    description = "Toggle fullscreen",
+                    group = "client::toggle"
                 }
             ), awful.key(
                 {modkey, ctrl}, "a", function(c)
+                    c.ontop = not c.ontop
+                end, {
+                    description = "Toggle ontop",
+                    group = "client::toggle"
+                }
+            ), awful.key(
+                {modkey, shift}, "a", function(c)
                     c.sticky = not c.sticky
                 end, {
-                    description = "toggle sticky",
-                    group = "client"
+                    description = "Toggle sticky",
+                    group = "client::toggle"
                 }
             ), awful.key(
                 {modkey}, "f", awful.client.floating.toggle, {
-                    description = "toggle floating",
-                    group = "client"
+                    description = "Toggle floating",
+                    group = "client::toggle"
                 }
             ), awful.key(
                 {modkey, ctrl}, "Down", function(c)
@@ -49,7 +49,7 @@ client.connect_signal(
                     -- minimized, since minimized clients can"t have the focus.
                     c.minimized = true
                 end, {
-                    description = "minimize",
+                    description = "Minimize",
                     group = "client"
                 }
             ), awful.key(
@@ -57,21 +57,21 @@ client.connect_signal(
                     c.maximized = not c.maximized
                     c:raise()
                 end, {
-                    description = "toggle maximize",
-                    group = "client"
+                    description = "Toggle maximized",
+                    group = "client::toggle"
                 }
             ), awful.key(
                 {modkey}, "w", function(c)
                     c:kill()
                 end, {
-                    description = "close window",
+                    description = "Close window",
                     group = "client"
                 }
             ), awful.key(
                 {alt}, "F4", function(c)
                     c:kill()
                 end, {
-                    description = "close window",
+                    description = "Close window",
                     group = "client"
                 }
             ), -- Single tap: Center client. Double tap: Center client + Floating + Resize
@@ -88,34 +88,34 @@ client.connect_signal(
                             local focused_screen_geometry = awful.screen.focused().geometry
                             helpers.float_and_resize(
                                 c, focused_screen_geometry.width * 0.5,
-                                    focused_screen_geometry.height * 0.5
+                                focused_screen_geometry.height * 0.5
                             )
                         end
                     )
                 end, {
-                    description = "center client",
+                    description = "Center client",
                     group = "client"
                 }
             ), awful.key(
                 {modkey, shift}, "Return", function(c)
                     c:swap(awful.client.getmaster())
                 end, {
-                    description = "move to master",
+                    description = "Move to master",
                     group = "client"
                 }
             ), awful.key(
                 {modkey, shift}, "]", function(c)
                     move_client_to_screen(c, "right")
                 end, {
-                    description = "move client to next screen",
-                    group = "client"
+                    description = "Move client to next screen",
+                    group = "screen"
                 }
             ), awful.key(
                 {modkey, shift}, "[", function(c)
                     move_client_to_screen(c, "left")
                 end, {
-                    description = "move client to previous screen",
-                    group = "client"
+                    description = "Move client to previous screen",
+                    group = "screen"
                 }
             )
         }

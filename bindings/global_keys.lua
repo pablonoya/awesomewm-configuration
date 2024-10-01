@@ -48,62 +48,62 @@ end
 awful.keyboard.append_global_keybindings {
     awful.key(
         {modkey}, "F1", hotkeys_popup.show_help, {
-            description = "show help",
+            description = "Show keybindings",
             group = "awesome"
         }
     ), awful.key(
         {modkey, ctrl}, "r", awesome.restart, {
-            description = "reload awesome",
+            description = "Reload awesome",
             group = "awesome"
         }
     ), awful.key(
         {modkey, ctrl}, "q", awesome.quit, {
-            description = "quit awesome",
+            description = "Quit awesome",
             group = "awesome"
         }
     ), awful.key(
         {modkey}, "l", function()
             awesome.emit_signal("lockscreen::visible", true)
         end, {
-            description = "lock screen",
+            description = "Lock screen",
             group = "awesome"
         }
     ), awful.key(
         {}, "XF86PowerOff", function()
             awesome.emit_signal("exit_screen::show")
         end, {
-            description = "show exit screen",
+            description = "Show exit screen",
             group = "awesome"
         }
     ), awful.key(
         {modkey}, "n", function()
             awesome.emit_signal("notification_center::toggle")
         end, {
-            description = "toggle notifcation center",
+            description = "Toggle notifcation center",
             group = "awesome"
         }
     ), awful.key(
         {modkey}, "x", helpers.toggle_silent_mode, {
-            description = "toggle silent mode",
+            description = "Toggle silent mode",
             group = "awesome"
         }
     ), awful.key(
         {modkey}, "a", function()
             awesome.emit_signal("control_center::toggle")
         end, {
-            description = "toggle control center",
+            description = "Toggle control center",
             group = "awesome"
         }
     ), awful.key(
         {modkey}, "Tab", revelation, {
-            description = "use revelation",
+            description = "Use Revelation",
             group = "awesome"
         }
     ), awful.key(
         {alt}, "Tab", function()
             awesome.emit_signal("bling::window_switcher::turn_on")
         end, {
-            description = "window switcher",
+            description = "Window switcher",
             group = "awesome"
         }
     )
@@ -114,8 +114,8 @@ awful.keyboard.append_global_keybindings {
     awful.key {
         modifiers = {modkey},
         keygroup = "arrows",
-        description = "focus client by direction",
-        group = "client",
+        description = "Focus client by direction",
+        group = "client::focus",
         on_press = function(key)
             awful.client.focus.bydirection(key:lower())
         end
@@ -123,61 +123,47 @@ awful.keyboard.append_global_keybindings {
         {modkey, alt}, "h", function()
             awful.client.focus.bydirection("left")
         end, {
-            description = "focus left client",
-            group = "client"
+            description = "Focus left client",
+            group = "client::focus"
         }
     ), awful.key(
         {modkey, alt}, "j", function()
             awful.client.focus.bydirection("down")
         end, {
-            description = "focus down client",
-            group = "client"
+            description = "Focus down client",
+            group = "client::focus"
         }
     ), awful.key(
         {modkey, alt}, "k", function()
             awful.client.focus.bydirection("up")
         end, {
-            description = "focus up client",
-            group = "client"
+            description = "Focus up client",
+            group = "client::focus"
         }
     ), awful.key(
         {modkey, alt}, "l", function()
             awful.client.focus.bydirection("right")
         end, {
-            description = "focus right client",
-            group = "client"
+            description = "Focus right client",
+            group = "client::focus"
+        }
+    ), awful.key(
+        {modkey}, "u", awful.client.urgent.jumpto, {
+            description = "Jump to urgent client",
+            group = "client::focus"
         }
     ), awful.key(
         {modkey, shift}, "j", function()
             awful.client.swap.byidx(1)
         end, {
-            description = "swap with next client",
+            description = "Swap with next client",
             group = "client"
         }
     ), awful.key(
         {modkey, shift}, "k", function()
             awful.client.swap.byidx(-1)
         end, {
-            description = "swap with previous client",
-            group = "client"
-        }
-    ), awful.key(
-        {modkey}, "u", awful.client.urgent.jumpto, {
-            description = "jump to urgent client",
-            group = "client"
-        }
-    ), awful.key(
-        {ctrl, shift, modkey}, "[", function()
-            swap_all_clients_between_screens("left")
-        end, {
-            description = "move all clients to previous screen",
-            group = "client"
-        }
-    ), awful.key(
-        {ctrl, shift, modkey}, "]", function()
-            swap_all_clients_between_screens("right")
-        end, {
-            description = "move all clients to next screen",
+            description = "Swap with previous client",
             group = "client"
         }
     )
@@ -189,7 +175,7 @@ awful.keyboard.append_global_keybindings {
         {modkey}, "Return", function()
             awful.spawn(variables.terminal)
         end, {
-            description = "open terminal",
+            description = "Open terminal",
             group = "launcher"
         }
     ), awful.key(
@@ -197,14 +183,14 @@ awful.keyboard.append_global_keybindings {
             ytm_scratchpad:reapply_geometry()
             ytm_scratchpad:toggle()
         end, {
-            description = "toggle scratchpad",
+            description = "Toggle Scratchpad",
             group = "launcher"
         }
     ), awful.key(
         {modkey}, "e", function()
             awful.spawn(variables.file_manager)
         end, {
-            description = "open file manager",
+            description = "Open file manager",
             group = "launcher"
         }
     ), awful.key(
@@ -217,14 +203,14 @@ awful.keyboard.append_global_keybindings {
                 end
             )
         end, {
-            description = "cycle autorandr",
+            description = "Cycle autorandr",
             group = "launcher"
         }
     ), awful.key(
         {modkey}, "v", function()
             awful.spawn("diodon")
         end, {
-            description = "open diodon",
+            description = "Open diodon",
             group = "launcher"
         }
     ), -- Screenshots
@@ -232,21 +218,21 @@ awful.keyboard.append_global_keybindings {
         {}, "Print", function()
             awful.spawn("flameshot gui")
         end, {
-            description = "take an area screenshot",
+            description = "Take an area screenshot",
             group = "screenshots"
         }
     ), awful.key(
         {modkey, shift}, "s", function()
             awful.spawn("flameshot gui")
         end, {
-            description = "take an area screenshot",
+            description = "Take an area screenshot",
             group = "screenshots"
         }
     ), awful.key(
         {alt}, "Print", function()
             awful.spawn("flameshot full")
         end, {
-            description = "take a full screenshot",
+            description = "Take a full screenshot",
             group = "screenshots"
         }
     )
@@ -259,99 +245,95 @@ awful.keyboard.append_global_keybindings {
         {}, "XF86MonBrightnessUp", function()
             system_controls.brightness_control("increase")
         end, {
-            description = "increase brightness",
-            group = "hotkeys"
+            description = "Increase brightness",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86MonBrightnessDown", function()
             system_controls.brightness_control("decrease")
         end, {
-            description = "decrease brightness",
-            group = "hotkeys"
+            description = "Decrease brightness",
+            group = "special keys"
         }
     ), -- Volume control
     awful.key(
         {}, "XF86AudioRaiseVolume", function()
             system_controls.volume_control("increase", 5)
         end, {
-            description = "increase volume",
-            group = "hotkeys"
+            description = "Increase volume",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86AudioLowerVolume", function()
             system_controls.volume_control("decrease", 5)
         end, {
-            description = "decrease volume",
-            group = "hotkeys"
+            description = "Decrease volume",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86AudioMute", function()
             system_controls.volume_control("mute")
         end, {
-            description = "mute volume",
-            group = "hotkeys"
+            description = "Mute volume",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86AudioMicMute", function()
             system_controls.mic_toggle()
         end, {
-            description = "mute microphone",
-            group = "hotkeys"
+            description = "Mute microphone",
+            group = "special keys"
         }
-    ), -- Music
+    ), -- Media
     awful.key(
         {}, "XF86AudioPlay", function()
             playerctl:play_pause()
         end, {
-            description = "toggle music",
-            group = "hotkeys"
+            description = "Play/pause media",
+            group = "special keys"
         }
     ), awful.key(
         {}, "Insert", function()
             playerctl:play_pause()
         end, {
-            description = "toggle music",
-            group = "hotkeys"
+            description = "Play/pause media",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86AudioPrev", function()
             playerctl:previous()
         end, {
-            description = "previous music",
-            group = "hotkeys"
+            description = "Previous media",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86AudioNext", function()
             playerctl:next()
         end, {
-            description = "next music",
-            group = "hotkeys"
+            description = "Next media",
+            group = "special keys"
         }
-    )
-}
-
--- Asusctl
-awful.keyboard.append_global_keybindings {
+    ), -- Asusctl
     awful.key(
         {}, "XF86KbdBrightnessUp", function()
             awful.spawn.easy_async("asusctl -n", asusctl_signals.keyboard_brightness)
 
         end, {
-            description = "increase keyboard brightness",
-            group = "hotkeys (asusctl)"
+            description = "Increase keyboard brightness",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86KbdBrightnessDown", function()
             awful.spawn.easy_async("asusctl -p", asusctl_signals.keyboard_brightness)
 
         end, {
-            description = "decrease keyboard brightness",
-            group = "hotkeys (asusctl)"
+            description = "Decrease keyboard brightness",
+            group = "special keys"
         }
     ), awful.key(
         {}, "XF86Launch4", system_controls.next_asusctl_profile, {
-            description = "asusctl next profile",
-            group = "hotkeys (asusctl)"
+            description = "Next asusctl profile",
+            group = "special keys"
         }
     )
 }
@@ -362,14 +344,28 @@ awful.keyboard.append_global_keybindings {
         {modkey}, "]", function()
             awful.screen.focus(helpers.get_next_screen("right"))
         end, {
-            description = "focus the next screen",
+            description = "Focus the next screen",
             group = "screen"
         }
     ), awful.key(
         {modkey}, "[", function()
             awful.screen.focus(helpers.get_next_screen("left"))
         end, {
-            description = "focus the previous screen",
+            description = "Focus the previous screen",
+            group = "screen"
+        }
+    ), awful.key(
+        {ctrl, shift, modkey}, "[", function()
+            swap_all_clients_between_screens("left")
+        end, {
+            description = "Swap all clients with previous screen",
+            group = "screen"
+        }
+    ), awful.key(
+        {ctrl, shift, modkey}, "]", function()
+            swap_all_clients_between_screens("right")
+        end, {
+            description = "Swap all clients with next screen",
             group = "screen"
         }
     )
@@ -381,24 +377,24 @@ awful.keyboard.append_global_keybindings {
         {modkey, ctrl}, "k", function()
             awful.tag.incmwfact(0.05)
         end, {
-            description = "increase master width factor",
+            description = "Increase master width factor",
             group = "layout"
         }
     ), awful.key(
         {modkey, ctrl}, "j", function()
             awful.tag.incmwfact(-0.05)
         end, {
-            description = "decrease master width factor",
+            description = "Decrease master width factor",
             group = "layout"
         }
     ), awful.key(
         {modkey}, "space", nil, {
-            description = "select next layout",
+            description = "Select next layout",
             group = "layout"
         }
     ), awful.key(
         {modkey, shift}, "space", nil, {
-            description = "select previous layout",
+            description = "Select previous layout",
             group = "layout"
         }
     ), -- Specific layouts
@@ -406,21 +402,21 @@ awful.keyboard.append_global_keybindings {
         {modkey, ctrl}, "m", function()
             awful.layout.set(awful.layout.suit.max)
         end, {
-            description = "set max layout",
+            description = "Set Max layout",
             group = "layout"
         }
     ), awful.key(
         {modkey, ctrl}, "t", function()
-            awful.layout.set(awful.layout.suit.tile)
+            awful.layout.set(awful.layout.suit.spiral)
         end, {
-            description = "set tile layout",
+            description = "Set Spiral layout",
             group = "layout"
         }
     ), awful.key(
         {modkey, ctrl}, "f", function()
             awful.layout.set(awful.layout.suit.floating)
         end, {
-            description = "set floating layout",
+            description = "Set Floating layout",
             group = "layout"
         }
     )
@@ -430,23 +426,23 @@ awful.keyboard.append_global_keybindings {
 awful.keyboard.append_global_keybindings {
     awful.key(
         {modkey}, ";", awful.tag.viewprev, {
-            description = "view previous tag",
+            description = "View previous tag",
             group = "tag"
         }
     ), awful.key(
         {modkey}, "'", awful.tag.viewnext, {
-            description = "view next tag",
+            description = "View next tag",
             group = "tag"
         }
     ), awful.key(
         {modkey}, "Escape", awful.tag.history.restore, {
-            description = "view last tag",
+            description = "View last tag",
             group = "tag"
         }
     ), awful.key {
         modifiers = {modkey},
         keygroup = "numrow",
-        description = "view tag #",
+        description = "View tag",
         group = "tag",
         on_press = function(index)
             local tag = awful.screen.focused().tags[index]
@@ -457,7 +453,7 @@ awful.keyboard.append_global_keybindings {
     }, awful.key {
         modifiers = {modkey, ctrl},
         keygroup = "numrow",
-        description = "toggle tag",
+        description = "Toggle tag",
         group = "tag",
         on_press = function(index)
             local screen = awful.screen.focused()
@@ -469,7 +465,7 @@ awful.keyboard.append_global_keybindings {
     }, awful.key {
         modifiers = {modkey, shift},
         keygroup = "numrow",
-        description = "move focused client to tag",
+        description = "Move client to tag",
         group = "tag",
         on_press = function(index)
             if client.focus then
@@ -482,7 +478,7 @@ awful.keyboard.append_global_keybindings {
     }, awful.key {
         modifiers = {modkey, ctrl, shift},
         keygroup = "numrow",
-        description = "toggle focused client on tag",
+        description = "Toggle client on tag",
         group = "tag",
         on_press = function(index)
             if client.focus then

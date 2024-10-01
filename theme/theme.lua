@@ -156,8 +156,8 @@ theme.hotkeys_fg = theme.xforeground
 theme.hotkeys_border_color = theme.focus
 theme.hotkeys_modifiers_fg = theme.xforeground .. "E0"
 theme.hotkeys_font = theme.mono_font
-theme.hotkeys_description_font = theme.font_name .. "10"
-theme.hotkeys_group_margin = dpi(12)
+theme.hotkeys_description_font = theme.font_name .. "11"
+theme.hotkeys_group_margin = dpi(16)
 
 -----------------
 -- UI Elements --
