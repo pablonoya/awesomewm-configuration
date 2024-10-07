@@ -87,7 +87,7 @@ local system_popup = awful.popup {
     border_width = dpi(2),
     border_color = beautiful.focus,
     maximum_width = beautiful.popup_size,
-
+    shape = helpers.rrect(beautiful.border_radius),
     placement = placement_fn,
     ontop = true,
     visible = false
