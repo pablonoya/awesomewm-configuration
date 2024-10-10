@@ -8,7 +8,7 @@ local clear_all_button = clickable_container {
     widget = {
         text_icon {
             text = "\u{e0b8}",
-            size = 18
+            size = 16
         },
         margins = dpi(4),
         widget = wibox.container.margin

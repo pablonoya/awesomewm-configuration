@@ -1,10 +1,8 @@
-local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
 
-local border_container = require("ui.widgets.border-container")
 local clickable_container = require("ui.widgets.clickable-container")
 local text_icon = require("ui.widgets.text-icon")
 
@@ -12,35 +10,23 @@ local function capitalize(s)
     return s:sub(1, 1):upper() .. s:sub(2)
 end
 
-local function icon_button(markup)
+local function icon_button(markup, signal_action)
     return clickable_container {
         widget = text_icon {
             markup = markup,
-            size = 19
+            size = 16
         },
-        shape = gshape.circle
+        shape = gshape.circle,
+        margins = dpi(2),
+        action = function()
+            awesome.emit_signal("calendar::date", signal_action)
+        end
     }
 end
 
-local previous = icon_button("\u{e5cb}")
-local next = icon_button("\u{e5cc}")
-local cal = icon_button("\u{e8df}")
-
-helpers.add_action(
-    previous, function()
-        awesome.emit_signal("calendar::date", "previous_month")
-    end
-)
-helpers.add_action(
-    next, function()
-        awesome.emit_signal("calendar::date", "next_month")
-    end
-)
-helpers.add_action(
-    cal, function()
-        awesome.emit_signal("calendar::date", "today")
-    end
-)
+local previous = icon_button("\u{e5cb}", "previous_month")
+local next = icon_button("\u{e5cc}", "next_month")
+local cal = icon_button("\u{e8df}", "today")
 
 return function(widget)
     widget.markup = "<b>" .. capitalize(widget.text) .. "</b>"

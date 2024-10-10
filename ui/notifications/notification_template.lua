@@ -31,7 +31,6 @@ local function notification_layout(notification)
                 {
                     title {
                         notification = notification,
-                        size = 12,
                         forced_width = dpi(188)
                     },
                     {

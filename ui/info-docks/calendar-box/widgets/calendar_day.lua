@@ -14,13 +14,14 @@ return function(widget, flag, date)
         widget.markup = "<b>" .. widget.text .. "</b>"
         style = focus_style
     end
+    widget.font = beautiful.font_name .. 12
 
-    local day = wibox.widget {
+    return wibox.widget {
         {
             widget,
             halign = "center",
             valign = "center",
-            forced_width = dpi(41),
+            forced_width = dpi(40),
             widget = wibox.container.place
         },
         shape = style.shape,
@@ -28,6 +29,4 @@ return function(widget, flag, date)
         bg = style.bg,
         widget = wibox.container.background
     }
-
-    return day
 end

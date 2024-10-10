@@ -29,7 +29,7 @@ end
 
 local calendar = wibox.widget {
     date = os.date("*t"),
-    font = "Manrope 12",
+    font = "Manrope 11",
     long_weekdays = true,
     fn_embed = decorate_cell,
     spacing = dpi(1.5),

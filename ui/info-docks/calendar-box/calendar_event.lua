@@ -52,7 +52,7 @@ local function calendar_event(event)
         event_date.markup = format_date(event.start_date, many_days) .. "\n" ..
                                 format_date(event.end_date, many_days)
     else
-        event_date.font = beautiful.font_name .. "Medium 12"
+        event_date.font = beautiful.font_name .. "Medium 11"
         event_date.markup = format_date(event.start_date)
     end
 

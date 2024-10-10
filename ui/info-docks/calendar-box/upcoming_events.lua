@@ -36,7 +36,7 @@ local icon = clickable_container {
 local header = wibox.widget {
     {
         text = "Upcoming events",
-        font = beautiful.font_name .. "Semibold 12",
+        font = beautiful.font_name .. "Semibold 11",
         widget = wibox.widget.textbox
     },
     nil,
