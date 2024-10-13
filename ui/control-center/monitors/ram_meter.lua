@@ -37,7 +37,7 @@ local ram_meter = monitor_progressbar {
         type = "linear",
         from = {0},
         to = {240},
-        stops = {{0, beautiful.moon}, {1, beautiful.yellow}}
+        stops = {{0, beautiful.yellow}, {1, beautiful.moon}}
     },
     bg_color = beautiful.yellow .. "60",
     watch_command = "bash -c 'free --kilo'",
