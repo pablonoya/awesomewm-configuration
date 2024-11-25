@@ -35,8 +35,8 @@ local cpu_usage = monitor_progressbar {
     slider_color = {
         type = "linear",
         from = {0},
-        to = {110},
-        stops = {{0, beautiful.cyan}, {0.7, beautiful.blue}}
+        to = {240},
+        stops = {{0, beautiful.blue}, {0.1, beautiful.blue}, {1, beautiful.magenta}}
     },
     bg_color = beautiful.blue .. "60",
     watch_command = [[ bash -c "cat /proc/stat | grep '^cpu '"]],
