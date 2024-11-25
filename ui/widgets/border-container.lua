@@ -1,20 +1,19 @@
 local beautiful = require("beautiful")
-
-local wibox_container = require("wibox.container")
-local wibox_widget = require("wibox.widget")
+local wibox = require("wibox")
 
 local helpers = require("helpers")
 
 return function(args)
-    return wibox_widget {
+    return wibox.widget {
         {
             args.widget,
             margins = args.margins or dpi(4),
-            widget = wibox_container.margin
+            widget = wibox.container.margin
         },
+        bg = args.bg or beautiful.xbackground,
         shape = args.shape or helpers.rrect(beautiful.border_radius),
-        border_width = dpi(1.6),
+        border_width = args.border_width or dpi(1.6),
         border_color = beautiful.focus,
-        widget = wibox_container.background
+        widget = wibox.container.background
     }
 end

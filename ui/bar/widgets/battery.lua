@@ -14,7 +14,7 @@ local text_icon = require("ui.widgets.text-icon")
 local is_charging = false
 local last_value = 50
 local low_value = 20
-local critical_value = 15
+local critical_value = 11
 
 local percentage = wibox.widget {
     font = beautiful.font_name .. "Bold 12",
@@ -163,8 +163,8 @@ local function battery(is_vertical_screen)
 
     return {
         battery_widget,
-        left = dpi(4),
-        right = dpi(6),
+        left = dpi(8),
+        right = dpi(8),
         widget = wibox.container.margin
     }
 end

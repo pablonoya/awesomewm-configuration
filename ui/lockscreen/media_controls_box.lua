@@ -65,7 +65,7 @@ local media_controls_box = wibox.widget {
     forced_height = dpi(96),
     border_width = dpi(2),
     border_color = beautiful.focus,
-    shape = helpers.rrect(beautiful.border_radius),
+    shape = helpers.rrect(beautiful.border_radius - 4),
     widget = wibox.container.background
 }
 
