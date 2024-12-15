@@ -91,9 +91,12 @@ function _helpers.float_and_resize(c, width, height)
     c:raise()
 end
 
-function _helpers.add_action(widget, action)
+function _helpers.add_action(widget, action, secondary_action)
     _helpers.add_hover_cursor(widget)
-    widget:buttons(gears.table.join(awful.button({}, 1, action)))
+    widget:buttons(gears.table.join(
+        awful.button({}, 1, action),
+        awful.button({}, 3, secondary_action)
+    ))
 end
 
 function _helpers.add_list_scrolling(widget)

@@ -77,7 +77,7 @@ return function(args)
     end
 
     awesome.connect_signal(args.signal_label, toggle)
-    helpers.add_action(filled_button, args.onclick)
+    helpers.add_action(filled_button, args.onclick, args.onrightclick)
 
     return filled_button
 end

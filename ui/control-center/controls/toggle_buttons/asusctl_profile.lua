@@ -9,5 +9,6 @@ return toggle_button {
     name = "Profile",
     active_color = beautiful.cyan,
     onclick = system_controls.next_asusctl_profile,
+    onrightclick = system_controls.previous_asusctl_profile,
     signal_label = "asusctl::profile"
 }
