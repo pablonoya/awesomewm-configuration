@@ -17,7 +17,7 @@ local calendar_popup = border_popup {
     widget = wibox.widget {
         calendar,
         upcoming_events,
-        spacing = dpi(4),
+        spacing = dpi(2),
         forced_width = beautiful.notif_center_width,
         forced_height = container_height,
         layout = wibox.layout.fixed.vertical

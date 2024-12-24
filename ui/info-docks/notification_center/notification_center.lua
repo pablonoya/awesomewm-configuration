@@ -34,11 +34,11 @@ local notification_center = border_popup {
             header,
             notification_list,
             layout = wibox.layout.fixed.vertical,
-            spacing = dpi(4)
+            spacing = dpi(2)
         },
-        top = dpi(4),
-        left = dpi(12),
-        right = dpi(12),
+        top = dpi(2),
+        left = dpi(8),
+        right = dpi(8),
         widget = wibox.container.margin
     },
     minimum_width = beautiful.notif_center_width,

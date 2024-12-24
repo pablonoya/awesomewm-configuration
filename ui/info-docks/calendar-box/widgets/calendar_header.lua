@@ -1,8 +1,6 @@
 local gshape = require("gears.shape")
 local wibox = require("wibox")
 
-local helpers = require("helpers")
-
 local clickable_container = require("ui.widgets.clickable-container")
 local text_icon = require("ui.widgets.text-icon")
 
@@ -32,7 +30,11 @@ return function(widget)
     widget.markup = "<b>" .. capitalize(widget.text) .. "</b>"
 
     return {
-        widget,
+        {
+            widget,
+            left = dpi(6),
+            widget = wibox.container.margin
+        },
         nil,
         {
             previous,
@@ -40,6 +42,7 @@ return function(widget)
             next,
             layout = wibox.layout.fixed.horizontal
         },
-        layout = wibox.layout.align.horizontal
+        layout = wibox.layout.align.horizontal,
+        forced_height = dpi(28)
     }
 end

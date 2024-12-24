@@ -1,4 +1,3 @@
-local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local header = require("ui.info-docks.calendar-box.widgets.calendar_header")
@@ -18,9 +17,7 @@ local function decorate_cell(widget, flag, date)
     elseif flag == "month" then
         return {
             widget,
-            top = dpi(4),
-            left = dpi(12),
-            right = dpi(12),
+            top = dpi(2),
             widget = wibox.container.margin
         }
     end
