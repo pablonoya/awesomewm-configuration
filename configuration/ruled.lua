@@ -40,12 +40,9 @@ ruled.client.connect_signal(
                 class = {
                     "Lxappearance", "Nm-connection-editor", "slack", "Slack", "discord",
                     "ulauncher", "Ulauncher", "blueman-manager", "Blueman-manager", "pavucontrol",
-                    "Pavucontrol", "youtube music", "YouTube Music", "anytype", "Thunar"
+                    "Pavucontrol", "anytype", "Thunar"
                 },
-                name = {
-                    -- xev
-                    "Event Tester", "zoom", "Picture in picture", ""
-                },
+                name = {"Event Tester", "zoom", "Picture in picture", "YouTube Music", ""},
                 role = {"AlarmWindow", "pop-up", "GtkFileChooserDialog"},
                 type = {"dialog"}
             },

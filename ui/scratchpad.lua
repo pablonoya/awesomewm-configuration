@@ -1,6 +1,6 @@
 local awful_screen = require("awful.screen")
 
-local bling = require("module.bling")
+local scratchpad = require("module.bling.module.scratchpad")
 local rubato = require("module.rubato")
 
 local anim_y = rubato.timed {
@@ -10,10 +10,10 @@ local anim_y = rubato.timed {
     awestore_compat = true
 }
 
-local ytm_scratchpad = bling.module.scratchpad {
+local ytm_scratchpad = scratchpad {
     command = "youtube-music",
     rule = {
-        instance = "youtube music"
+        name = "YouTube Music"
     },
     sticky = true,
     autoclose = true,
