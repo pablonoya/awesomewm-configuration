@@ -1,42 +1,29 @@
-local wibox_layout = require("wibox.layout")
-local wibox_widget = require("wibox.widget")
 local naughty = require("naughty")
+local wibox = require("wibox")
 
 local helpers = require("helpers")
 
 local notification_box = require("ui.info-docks.notification_center.notification_box")
-local no_notifications = require("ui.info-docks.notification_center.no_notifications")
 
 local all_notifications = {}
-local is_empty = true
 
-local list = wibox_widget {
-    no_notifications,
+local list = wibox.widget {
     spacing = dpi(8),
-    layout = wibox_layout.fixed.vertical
+    layout = wibox.layout.fixed.vertical
 }
 
 -- scrolling notifications list
 helpers.add_list_scrolling(list)
 
-function add_to_list(notification)
-    if #list.children == 1 and is_empty then
-        list:reset()
-        is_empty = false
-    end
-
+local function add_to_list(notification)
     list:insert(1, notification_box(notification))
     all_notifications = list.children
-
     awesome.emit_signal("notifications::count", #all_notifications)
 end
 
 function clear_all_notifications()
     list:reset()
-    list:insert(1, no_notifications)
-
     all_notifications = {}
-    is_empty = true
     awesome.emit_signal("notifications::count", 0)
 end
 

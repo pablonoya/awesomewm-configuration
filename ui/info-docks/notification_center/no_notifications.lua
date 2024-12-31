@@ -3,13 +3,12 @@ local wibox = require("wibox")
 
 return wibox.widget {
     {
-        text = "No notifications",
-        ellipsize = "none",
+        text = "No notifications yet",
         halign = "center",
-        font = beautiful.font_name .. "Medium 11",
+        font = beautiful.font_name .. 11,
         widget = wibox.widget.textbox
     },
-    top = dpi(8),
-    bottom = dpi(24),
+    top = dpi(4),
+    bottom = dpi(16),
     widget = wibox.container.margin
 }
