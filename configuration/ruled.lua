@@ -74,6 +74,23 @@ ruled.client.connect_signal(
                 placement = awful.placement.centered
             }
         }
+        -- Top right
+        ruled.client.append_rule {
+            id = "top right",
+            rule_any = {
+                class = {"blueman-manager", "Blueman-manager", "Nm-connection-editor"}
+            },
+            properties = {
+                placement = function(c)
+                    awful.placement.top_right(
+                        c, {
+                            honor_workarea = true,
+                            margins = beautiful.useless_gap
+                        }
+                    )
+                end
+            }
+        }
     end
 )
 
