@@ -21,7 +21,7 @@ return function(args)
     local action = scrolling_text {
         text = args.name,
         font = beautiful.font_name .. " Bold 10",
-        forced_width = dpi(100)
+        forced_width = dpi(104)
     }
 
     local filled_button = wibox.widget {
@@ -36,7 +36,7 @@ return function(args)
             widget = wibox.container.margin
         },
         bg = beautiful.control_center_button_bg,
-        shape = helpers.rrect(beautiful.border_radius),
+        shape = helpers.rrect(20),
         widget = wibox.container.background
     }
 
