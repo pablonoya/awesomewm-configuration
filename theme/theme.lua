@@ -141,12 +141,12 @@ theme.taglist_fg_empty = theme.xbackground
 theme.taglist_bg_volatile = theme.jupiter
 
 -- Mainmenu
-theme.menu_font = theme.font_name .. "Medium 10"
-theme.menu_height = dpi(36)
-theme.menu_width = dpi(216)
+theme.menu_font = theme.font_name .. "Medium 9"
+theme.menu_height = dpi(32)
+theme.menu_width = dpi(200)
 theme.menu_bg_normal = theme.black
 theme.menu_bg_focus = theme.xbackground
-theme.menu_fg_normal = theme.xforeground
+theme.menu_fg_normal = theme.xforeground .. "E0"
 theme.menu_border_width = dpi(1.6)
 theme.menu_border_color = theme.focus
 
