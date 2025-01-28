@@ -64,8 +64,13 @@ local function on_connection()
 
             for i, event in ipairs(decoded) do
                 local key = event.start_date .. ":" .. event.summary
+                
+                local y, m, d = event.end_date:match("(%d+)-(%d+)-(%d+)")
+                local hh, mm = event.end_time:match("(%d+):(%d+)")
 
-                if not added_events[key] then
+                local end_datetime = os.time({year = y, month = m, day = d, hour = hh, min = mm})
+
+                if not added_events[key] and end_datetime > os.time() then
                     events:add(calendar_event(event))
                     added_events[key] = true
                 end
