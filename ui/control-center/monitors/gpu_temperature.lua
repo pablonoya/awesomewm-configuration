@@ -33,7 +33,7 @@ local gpu_temperature = monitor_progressbar {
         type = "linear",
         from = {0},
         to = {255},
-        stops = {{0.4, beautiful.green}, {0.75, beautiful.yellow}, {0.9, beautiful.red}}
+        stops = {{0.4, beautiful.green}, {0.8, beautiful.yellow}, {1, beautiful.red}}
     },
     bg_color = beautiful.yellow .. "60",
     watch_command = [[
