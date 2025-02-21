@@ -21,7 +21,7 @@ local meter_icon = wibox_widget {
 
 local function format_info(stdout)
     stdout = tonumber(stdout) or 0
-    return stdout, string.format("%.1f %%", stdout)
+    return stdout, string.format("%d %%", stdout)
 end
 
 local gpu_usage = monitor_progressbar {
@@ -35,7 +35,7 @@ local gpu_usage = monitor_progressbar {
         stops = {{0, beautiful.cyan}, {0.3, beautiful.green}}
     },
     bg_color = beautiful.green .. "60",
-    watch_command = [[ bash -c "nvidia-smi -q -d UTILIZATION | grep Gpu | awk '{print \$3}'"]],
+    watch_command = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
     format_info = format_info,
     interval = 2
 }
