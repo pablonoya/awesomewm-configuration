@@ -45,7 +45,7 @@ local function capitalize(s)
     return s:sub(1, 1):upper() .. s:sub(2)
 end
 
-local function get_description(description)
+local function format_description(description)
     local mapping = {
         ["overcast clouds"] = "Cloudy",
         ["broken clouds"] = "Mostly cloudy",
@@ -55,23 +55,21 @@ local function get_description(description)
     return mapping[description] or capitalize(description)
 end
 
-local function colorize_by_temp(icon, temp)
-    local color = beautiful.moon
-
+local function color_by_temp(temp)
     if temp < 12 then
-        color = beautiful.blue
+        return beautiful.blue
     elseif temp > 22 then
-        color = beautiful.yellow
+        return beautiful.yellow
     elseif temp > 26 then
-        color = beautiful.red
+        return beautiful.red
     end
 
-    return color_helpers.colorize_text(icon, color)
+    return beautiful.moon
 end
 
 local location_icon = wibox.widget {
     markup = "\u{e0c8}",
-    font = beautiful.icon_font_name .. 12,
+    font = beautiful.icon_font_name .. 11,
     widget = wibox.widget.textbox
 }
 
@@ -90,56 +88,27 @@ local feels_like = wibox.widget {
 local description = wibox.widget {
     markup = "Clear sky",
     font = beautiful.font_name .. "Medium 12",
-    halign = "right",
+    valign = "center",
     widget = wibox.widget.textbox
 }
 local current_temp = wibox.widget {
     markup = "-°",
-    font = beautiful.font_name .. "Medium 28",
+    font = beautiful.font_name .. "Medium 26",
     widget = wibox.widget.textbox
 }
 
 local icon = wibox.widget {
     markup = "\u{e2c1}",
-    font = beautiful.icon_font_name .. 26,
+    font = beautiful.icon_font_name .. 30,
     widget = wibox.widget.textbox
 }
-
-awesome.connect_signal(
-    "weather::update", function(data)
-        local degree_symbol = colorize_by_temp("°", data.main.temp)
-
-        current_temp.markup = string.format("%.0f", data.main.temp) .. degree_symbol
-        icon.markup = colorize_by_temp(icon_map[data.weather[1].icon], data.main.temp)
-        feels_like.markup = string.format("Feels like %.0f", data.main.feels_like) .. degree_symbol
-
-        description.markup = get_description(data.weather[1].description)
-        station.markup = string.format("%s, %s", data.name, data.sys.country)
-    end
-)
 
 local weather_popup = border_popup {
     widget = {
         {
             {
                 {
-                    {
-
-                        {
-                            current_temp,
-                            icon,
-                            spacing = dpi(8),
-                            layout = wibox.layout.fixed.horizontal
-                        },
-                        feels_like,
-
-                        spacing = dpi(-2),
-                        layout = wibox.layout.fixed.vertical
-                    },
-                    widget = wibox.container.background
-                },
-                nil,
-                {
+                    current_temp,
                     {
                         description,
                         {
@@ -148,22 +117,42 @@ local weather_popup = border_popup {
                             spacing = dpi(4),
                             layout = wibox.layout.fixed.horizontal
                         },
+                        spacing = dpi(2),
                         layout = wibox.layout.fixed.vertical
                     },
-                    top = dpi(4),
-                    widget = wibox.container.margin
+                    spacing = dpi(16),
+                    layout = wibox.layout.fixed.horizontal,
+                    widget = wibox.container.background
                 },
+                nil,
+                icon,
                 layout = wibox.layout.align.horizontal
             },
-            top = dpi(4),
+            top = dpi(8),
             bottom = dpi(8),
             left = dpi(16),
-            right = dpi(16),
+            right = dpi(24),
             widget = wibox.container.margin
         },
         forced_width = beautiful.notif_center_width,
         widget = wibox.container.background
     }
 }
+
+awesome.connect_signal(
+    "weather::update", function(data)
+        local degree_symbol = color_helpers.colorize_text("°", color_by_temp(data.main.temp))
+
+        current_temp.markup = string.format("%.0f", data.main.temp) .. degree_symbol
+
+        icon.markup = color_helpers.colorize_text(
+            icon_map[data.weather[1].icon], color_by_temp(data.main.temp)
+        )
+        feels_like.markup = string.format("Feels like %.0f", data.main.feels_like) .. degree_symbol
+
+        description.markup = format_description(data.weather[1].description)
+        station.markup = string.format("%s, %s", data.name, data.sys.country)
+    end
+)
 
 return weather_popup
