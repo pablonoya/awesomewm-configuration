@@ -74,7 +74,8 @@ local function calendar_event(event)
                 left = dpi(8),
                 widget = wibox.container.margin
             },
-            bg = event.calendar_color .. "B0",
+            fg = event.calendar_color,
+            bg = event.calendar_color .. "38",
             shape = helpers.rrect(beautiful.border_radius / 2),
             widget = wibox.container.background
         },
