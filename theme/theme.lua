@@ -61,7 +61,7 @@ theme.fg_focus = theme.accent
 
 -- Accent colors
 theme.accent = theme.blue
-theme.focus = "#424f5b"
+theme.focus = "#455361"
 
 -- Time of the day colors
 theme.late_night_color = theme.magenta
@@ -72,7 +72,7 @@ theme.dusk_color = theme.chibimoon
 theme.night_color = theme.blue
 
 -- Gaps
-theme.useless_gap = dpi(8)
+theme.useless_gap = dpi(6)
 
 -- Fonts
 theme.font_name = "Manrope "
