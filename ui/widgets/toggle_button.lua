@@ -54,16 +54,15 @@ return function(args)
         end
     )
 
-    local function toggle(value)
+    local function toggle(value, color)
         if value and value ~= "" then
-            filled_button.bg = bg_color
+            filled_button.bg = color or bg_color
             filled_button.fg = beautiful.xbackground
-            hover_bg = gcolor.change_opacity(bg_color, 0.8)
+            hover_bg = gcolor.change_opacity(color or bg_color, 0.8)
         else
             filled_button.bg = beautiful.control_center_button_bg
             filled_button.fg = beautiful.xforeground
-            hover_bg = gcolor.change_opacity(bg_color, 0.4)
-
+            hover_bg = gcolor.change_opacity(color or bg_color, 0.4)
         end
 
         if type(value) == "string" then
