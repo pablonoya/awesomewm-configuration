@@ -33,8 +33,8 @@ awesome.connect_signal(
 )
 
 local function get_datetime_format(is_vertical)
-    local date = "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
     local time = "<b>%I" .. color_helpers.colorize_by_time_of_day(":") .. "%M</b>"
+    local date = "%a" .. color_helpers.colorize_by_time_of_day("<b>.</b>") .. "%d"
 
     return (date .. (is_vertical and "\n" or " ") .. time)
 end
@@ -59,8 +59,8 @@ return function(is_vertical)
     local container = clickable_container {
         widget = {
             {
-                bell,
                 datetime,
+                bell,
                 spacing = dpi(4),
                 widget = wibox.layout.fixed.horizontal
             },

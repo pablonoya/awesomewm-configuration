@@ -14,7 +14,7 @@ return function(args)
         bar_color = args.bar_bg_color,
         bar_active_color = args.bar_color,
         bar_shape = gshape.rounded_bar,
-        bar_height = args.bar_height or dpi(8),
+        bar_height = args.bar_height or dpi(10),
 
         handle_color = args.handle_color,
         handle_shape = gshape.circle,

@@ -75,7 +75,7 @@ local function calendar_event(event)
                 widget = wibox.container.margin
             },
             fg = event.calendar_color,
-            bg = event.calendar_color .. "38",
+            bg = event.calendar_color .. "55",
             shape = helpers.rrect(beautiful.border_radius / 2),
             widget = wibox.container.background
         },
