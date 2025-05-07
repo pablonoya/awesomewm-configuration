@@ -32,8 +32,8 @@ screen.connect_signal(
         end
 
         local vertical_screen = s.geometry.height > s.geometry.width
-        local filepath = (vertical_screen and variables.videowallpaper_vertical_path
-                             or variables.videowallpaper_path)
+        local filepath = (vertical_screen and variables.videowallpaper_vertical_path or
+                             variables.videowallpaper_path)
 
         s.videowallpaper = away_wallpaper.get_videowallpaper(
             s, {
@@ -42,8 +42,8 @@ screen.connect_signal(
                 player = "mpv",
                 xargs = {"-b", "-ov", "-ni", "-s"},
                 pargs = {
-                    "-wid WID", "--no-stop-screensaver", "--loop", "--no-audio", "--hwdec=auto",
-                    "--really-quiet", "--player-operation-mode=cplayer"
+                    "-wid %WID", "--no-stop-screensaver", "--loop", "--no-audio", "--hwdec=auto",
+                    "--really-quiet", "--player-operation-mode=cplayer", "--gpu-api=opengl"
                 }
             }
         )
@@ -58,9 +58,9 @@ screen.connect_signal(
     end
 )
 
--- Wait 4 seconds for the wallpaper to be set before loading video pausing helpers
+-- Wait 5 seconds for the wallpaper to be set before loading video pausing helpers
 gtimer {
-    timeout = 4,
+    timeout = 5,
     autostart = true,
     single_shot = true,
     callback = function()
