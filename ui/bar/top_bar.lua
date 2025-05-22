@@ -49,8 +49,8 @@ local function top_bar(s)
                     device_indicators,
                     systray,
                     battery(is_vertical),
-                    notifications_and_datetime(is_vertical),
                     control_center_button,
+                    notifications_and_datetime(is_vertical),
 
                     layout = wibox.layout.fixed.horizontal
                 }

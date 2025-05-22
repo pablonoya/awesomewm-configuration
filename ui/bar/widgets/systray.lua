@@ -19,13 +19,18 @@ local systray = wibox_widget {
         {
             {
                 tray,
-                margins = dpi(4),
+                top = dpi(4),
+                bottom = dpi(4),
+                left = dpi(6),
+                right = dpi(6),
                 widget = wibox_container.margin
             },
             widget = wibox_container.place
         },
         id = "background",
         shape = helpers.rrect(beautiful.border_radius),
+        border_width = dpi(2),
+        border_color = beautiful.focus,
         widget = wibox_container.background
     },
     screen = focused_screen,

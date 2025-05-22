@@ -28,7 +28,7 @@ awesome.connect_signal(
 
 awesome.connect_signal(
     "notification_center::visible", function(visible)
-        ui_helpers.toggle_filled_icon(bell, 16, visible)
+        ui_helpers.toggle_filled_icon(bell, 15, visible)
     end
 )
 
@@ -41,7 +41,7 @@ end
 
 return function(is_vertical)
     local datetime = wibox.widget {
-        font = beautiful.font_name .. (is_vertical and 12 or 13),
+        font = beautiful.font_name .. (is_vertical and 11 or 12),
         format = get_datetime_format(is_vertical),
         refresh = 2,
         ellipsize = "none",
