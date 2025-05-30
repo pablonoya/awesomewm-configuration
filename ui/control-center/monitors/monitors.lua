@@ -45,7 +45,7 @@ local monitors = wibox.widget {
         }
     },
     layout = wibox.layout.fixed.vertical,
-    spacing = dpi(12),
+    spacing = dpi(8),
     visible = false
 }
 

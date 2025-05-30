@@ -22,7 +22,7 @@ local control_sliders = wibox_widget {
 
     },
     layout = wibox_layout.fixed.vertical,
-    spacing = dpi(12)
+    spacing = dpi(8)
 }
 
 local controls = wibox_widget {
@@ -30,7 +30,7 @@ local controls = wibox_widget {
     control_sliders,
     visible = true,
     layout = wibox_layout.fixed.vertical,
-    spacing = dpi(12)
+    spacing = dpi(8)
 }
 
 awesome.connect_signal(

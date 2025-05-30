@@ -22,7 +22,7 @@ local body_container = wibox.widget {
             layout = wibox.layout.fixed.vertical,
             spacing = dpi(12)
         },
-        margins = dpi(12),
+        margins = dpi(8),
         widget = wibox.container.margin
     },
     bg = beautiful.wibar_bg,
