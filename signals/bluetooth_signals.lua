@@ -3,7 +3,8 @@ local gtimer = require("gears.timer")
 
 local function emit_devices_signal()
     spawn.easy_async_with_shell(
-        [[bash -c 'bluetoothctl devices Connected | cut -d" " -f3-']], function(stdout)
+        [[bash -c 'bluetoothctl devices Connected | grep 'Device' | cut -d" " -f3-']],
+        function(stdout)
             if stdout == "" then
                 return
             end
