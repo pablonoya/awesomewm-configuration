@@ -11,8 +11,6 @@ local player_icon = require("ui.widgets.media.player_icon")
 
 local scrolling_text = require("ui.widgets.scrolling-text")
 
-local text_separator = color_helpers.colorize_text(" • ", beautiful.xforeground .. "B0")
-
 local media_controls = wibox.widget {
     {
         media_controls.prev(),
@@ -26,7 +24,7 @@ local media_controls = wibox.widget {
 return function(screen_width, is_vertical)
     local media_info = scrolling_text {
         font = beautiful.font_name .. "Medium 11",
-        fps = 4,
+        fps = 8,
         extra_space = 16,
         step_function = wibox.container.scroll.step_functions.linear_increase,
         max_size = screen_width / (is_vertical and 24 or 10)
@@ -39,7 +37,21 @@ return function(screen_width, is_vertical)
         layout = wibox.layout.fixed.horizontal
     }
 
-    local media_container
+    local media_container = wibox.widget {
+        {
+            {
+                media_controls,
+                media_info,
+                cover,
+                spacing = dpi(8),
+                layout = wibox.layout.fixed.horizontal
+            },
+            left = dpi(4),
+            right = dpi(4),
+            widget = wibox.container.margin
+        },
+        widget = wibox.container.background
+    }
     if is_vertical then
         media_container = wibox.widget {
             {
@@ -54,19 +66,6 @@ return function(screen_width, is_vertical)
             },
             left = dpi(2),
             right = dpi(4),
-            widget = wibox.container.margin
-        }
-    else
-        media_container = wibox.widget {
-            {
-                media_controls,
-                media_info,
-                cover,
-                spacing = dpi(8),
-                layout = wibox.layout.fixed.horizontal
-            },
-            left = dpi(2),
-            right = dpi(2),
             widget = wibox.container.margin
         }
     end
@@ -93,10 +92,7 @@ return function(screen_width, is_vertical)
     playerctl:connect_signal(
         "metadata", function(_, title, artist, album_path, _, new)
             progress_container.visible = (title ~= "")
-
-            media_info.text:set_markup_silently(
-                title .. (artist ~= "" and text_separator .. artist or "")
-            )
+            media_info.text:set_markup_silently(title .. (artist and " • " .. artist or ""))
             if new then
                 media_info:reset_scrolling()
             end
@@ -111,19 +107,19 @@ return function(screen_width, is_vertical)
 
     awesome.connect_signal(
         "media::dominantcolors", function(colors)
-            local fg_bar_color = colors[3]
+            media_container.fg = colors[2]
+            media_container.bg = colors[1] .. "D0"
+            media_controls.fg = colors[2]
 
-            progress_container.color = fg_bar_color
-            media_controls.fg = fg_bar_color
+            progress_container.border_color = colors[2] .. "50"
+            progress_container.color = colors[2]
         end
     )
 
-    local mediabar = {
+    return {
         progress_container,
         left = dpi(4),
         right = dpi(4),
         widget = wibox.container.margin
     }
-
-    return mediabar
 end
