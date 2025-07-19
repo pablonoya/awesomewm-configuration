@@ -8,16 +8,15 @@ return function(notification)
     local actions = wibox.widget {
         notification = notification,
         base_layout = wibox.widget {
-            spacing = dpi(5),
+            spacing = dpi(4),
             layout = wibox.layout.flex.horizontal
         },
         widget_template = {
             {
-                {
-                    id = "text_role",
-                    widget = wibox.widget.textbox
-                },
-                layout = wibox.container.place
+                id = "text_role",
+                halign = "center",
+                font = beautiful.font_name .. "Medium 11",
+                widget = wibox.widget.textbox
             },
             id = "background_role",
             widget = wibox.container.background
@@ -25,15 +24,12 @@ return function(notification)
         style = {
             underline_normal = false,
             underline_selected = true,
-            bg_normal = beautiful.focus .. "E7",
-            bg_selected = beautiful.focus,
-            shape_normal = helpers.rrect(beautiful.border_radius / 4)
+            fg_normal = beautiful.accent,
+            bg_selected = beautiful.focus
         },
-        forced_height = dpi(25),
+        forced_height = dpi(24),
         widget = naughty.list.actions
     }
-
-    helpers.add_hover_cursor(actions, "hand2")
 
     return {
         actions,
