@@ -30,5 +30,5 @@ require("ui")
 require("signals")
 
 -- Garbage Collector Settings
-collectgarbage("setpause", 110)
-collectgarbage("setstepmul", 1000)
+collectgarbage("setpause", 400)
+collectgarbage("setstepmul", 200)

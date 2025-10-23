@@ -129,7 +129,7 @@ theme.taglist_squares_unsel = nil
 theme.taglist_bg_focus = theme.focus
 theme.taglist_fg_focus = theme.xforeground
 
-theme.taglist_bg_urgent = theme.uranus .. "B7"
+theme.taglist_bg_urgent = theme.uranus .. "A7"
 theme.taglist_fg_urgent = theme.wibar_bg
 
 theme.taglist_bg_occupied = theme.wibar_bg
@@ -166,9 +166,7 @@ theme.hotkeys_group_margin = dpi(16)
 theme.wibar_size = dpi(40)
 theme.wibar_bg = theme.xbackground
 theme.wibar_widget_bg = theme.black
-theme.wibar_position = "bottom"
-theme.wibar_border_color = theme.focus
-theme.wibar_border_width = theme.border_width
+theme.wibar_position = "top"
 theme.wibar_margins = {
     top = dpi(8),
     left = dpi(12),

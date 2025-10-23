@@ -6,6 +6,7 @@ local helpers = require("helpers")
 
 local scrolling_text = require("ui.widgets.scrolling-text")
 local text_icon = require("ui.widgets.text-icon")
+local rubato = require("module.rubato")
 
 return function(args)
     local bg_color = args.active_color or beautiful.accent
@@ -36,8 +37,16 @@ return function(args)
             widget = wibox.container.margin
         },
         bg = beautiful.control_center_button_bg,
-        shape = helpers.rrect(20),
         widget = wibox.container.background
+    }
+
+    local roundness = rubato.timed {
+        duration = 0.1,
+        intro = 0.04,
+        pos = 12,
+        subscribed = function(radius)
+            filled_button.shape = helpers.rrect(radius)
+        end
     }
 
     -- Change color on hover
@@ -58,11 +67,13 @@ return function(args)
         if value and value ~= "" then
             filled_button.bg = color or bg_color
             filled_button.fg = beautiful.xbackground
+            roundness.target = args.radius or 20
             hover_bg = gcolor.change_opacity(color or bg_color, 0.8)
         else
+            roundness.target = 12
+            hover_bg = gcolor.change_opacity(color or bg_color, 0.4)
             filled_button.bg = beautiful.control_center_button_bg
             filled_button.fg = beautiful.xforeground
-            hover_bg = gcolor.change_opacity(color or bg_color, 0.4)
         end
 
         if type(value) == "string" then
