@@ -3,7 +3,6 @@ local naughty = require("naughty")
 local wibox = require("wibox")
 
 local actions = require("ui.widgets.notification.actions")
-local dismiss = require("ui.widgets.notification.dismiss")
 local icon = require("ui.widgets.notification.icon")
 local message = require("ui.widgets.notification.message")
 local title = require("ui.widgets.notification.title")
@@ -17,6 +16,8 @@ local urgency_color = {
 }
 
 local function notification_layout(notification)
+    notification.creation_time = os.time()
+
     local template = {
         {
             icon {
@@ -28,19 +29,8 @@ local function notification_layout(notification)
         },
         {
             {
-                {
-                    title {
-                        notification = notification,
-                        forced_width = dpi(188)
-                    },
-                    {
-                        markup = os.date("%I:%M"),
-                        font = beautiful.font_name .. " 11",
-                        align = "right",
-                        widget = wibox.widget.textbox
-                    },
-                    spacing = dpi(12),
-                    layout = wibox.layout.fixed.horizontal
+                title {
+                    notification = notification
                 },
                 message(notification),
                 actions(notification),

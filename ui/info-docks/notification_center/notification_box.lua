@@ -7,17 +7,10 @@ local actions = require("ui.widgets.notification.actions")
 local dismiss = require("ui.widgets.notification.dismiss")
 local icon = require("ui.widgets.notification.icon")
 local message = require("ui.widgets.notification.message")
-local time_elapsed = require("ui.widgets.notification.time_elapsed")
 local title = require("ui.widgets.notification.title")
 
-local function notification_box(notification)
-    local time_of_notification = os.date("%H:%M:%S")
-    local exact_time = os.date("%I:%M %p")
-    local exact_date = os.date("%d.%m.%y")
-
+return function(notification)
     local dismiss_btn = dismiss()
-    local time_elapsed_text = time_elapsed(time_of_notification, exact_time, exact_date)
-
     local notifbox = wibox.widget {
         {
             {
@@ -29,19 +22,8 @@ local function notification_box(notification)
             },
             {
                 {
-                    {
-                        title {
-                            notification = notification,
-                            forced_width = dpi(170)
-                        },
-                        {
-                            time_elapsed_text,
-                            dismiss_btn,
-                            forced_width = dpi(64),
-                            layout = wibox.layout.stack
-                        },
-                        spacing = dpi(8),
-                        layout = wibox.layout.fixed.horizontal
+                    title {
+                        notification = notification
                     },
                     message(notification),
                     actions(notification),
@@ -54,7 +36,8 @@ local function notification_box(notification)
                 right = dpi(8),
                 widget = wibox.container.margin
             },
-            layout = wibox.layout.fixed.horizontal
+            dismiss_btn,
+            layout = wibox.layout.align.horizontal
         },
         bg = beautiful.xbackground,
         shape = helpers.rrect(beautiful.border_radius / 2),
@@ -66,14 +49,12 @@ local function notification_box(notification)
     -- Show dismiss on hover
     notifbox:connect_signal(
         "mouse::enter", function()
-            time_elapsed_text.visible = false
             dismiss_btn.visible = true
         end
     )
 
     notifbox:connect_signal(
         "mouse::leave", function()
-            time_elapsed_text.visible = true
             dismiss_btn.visible = false
         end
     )
@@ -85,8 +66,6 @@ local function notification_box(notification)
         end
     )
 
-    notifbox.creation_time = os.time()
+    notifbox.notification = notification
     return notifbox
 end
-
-return notification_box

@@ -1,3 +1,4 @@
+local gtimer = require("gears.timer")
 local naughty = require("naughty")
 local wibox = require("wibox")
 
@@ -54,12 +55,30 @@ naughty.connect_signal(
     end
 )
 
+local function update_notification_titles()
+    for _, widget in pairs(all_notifications) do
+        widget.notification:emit_signal("property::title")
+    end
+end
+
+local elapsed_timer = gtimer {
+    timeout = 30,
+    callback = update_notification_titles
+}
+
 awesome.connect_signal(
     "notification_center::visible", function(visible)
+        if visible then
+            update_notification_titles()
+            elapsed_timer:start()
+        else
+            elapsed_timer:stop()
+        end
+
         if visible and #all_notifications > 1 then
             table.sort(
                 all_notifications, function(n1, n2)
-                    return n1.creation_time > n2.creation_time
+                    return n1.notification.creation_time > n2.notification.creation_time
                 end
             )
 

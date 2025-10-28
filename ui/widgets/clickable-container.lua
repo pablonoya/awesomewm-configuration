@@ -22,6 +22,11 @@ local function clickable_container(args)
         border_width = args.border_width,
         widget = wibox_container.background
     }
+
+    if args.visible ~= nil then
+        container.visible = args.visible
+    end
+
     container.focused = false
 
     -- Hover bg and fg change
