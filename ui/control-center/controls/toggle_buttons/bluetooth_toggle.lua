@@ -1,3 +1,4 @@
+local beautiful = require("beautiful")
 local spawn = require("awful.spawn")
 
 local toggle_button = require("ui.widgets.toggle_button")
@@ -21,6 +22,7 @@ end
 return toggle_button {
     icon = "\u{e1a7}",
     name = "Bluetooth",
+    active_color = beautiful.cyan,
     signal_label = signal_label,
     onclick = onclick
 }

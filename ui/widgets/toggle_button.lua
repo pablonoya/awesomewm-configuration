@@ -63,14 +63,14 @@ return function(args)
         end
     )
 
-    local function toggle(value, color)
+    local function toggle(value, color, radius)
         if value and value ~= "" then
             filled_button.bg = color or bg_color
             filled_button.fg = beautiful.xbackground
-            roundness.target = args.radius or 20
+            roundness.target = args.radius or radius or 20
             hover_bg = gcolor.change_opacity(color or bg_color, 0.8)
         else
-            roundness.target = 12
+            roundness.target = radius or 12
             hover_bg = gcolor.change_opacity(color or bg_color, 0.4)
             filled_button.bg = beautiful.control_center_button_bg
             filled_button.fg = beautiful.xforeground

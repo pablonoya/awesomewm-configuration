@@ -3,17 +3,27 @@ local beautiful = require("beautiful")
 
 local _signals = {}
 
-local profile_color = {
-    Quiet = beautiful.green,
-    Balanced = beautiful.cyan,
-    Performance = beautiful.accent
+local profile_styles = {
+    Quiet = {
+        color = beautiful.green,
+        roundness = 12
+    },
+    Balanced = {
+        color = beautiful.cyan,
+        roundness = 20
+    },
+    Performance = {
+        color = beautiful.accent,
+        roundness = 24
+    }
 }
 
 function _signals.emit_profile()
     spawn.easy_async_with_shell(
         "asusctl profile -p | tail -n +2 | awk '{print $NF}'", function(stdout)
             local profile = stdout:gsub("\n", "")
-            awesome.emit_signal("asusctl::profile", profile, profile_color[profile])
+            local style = profile_styles[profile]
+            awesome.emit_signal("asusctl::profile", profile, style.color, style.roundness)
         end
     )
 end
