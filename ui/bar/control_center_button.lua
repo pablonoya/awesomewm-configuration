@@ -35,5 +35,6 @@ awesome.connect_signal(
 return {
     control_center_button,
     left = dpi(4),
+    right = dpi(4),
     widget = wibox_container.margin
 }
