@@ -9,7 +9,7 @@ return function(args)
         maximum = args.max or 100,
         shape = gshape.rounded_bar,
         forced_height = dpi(24),
-        forced_width = dpi(220),
+        forced_width = args.forced_width or dpi(236),
 
         bar_color = args.bar_bg_color,
         bar_active_color = args.bar_color,

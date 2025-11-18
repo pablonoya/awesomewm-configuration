@@ -21,16 +21,16 @@ local mic_value = value_text {
 
 local mic_device_name = wibox_widget {
     text = "-",
-    font = beautiful.font_name .. " Medium 10",
+    font = beautiful.font_name .. " Semibold 10",
     valign = "center",
     forced_height = dpi(12),
     widget = wibox_widget.textbox
 }
 
 local mic_slider = slider {
-    bar_bg_color = beautiful.accent .. "60",
-    bar_color = beautiful.accent,
-    handle_color = beautiful.accent
+    bar_bg_color = beautiful.magenta .. "60",
+    bar_color = beautiful.magenta,
+    handle_color = beautiful.magenta
 }
 
 mic_slider:connect_signal(
@@ -42,8 +42,8 @@ mic_slider:connect_signal(
 
 local mic_device = clickable_container {
     widget = mic_device_name,
-    bg = beautiful.xbackground,
-    bg_focused = "#668c75",
+    fg = beautiful.red,
+    bg_focused = beautiful.magenta .. "32",
     margins = {
         left = dpi(6),
         right = dpi(6)
@@ -67,8 +67,8 @@ mic_device:connect_signal(
 awesome.connect_signal(
     "microphone::state", function(state)
         if not mic_device.hover then
-            mic_device.bg = state and beautiful.green or beautiful.xbackground
-            mic_device.fg = state and beautiful.xbackground or beautiful.xforeground
+            mic_device.bg = state and beautiful.magenta or beautiful.black
+            mic_device.fg = state and beautiful.xbackground or beautiful.magenta
         end
     end
 )
@@ -83,12 +83,12 @@ awesome.connect_signal(
     "microphone::muted", function(muted)
         if muted then
             mic_icon.text = "\u{e02b}"
-            mic_slider.bar_active_color = beautiful.accent .. "60"
+            mic_slider.bar_active_color = beautiful.magenta .. "60"
             mic_slider.handle_color = beautiful.focus
         else
             mic_icon.text = "\u{e029}"
-            mic_slider.bar_active_color = beautiful.accent
-            mic_slider.handle_color = beautiful.accent
+            mic_slider.bar_active_color = beautiful.magenta
+            mic_slider.handle_color = beautiful.magenta
         end
     end
 )

@@ -23,7 +23,7 @@ local vol_value = value_text {
 
 local volume_device_name = wibox_widget {
     text = "-",
-    font = beautiful.font_name .. " Medium 10",
+    font = beautiful.font_name .. " Semibold 10",
     valign = "center",
     forced_height = dpi(12),
     widget = wibox_widget.textbox
@@ -31,10 +31,11 @@ local volume_device_name = wibox_widget {
 
 local volume_device = clickable_container {
     widget = volume_device_name,
-    bg = beautiful.xbackground,
+    fg = beautiful.accent,
+    bg_focused = beautiful.accent .. "32",
     margins = {
-        left = dpi(6),
-        right = dpi(6)
+        left = dpi(4),
+        right = dpi(4)
     },
     action = function()
         spawn("pavucontrol -t 3")
