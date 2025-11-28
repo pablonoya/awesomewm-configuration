@@ -31,8 +31,8 @@ local volume_device_name = wibox_widget {
 
 local volume_device = clickable_container {
     widget = volume_device_name,
-    fg = beautiful.accent,
-    bg_focused = beautiful.accent .. "32",
+    fg = beautiful.cyan,
+    bg_focused = beautiful.cyan .. "32",
     margins = {
         left = dpi(4),
         right = dpi(4)
@@ -43,9 +43,9 @@ local volume_device = clickable_container {
 }
 
 local volume_slider = slider {
-    bar_bg_color = beautiful.accent .. "60",
-    bar_color = beautiful.accent,
-    handle_color = beautiful.accent
+    bar_bg_color = beautiful.cyan .. "60",
+    bar_color = beautiful.cyan,
+    handle_color = beautiful.cyan
 }
 
 volume_slider:connect_signal(
@@ -59,12 +59,12 @@ volume_slider:connect_signal(
 local function set_muted_style(muted)
     if muted then
         volume_icon.text = "\u{e04f}"
-        volume_slider.bar_active_color = beautiful.accent .. "60"
+        volume_slider.bar_active_color = beautiful.cyan .. "60"
         volume_slider.handle_color = beautiful.focus
     else
         volume_icon.text = ui_helpers.get_volume_icon(volume_slider:get_value())
-        volume_slider.bar_active_color = beautiful.accent
-        volume_slider.handle_color = beautiful.accent
+        volume_slider.bar_active_color = beautiful.cyan
+        volume_slider.handle_color = beautiful.cyan
     end
 end
 

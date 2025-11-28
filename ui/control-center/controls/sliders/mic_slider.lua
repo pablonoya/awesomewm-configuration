@@ -28,9 +28,9 @@ local mic_device_name = wibox_widget {
 }
 
 local mic_slider = slider {
-    bar_bg_color = beautiful.magenta .. "60",
-    bar_color = beautiful.magenta,
-    handle_color = beautiful.magenta
+    bar_bg_color = beautiful.green .. "60",
+    bar_color = beautiful.green,
+    handle_color = beautiful.green
 }
 
 mic_slider:connect_signal(
@@ -42,8 +42,8 @@ mic_slider:connect_signal(
 
 local mic_device = clickable_container {
     widget = mic_device_name,
-    fg = beautiful.red,
-    bg_focused = beautiful.magenta .. "32",
+    fg = beautiful.green,
+    bg_focused = beautiful.green .. "32",
     margins = {
         left = dpi(6),
         right = dpi(6)
@@ -52,26 +52,6 @@ local mic_device = clickable_container {
         spawn("pavucontrol -t 4")
     end
 }
-
-mic_device:connect_signal(
-    "mouse::enter", function()
-        mic_device.hover = true
-    end
-)
-mic_device:connect_signal(
-    "mouse::leave", function()
-        mic_device.hover = false
-    end
-)
-
-awesome.connect_signal(
-    "microphone::state", function(state)
-        if not mic_device.hover then
-            mic_device.bg = state and beautiful.magenta or beautiful.black
-            mic_device.fg = state and beautiful.xbackground or beautiful.magenta
-        end
-    end
-)
 
 awesome.connect_signal(
     "microphone::device", function(name)
@@ -83,12 +63,12 @@ awesome.connect_signal(
     "microphone::muted", function(muted)
         if muted then
             mic_icon.text = "\u{e02b}"
-            mic_slider.bar_active_color = beautiful.magenta .. "60"
+            mic_slider.bar_active_color = beautiful.green .. "60"
             mic_slider.handle_color = beautiful.focus
         else
             mic_icon.text = "\u{e029}"
-            mic_slider.bar_active_color = beautiful.magenta
-            mic_slider.handle_color = beautiful.magenta
+            mic_slider.bar_active_color = beautiful.green
+            mic_slider.handle_color = beautiful.green
         end
     end
 )
