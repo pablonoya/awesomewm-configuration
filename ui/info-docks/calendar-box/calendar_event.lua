@@ -25,7 +25,7 @@ local format_time = function(time_str)
     hour = tonumber(hour)
 
     local hour_12h = hour > 12 and (hour % 12) or hour
-    local minute = minute ~= "00" and (":" .. minute) or ""
+    minute = minute ~= "00" and (":" .. minute) or ""
     local period = hour >= 12 and " PM" or " AM"
 
     return hour_12h .. minute .. period
@@ -44,20 +44,20 @@ local description = {
     widget = wibox.widget.textbox
 }
 
-local function calendar_event(event)
+return function(event)
     local many_days = event.start_date ~= event.end_date
 
     if many_days then
         event_date.font = beautiful.font_name .. "Medium 11"
         event_date.markup = format_date(event.start_date, many_days) .. "\n" ..
-                                format_date(event.end_date, many_days)
+            format_date(event.end_date, many_days)
     else
         event_date.font = beautiful.font_name .. "Medium 11"
         event_date.markup = format_date(event.start_date)
     end
 
     description.markup = "<b>" .. gstring.xml_escape(event.summary) .. "</b>\n" ..
-                             format_time(event.start_time) .. " - " .. format_time(event.end_time)
+        format_time(event.start_time) .. " - " .. format_time(event.end_time)
 
     return wibox.widget {
         {
@@ -68,21 +68,28 @@ local function calendar_event(event)
         },
         {
             {
-                description,
-                top = dpi(3),
-                bottom = dpi(3),
-                left = dpi(8),
+                {
+                    {
+                        forced_width = dpi(4),
+                        bg = event.calendar_color,
+                        shape = helpers.rrect(4),
+                        widget = wibox.container.background
+                    },
+                    description,
+                    spacing = dpi(8),
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                top = dpi(4),
+                bottom = dpi(4),
+                left = dpi(4),
                 widget = wibox.container.margin
             },
-            fg = event.calendar_color,
-            bg = event.calendar_color .. "55",
+            bg = event.calendar_color .. '50',
             shape = helpers.rrect(beautiful.border_radius / 2),
             widget = wibox.container.background
         },
-        spacing = dpi(8),
+        spacing = dpi(4),
         fill_space = true,
         layout = wibox.layout.fixed.horizontal
     }
 end
-
-return calendar_event
