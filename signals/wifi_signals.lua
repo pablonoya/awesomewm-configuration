@@ -2,7 +2,6 @@ local spawn = require("awful.spawn")
 local beautiful = require("beautiful")
 local gtimer = require("gears.timer")
 
-local last_ssid
 local function emit_ssid_signal()
     spawn.easy_async_with_shell(
         "iwgetid -r", function(stdout)

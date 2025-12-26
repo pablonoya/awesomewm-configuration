@@ -4,8 +4,11 @@ local gtimer = require("gears.timer")
 
 local function emit_devices_signal()
     spawn.easy_async_with_shell(
-        [[bash -c 'bluetoothctl devices Connected | grep 'Device' | cut -d" " -f3-']],
-        function(stdout)
+        [[bluetoothctl devices Connected | grep 'Device' | cut -d" " -f3-]], function(stdout)
+            if stdout == "" then
+                return
+            end
+
             local devices = {}
             for line in stdout:gmatch("[^\n]+") do
                 table.insert(devices, line)
@@ -14,8 +17,6 @@ local function emit_devices_signal()
                 awesome.emit_signal(
                     "bluetooth::devices", table.concat(devices, ", "), beautiful.blue
                 )
-            else
-                awesome.emit_signal("bluetooth::devices", "Bluetooth")
             end
         end
     )
