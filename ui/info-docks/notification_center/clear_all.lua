@@ -1,4 +1,4 @@
-local wibox = require("wibox")
+local beautiful = require("beautiful")
 local gshape = require("gears.shape")
 
 local text_icon = require("ui.widgets.text-icon")
@@ -12,5 +12,7 @@ return clickable_container {
     },
     shape = gshape.circle,
     margins = dpi(4),
+    bg_focused = beautiful.red .. "40",
+    fg_focused = beautiful.red,
     action = clear_all_notifications
 }

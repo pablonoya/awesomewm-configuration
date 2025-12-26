@@ -1,9 +1,7 @@
 local beautiful = require("beautiful")
-local wibox = require("wibox")
 local gshape = require("gears.shape")
 
 local helpers = require("helpers")
-local color_helpers = require("helpers.color-helpers")
 
 local text_icon = require("ui.widgets.text-icon")
 local clickable_container = require("ui.widgets.clickable-container")
@@ -21,17 +19,22 @@ local button = clickable_container {
     shape = gshape.circle,
     margins = dpi(4),
     bg_focused = bg_focused,
+    fg_focused = beautiful.accent,
     action = helpers.toggle_silent_mode
 }
 
 awesome.connect_signal(
     "notifications::suspended", function(suspended)
         if suspended then
-            icon.markup = color_helpers.colorize_text("\u{e7f6}", beautiful.accent)
+            icon.markup = "\u{e7f6}"
+            button.fg = beautiful.accent
+            button.bg = bg_focused
         else
-            icon.markup = color_helpers.colorize_text("\u{e7f4}", beautiful.fg)
+            icon.markup = "\u{e7f4}"
+            button.fg = beautiful.fg
+            button.bg = beautiful.black
         end
-        button.bg = suspended and bg_focused or beautiful.black
+
         button.focused = suspended
     end
 )
