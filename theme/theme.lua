@@ -266,7 +266,7 @@ theme.tabbar_size = 40
 theme.mstab_bar_ontop = true
 
 -- Tag Preview
-theme.tag_preview_client_border_radius = dpi(5)
+theme.tag_preview_client_border_radius = dpi(4)
 theme.tag_preview_client_opacity = 1
 theme.tag_preview_client_bg = theme.xbackground
 theme.tag_preview_client_border_color = theme.focus
@@ -277,22 +277,22 @@ theme.tag_preview_widget_border_color = theme.focus
 theme.tag_preview_widget_border_width = theme.border_width
 theme.tag_preview_widget_margin = dpi(12)
 
--- Task Preview
-theme.task_preview_widget_border_radius = dpi(5)
+-- Client / Task Preview
+theme.task_preview_widget_border_radius = theme.border_radius
 theme.task_preview_widget_bg = theme.black
 theme.task_preview_widget_border_color = theme.focus
 theme.task_preview_widget_border_width = theme.border_width
 theme.task_preview_widget_margin = dpi(8)
 
 -- Window switcher
-theme.window_switcher_widget_bg = theme.black .. "E9"
+theme.window_switcher_widget_bg = theme.black
 theme.window_switcher_widget_border_width = theme.border_width
 theme.window_switcher_widget_border_radius = theme.border_radius
 theme.window_switcher_widget_border_color = theme.focus
-theme.window_switcher_client_width = dpi(256)
-theme.window_switcher_name_font = theme.font_name .. "Medium 11"
-theme.window_switcher_name_normal_color = theme.xforeground .. "97"
-theme.window_switcher_name_focus_color = theme.accent
-theme.window_switcher_icon_width = dpi(28)
+theme.window_switcher_client_width = dpi(232)
+theme.window_switcher_name_font = theme.font_name .. " Medium 11"
+theme.window_switcher_name_normal_color = theme.xforeground .. "B0"
+theme.window_switcher_name_focus_color = theme.xforeground
+theme.window_switcher_icon_width = dpi(24)
 
 return theme
