@@ -14,30 +14,38 @@ return function(notification)
     local notifbox = wibox.widget {
         {
             {
-                icon {
-                    notification = notification
-                },
-                bg = beautiful.black,
-                widget = wibox.container.background
-            },
-            {
                 {
-                    title {
+                    icon {
                         notification = notification
                     },
-                    message(notification),
-                    actions(notification),
-                    spacing = dpi(8),
-                    layout = wibox.layout.fixed.vertical
+                    bg = beautiful.black,
+                    widget = wibox.container.background
                 },
-                top = dpi(4),
-                bottom = dpi(6),
-                left = dpi(8),
-                right = dpi(8),
-                widget = wibox.container.margin
+                {
+                    {
+                        title {
+                            notification = notification
+                        },
+                        message(notification),
+                        actions(notification),
+                        spacing = dpi(8),
+                        layout = wibox.layout.fixed.vertical
+                    },
+                    top = dpi(4),
+                    bottom = dpi(6),
+                    left = dpi(8),
+                    right = dpi(8),
+                    widget = wibox.container.margin
+                },
+                layout = wibox.layout.fixed.horizontal
             },
-            dismiss_btn,
-            layout = wibox.layout.align.horizontal
+            {
+                dismiss_btn,
+                halign = "right",
+                valign = "top",
+                widget = wibox.container.place
+            },
+            layout = wibox.layout.stack
         },
         bg = beautiful.xbackground,
         shape = helpers.rrect(beautiful.border_radius / 2),

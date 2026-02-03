@@ -1,20 +1,40 @@
 local beautiful = require("beautiful")
-
-local helpers = require("helpers")
+local gshape = require("gears.shape")
+local wibox = require("wibox")
 
 local text_icon = require("ui.widgets.text-icon")
-local clickable_container = require("ui.widgets.clickable-container")
 
 return function()
-    return clickable_container {
-        widget = text_icon {
+    local dismiss = wibox.widget {
+        text_icon {
             text = "\u{e5cd}",
-            size = 14
+            size = 16
         },
+        shape = gshape.circle,
+        bg = beautiful.black,
+        fg = beautiful.red,
+
+        widget = wibox.container.background
+    }
+
+    dismiss:connect_signal(
+        "mouse::enter", function()
+            dismiss.bg = beautiful.red
+            dismiss.fg = beautiful.black
+        end
+    )
+
+    dismiss:connect_signal(
+        "mouse::leave", function()
+            dismiss.bg = beautiful.black
+            dismiss.fg = beautiful.red
+        end
+    )
+
+    return wibox.widget {
+        dismiss,
         visible = false,
-        shape = helpers.rrect(4),
-        bg = beautiful.focus,
-        bg_focused = beautiful.red,
-        fg_focused = beautiful.black
+        margins = dpi(3),
+        widget = wibox.container.margin
     }
 end
