@@ -13,9 +13,9 @@ local function icon_button(icon, color, onclick)
     local button = wibox.widget {
         text_icon {
             markup = color_helpers.colorize_text(icon, color),
-            size = 24
+            size = 28
         },
-        forced_width = dpi(48),
+        forced_width = dpi(52),
         forced_height = dpi(48),
         shape = helpers.rrect(beautiful.border_radius - 4),
         widget = wibox.container.background

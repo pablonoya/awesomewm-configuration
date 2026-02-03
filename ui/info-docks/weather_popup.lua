@@ -55,27 +55,56 @@ local function format_description(description)
     return mapping[description] or capitalize(description)
 end
 
-local function color_by_temp(temp)
-    if temp < 12 then
-        return beautiful.blue
-    elseif temp > 22 then
-        return beautiful.yellow
-    elseif temp > 26 then
-        return beautiful.red
+local function color_by_temp(text, temp)
+    local color = beautiful.moon
+
+    if temp < 10 then
+        color = beautiful.blue
+    elseif temp > 23 then
+        color = beautiful.yellow
+    elseif temp > 27 then
+        color = beautiful.red
     end
 
-    return beautiful.moon
+    return color_helpers.colorize_text(text, color)
 end
 
-local location_icon = wibox.widget {
-    markup = "\u{e0c8}",
-    font = beautiful.icon_font_name .. 11,
+local function color_by_humidity(text, humidity)
+    local color = beautiful.uranus
+
+    if humidity > 27 then
+        color = beautiful.cyan
+    elseif humidity > 60 then
+        color = beautiful.blue
+    end
+
+    return color_helpers.colorize_text(text, color)
+end
+
+local function color_by_wind_speed(text, speed)
+    local color = beautiful.green
+    if speed > 13.8 then
+        color = beautiful.red
+    elseif speed > 10.7 then
+        color = beautiful.magenta
+    elseif speed > 7.9 then
+        color = beautiful.blue
+    elseif speed > 3.3 then
+        color = beautiful.cyan
+    end
+
+    return color_helpers.colorize_text(text, color)
+end
+
+local current_temp = wibox.widget {
+    markup = "-°",
+    font = beautiful.font_name .. "Medium 28",
     widget = wibox.widget.textbox
 }
 
-local station = wibox.widget {
-    markup = "Station",
-    font = beautiful.font_name .. 11,
+local icon = wibox.widget {
+    markup = "\u{e2c1}",
+    font = beautiful.icon_font_name .. 28,
     widget = wibox.widget.textbox
 }
 
@@ -87,19 +116,44 @@ local feels_like = wibox.widget {
 
 local description = wibox.widget {
     markup = "Clear sky",
-    font = beautiful.font_name .. "Medium 12",
+    font = beautiful.font_name .. "Medium 13",
     valign = "center",
     widget = wibox.widget.textbox
 }
-local current_temp = wibox.widget {
-    markup = "-°",
-    font = beautiful.font_name .. "Medium 26",
+
+local humidity_icon = wibox.widget {
+    markup = "\u{f164}",
+    font = beautiful.icon_font_name .. 12,
     widget = wibox.widget.textbox
 }
 
-local icon = wibox.widget {
-    markup = "\u{e2c1}",
-    font = beautiful.icon_font_name .. 30,
+local humidity = wibox.widget {
+    text = "-%",
+    font = beautiful.font_name .. 12,
+    widget = wibox.widget.textbox
+}
+
+local wind_icon = wibox.widget {
+    markup = "\u{efd8}",
+    font = beautiful.icon_font_name .. 12,
+    widget = wibox.widget.textbox
+}
+
+local wind = wibox.widget {
+    text = "- m/s",
+    font = beautiful.font_name .. 12,
+    widget = wibox.widget.textbox
+}
+
+local location_icon = wibox.widget {
+    markup = "\u{e0c8}",
+    font = beautiful.icon_font_name .. 12,
+    widget = wibox.widget.textbox
+}
+
+local station = wibox.widget {
+    markup = "Station",
+    font = beautiful.font_name .. 12,
     widget = wibox.widget.textbox
 }
 
@@ -108,30 +162,54 @@ local weather_popup = border_popup {
         {
             {
                 {
-                    current_temp,
                     {
-                        description,
+                        current_temp,
+                        icon,
+                        spacing = dpi(4),
+                        layout = wibox.layout.fixed.horizontal
+                    },
+                    feels_like,
+                    halign = "center",
+                    layout = wibox.layout.fixed.vertical
+                },
+                {
+                    description,
+                    {
                         {
-                            location_icon,
-                            station,
+                            humidity_icon,
+                            humidity,
                             spacing = dpi(4),
                             layout = wibox.layout.fixed.horizontal
                         },
-                        spacing = dpi(2),
-                        layout = wibox.layout.fixed.vertical
+                        {
+                            text = " • ",
+                            widget = wibox.widget.textbox
+                        },
+                        {
+                            wind_icon,
+                            wind,
+                            spacing = dpi(4),
+                            layout = wibox.layout.fixed.horizontal
+                        },
+                        -- spacing = dpi(4),
+                        layout = wibox.layout.fixed.horizontal
                     },
-                    spacing = dpi(16),
-                    layout = wibox.layout.fixed.horizontal,
-                    widget = wibox.container.background
+                    {
+                        location_icon,
+                        station,
+                        spacing = dpi(4),
+                        layout = wibox.layout.fixed.horizontal
+                    },
+                    spacing = dpi(4),
+                    layout = wibox.layout.fixed.vertical
                 },
-                nil,
-                icon,
-                layout = wibox.layout.align.horizontal
+                spacing = dpi(20),
+                layout = wibox.layout.fixed.horizontal
             },
             top = dpi(8),
             bottom = dpi(8),
-            left = dpi(16),
-            right = dpi(24),
+            left = dpi(12),
+            right = dpi(12),
             widget = wibox.container.margin
         },
         forced_width = beautiful.notif_center_width,
@@ -141,16 +219,22 @@ local weather_popup = border_popup {
 
 awesome.connect_signal(
     "weather::update", function(data)
-        local degree_symbol = color_helpers.colorize_text("°", color_by_temp(data.main.temp))
-
-        current_temp.markup = string.format("%.0f", data.main.temp) .. degree_symbol
-
-        icon.markup = color_helpers.colorize_text(
-            icon_map[data.weather[1].icon], color_by_temp(data.main.temp)
+        current_temp.markup = string.format(
+            "%.0f%s", data.main.temp, color_by_temp("°", data.main.temp)
         )
-        feels_like.markup = string.format("Feels like %.0f", data.main.feels_like) .. degree_symbol
+        icon.markup = color_by_temp(icon_map[data.weather[1].icon], data.main.temp)
+        feels_like.markup = string.format(
+            "Feels like %.0f%s", data.main.feels_like, color_by_temp("°", data.main.feels_like)
+        )
 
         description.markup = format_description(data.weather[1].description)
+        humidity.markup = string.format(
+            "%d%s", data.main.humidity, color_by_humidity("%", data.main.humidity)
+        )
+        wind.markup = string.format(
+            "%.2f m%ss", data.wind.speed, color_by_wind_speed("/", data.wind.speed)
+        )
+
         station.markup = string.format("%s, %s", data.name, data.sys.country)
     end
 )
