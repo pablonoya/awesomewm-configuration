@@ -20,7 +20,7 @@ local profile_styles = {
 
 function _signals.emit_profile()
     spawn.easy_async_with_shell(
-        "asusctl profile -p | grep 'Active profile' | awk '{print $NF}'", function(stdout)
+        "asusctl profile get | grep 'Active profile' | awk '{print $NF}'", function(stdout)
             local profile = stdout:gsub("\n", "")
             local style = profile_styles[profile]
             awesome.emit_signal("asusctl::profile", profile, style.color, style.roundness)
