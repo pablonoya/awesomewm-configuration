@@ -25,7 +25,7 @@ local cover = wibox.widget {
         widget = wibox.container.place
     },
     {
-        player_icon(20, "popup"),
+        player_icon(20),
         valign = "bottom",
         halign = "right",
         widget = wibox.container.place
@@ -65,9 +65,17 @@ local media_controls_box = wibox.widget {
     forced_height = dpi(96),
     border_width = dpi(2),
     border_color = beautiful.focus,
-    shape = helpers.rrect(beautiful.border_radius - 4),
+    shape = helpers.rrect(beautiful.border_radius),
     widget = wibox.container.background
 }
+
+awesome.connect_signal(
+    "media::dominantcolors", function(colors)
+        media_controls_box.bg = colors[1]
+        media_controls_box.border_color = colors[2]
+        media_controls_box.fg = colors[2]
+    end
+)
 
 playerctl:connect_signal(
     "metadata", function(_, title)
@@ -78,17 +86,6 @@ playerctl:connect_signal(
 playerctl:connect_signal(
     "no_players", function(_)
         media_controls_box.visible = false
-    end
-)
-
-awesome.connect_signal(
-    "media::dominantcolors", function(colors)
-        local bg_color, fg_color, _ = table.unpack(colors)
-
-        -- darkening the bg color to match the dark theming
-        media_controls_box.bg = bg_color .. "D0"
-        media_controls_box.border_color = bg_color
-        media_controls_box.fg = fg_color
     end
 )
 

@@ -14,10 +14,11 @@ local scrolling_text = require("ui.widgets.scrolling-text")
 local media_controls = wibox.widget {
     {
         media_controls.prev(),
-        media_controls.play(19),
+        media_controls.play(20),
         media_controls.next(),
         layout = wibox.layout.fixed.horizontal
     },
+    shape = helpers.rrect(24),
     widget = wibox.container.background
 }
 
@@ -32,7 +33,7 @@ return function(screen_width, is_vertical)
 
     local cover = wibox.widget {
         media_image(4),
-        player_icon(is_vertical and 20 or 16, "bar"),
+        player_icon(is_vertical and 20 or 16),
         spacing = dpi(-2),
         layout = wibox.layout.fixed.horizontal
     }
@@ -43,7 +44,7 @@ return function(screen_width, is_vertical)
                 media_controls,
                 media_info,
                 cover,
-                spacing = dpi(8),
+                spacing = dpi(4),
                 layout = wibox.layout.fixed.horizontal
             },
             left = dpi(4),
@@ -108,7 +109,8 @@ return function(screen_width, is_vertical)
     awesome.connect_signal(
         "media::dominantcolors", function(colors)
             media_container.fg = colors[2]
-            media_container.bg = colors[1] .. "D0"
+            media_container.bg = colors[1]
+
             media_controls.fg = colors[2]
 
             progress_container.border_color = colors[2] .. "50"

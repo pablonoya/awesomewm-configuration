@@ -3,16 +3,27 @@ local beautiful = require("beautiful")
 local playerctl = require("signals.playerctl")
 local slider = require("ui.widgets.slider")
 
+local previous_value = 0
+local internal_update = false
+local last_length = 0
+
 local progressbar = slider {
     bar_bg_color = beautiful.accent .. "70",
     bar_color = beautiful.accent,
-    handle_width = dpi(12),
+    handle_width = dpi(16),
     handle_color = beautiful.accent,
-    handle_border_width = 0
+    handle_border_width = 2
 }
 
-local previous_value = 0
-local internal_update = false
+awesome.connect_signal(
+    "media::dominantcolors", function(colors)
+        progressbar.bar_color = colors[2] .. "50"
+        progressbar.bar_active_color = colors[2]
+
+        progressbar.handle_color = colors[2]
+        progressbar.handle_border_color = colors[1]
+    end
+)
 
 progressbar:connect_signal(
     "property::value", function(_, new_value)
@@ -23,7 +34,6 @@ progressbar:connect_signal(
     end
 )
 
-local last_length = 0
 playerctl:connect_signal(
     "position", function(_, interval_sec, length_sec)
         if length_sec ~= last_length then
@@ -34,15 +44,6 @@ playerctl:connect_signal(
         internal_update = true
         previous_value = interval_sec
         progressbar.value = interval_sec
-    end
-)
-awesome.connect_signal(
-    "media::dominantcolors", function(colors)
-        local fg_color = colors[2]
-
-        progressbar.bar_color = fg_color .. "70"
-        progressbar.bar_active_color = fg_color
-        progressbar.handle_color = fg_color
     end
 )
 

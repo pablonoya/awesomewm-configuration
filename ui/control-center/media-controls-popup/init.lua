@@ -10,12 +10,9 @@ playerctl:connect_signal(
 
 awesome.connect_signal(
     "media::dominantcolors", function(colors)
-        local bg_color, fg_color, _ = table.unpack(colors)
-
-        -- darkening the bg color to match the dark theming
-        media_controls_popup.widget.bg = bg_color .. "D0"
-        media_controls_popup.border_color = bg_color
-        media_controls_popup.fg = fg_color
+        media_controls_popup.widget.bg = colors[1]
+        media_controls_popup.fg = colors[2]
+        media_controls_popup.border_color = colors[1]
     end
 )
 

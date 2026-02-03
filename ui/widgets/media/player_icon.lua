@@ -8,7 +8,7 @@ local playerctl = require("signals.playerctl")
 
 local last_player_name
 
-return function(size, widget_type)
+return function(size)
     local icon = wibox.widget {
         image = media_icons.music_note,
         valign = "center",
@@ -40,15 +40,10 @@ return function(size, widget_type)
 
     awesome.connect_signal(
         "media::dominantcolors", function(colors)
-            local bg_color, fg_color, fg_bar_color = table.unpack(colors)
-
-            if widget_type == "popup" then
-                player_icon.bg = bg_color
-            end
-
+            player_icon.bg = colors[1]
             icon.image = gcolor.recolor_image(
                 media_icons[last_player_name] or media_icons.music_note,
-                    widget_type == "popup" and fg_color or fg_bar_color
+                colors[2]
             )
         end
     )

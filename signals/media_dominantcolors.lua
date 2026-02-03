@@ -4,28 +4,26 @@ local notification = require("naughty.notification")
 local variables = require("configuration.variables")
 local playerctl = require("signals.playerctl")
 
-local actual_colors
-
 local function extract_dominantcolors(stdout, stderr)
     if stderr ~= "" then
         notification {
+            title = "dominantcolors error",
             text = stderr,
             urgency = "critical"
         }
         return
     end
 
-    if stdout == "" or not string.match(stdout, "^#") or actual_colors == stdout then
+    if not string.match(stdout, "^#") then
         return
     end
 
     local colors = {}
-    for color in stdout:gmatch("[^\n]+") do
-        table.insert(colors, color)
+    for color in stdout:gmatch("#%x%x%x%x%x%x") do
+        colors[#colors + 1] = color
     end
 
     awesome.emit_signal("media::dominantcolors", colors)
-    actual_colors = stdout
 end
 
 playerctl:connect_signal(
@@ -34,10 +32,8 @@ playerctl:connect_signal(
             return
         end
 
-        if not actual_colors or new == true then
-            spawn.easy_async_with_shell(
-                variables.dominantcolors_path .. " -c 3.5 " .. album_path, extract_dominantcolors
-            )
-        end
+        spawn.easy_async_with_shell(
+            variables.dominantcolors_path .. " -c 3.5 " .. album_path, extract_dominantcolors
+        )
     end
 )

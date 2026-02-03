@@ -26,7 +26,7 @@ local cover = wibox.widget {
         widget = wibox.container.place
     },
     {
-        player_icon(25, "popup"),
+        player_icon(25),
         valign = "bottom",
         halign = "right",
         widget = wibox.container.place
