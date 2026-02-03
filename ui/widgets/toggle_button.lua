@@ -44,6 +44,7 @@ return function(args)
         duration = 0.1,
         intro = 0.04,
         pos = 12,
+        easing = rubato.easing.bouncy,
         subscribed = function(radius)
             filled_button.shape = helpers.rrect(radius)
         end

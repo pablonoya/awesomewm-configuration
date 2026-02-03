@@ -30,11 +30,11 @@ end
 
 local function hide()
     animation.slide_out(slide_calendar, calendar_popup)
-    animation.slide_out(slide_notif_center, notification_center)
 
     if variables.weather_api_key then
         animation.slide_out(slide_weather, weather_popup)
     end
+    animation.slide_out(slide_notif_center, notification_center)
 end
 
 awesome.connect_signal(

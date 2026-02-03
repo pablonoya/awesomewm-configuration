@@ -5,9 +5,10 @@ local _animation = {}
 
 function _animation.create_timed_slide(duration, widget)
     return rubato.timed {
-        rate = 60,
+        awestore_compat = true,
         duration = duration,
         intro = 0.01,
+        outro = 0.03,
         easing = rubato.easing.quadratic,
         subscribed = function(pos)
             widget.x = pos
@@ -35,7 +36,12 @@ end
 
 function _animation.slide_out(timed_slide, widget)
     timed_slide.target = widget.x + widget.width
-    widget.visible = false
+    timed_slide.ended:subscribe(
+        function()
+            widget.visible = false
+            timed_slide.ended:unsubscribe()
+        end
+    )
 end
 
 return _animation

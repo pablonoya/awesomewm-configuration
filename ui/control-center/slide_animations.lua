@@ -21,9 +21,8 @@ local function show()
 end
 
 local function hide()
-    animation.slide_out(slide_control_center, control_center)
     animation.slide_out(slide_media_popup, media_controls_popup)
-
+    animation.slide_out(slide_control_center, control_center)
 end
 
 playerctl:connect_signal(
