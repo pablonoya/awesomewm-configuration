@@ -172,6 +172,13 @@ awful.keyboard.append_global_keybindings {
 -- Launcher
 awful.keyboard.append_global_keybindings {
     awful.key(
+        {alt}, " ", function()
+            awful.spawn("gapplication launch io.ulauncher.Ulauncher")
+        end, {
+            description = "Open Ulauncher",
+            group = "launcher"
+        }
+    ), awful.key(
         {modkey}, "Return", function()
             awful.spawn(variables.terminal)
         end, {
